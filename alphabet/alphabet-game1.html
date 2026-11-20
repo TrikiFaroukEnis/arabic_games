@@ -98,7 +98,7 @@
         <a class="back-link" href="./index.html">↩ ألعاب الحروف</a>
         <h1>🎓 تعلم الحروف العربية</h1>
         <p>10 أسئلة في كل لعبة</p>
-        <button class="btn-main" onclick="startGame()">بدء اللعبة</button>
+        <button class="btn-main" id="startButton" type="button">بدء اللعبة</button>
     </div>
 
     <div class="card hidden" id="gameScreen">
@@ -107,13 +107,15 @@
             <span id="score">⭐ 0/10</span>
             <span id="errors">❌ 0</span>
         </div>
-        <div id="progressOuter"><div id="progressBar"></div></div>
+        <div id="progressOuter">
+            <div id="progressBar"></div>
+        </div>
         <div id="counter" style="margin: 10px 0"></div>
         <div class="controls">
-            <button class="btn-control" id="voiceToggle">🔊 صوت</button>
-            <button class="btn-control" id="repeatBtn">🔄 إعادة السؤال</button>
+            <button class="btn-control" id="voiceToggle" type="button">🔊 صوت</button>
+            <button class="btn-control" id="repeatBtn" type="button">🔄 إعادة السؤال</button>
         </div>
-        <h2 id="question"></h2>
+        <h2 id="question" aria-live="polite"></h2>
         <div id="options"></div>
     </div>
 
@@ -122,8 +124,8 @@
         <h2>🏆 انتهت اللعبة</h2>
         <p id="result"></p>
         <p id="percent"></p>
-        <button class="btn-main" onclick="restartSameGame()">إعادة البدء</button>
-        <button class="btn-main" onclick="startGame()">🎲 لعبة جديدة</button>
+        <button class="btn-main" id="restartSameGameButton" type="button">إعادة البدء</button>
+        <button class="btn-main" id="newGameButton" type="button">🎲 لعبة جديدة</button>
     </div>
 
     <script>
@@ -136,9 +138,21 @@
             ["ق", "القاف"], ["ك", "الكاف"], ["ل", "اللام"], ["م", "الميم"],
             ["ن", "النون"], ["ه", "الهاء"], ["و", "الواو"], ["ي", "الياء"]
         ];
-        let gameLetters = [], index = 0, score = 0, error = 0, currentLetterName = "";
-        let voiceEnabled = true, arabicVoice = null;
-        function shuffle(a) { return [...a].sort(() => Math.random() - 0.5); }
+        let gameLetters = [];
+        let index = 0;
+        let score = 0;
+        let error = 0;
+        let currentLetterName = "";
+        let voiceEnabled = true;
+        let arabicVoice = null;
+        function shuffle(items) {
+            const shuffledItems = [...items];
+            for (let index = shuffledItems.length - 1; index > 0; index--) {
+                const randomIndex = Math.floor(Math.random() * (index + 1));
+                [shuffledItems[index], shuffledItems[randomIndex]] = [shuffledItems[randomIndex], shuffledItems[index]];
+            }
+            return shuffledItems;
+        }
         function triggerStars(buttonEl) {
             const fxLayer = document.getElementById("fxLayer");
             const rect = buttonEl.getBoundingClientRect();
@@ -162,7 +176,11 @@
         function findArabicVoice() {
             if (!("speechSynthesis" in window)) return;
             const voices = speechSynthesis.getVoices();
-            arabicVoice = voices.find((voice) => voice.lang === "ar-SA") || voices.find((voice) => voice.lang === "ar-EG") || voices.find((voice) => voice.lang.startsWith("ar")) || null;
+            arabicVoice =
+                voices.find((voice) => voice.lang === "ar-SA") ||
+                voices.find((voice) => voice.lang === "ar-EG") ||
+                voices.find((voice) => voice.lang.startsWith("ar")) ||
+                null;
         }
         if ("speechSynthesis" in window) {
             speechSynthesis.onvoiceschanged = findArabicVoice;
@@ -178,9 +196,16 @@
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.rate = 0.9;
             utterance.pitch = 1;
-            if (arabicVoice) { utterance.voice = arabicVoice; utterance.lang = arabicVoice.lang; }
-            else { utterance.lang = "ar"; }
+            if (arabicVoice) {
+                utterance.voice = arabicVoice;
+                utterance.lang = arabicVoice.lang;
+            } else {
+                utterance.lang = "ar";
+            }
             speechSynthesis.speak(utterance);
+        }
+        function speakCurrentQuestion() {
+            if (currentLetterName) speakArabic("اختر حرف " + currentLetterName);
         }
         function updateUI() {
             document.getElementById("score").textContent = `⭐ ${score}/10`;
@@ -191,44 +216,67 @@
         function startGame() {
             unlockSpeech();
             gameLetters = shuffle(alphabet).slice(0, 10);
-            index = 0; score = 0; error = 0;
+            index = 0;
+            score = 0;
+            error = 0;
             document.getElementById("startScreen").classList.add("hidden");
             document.getElementById("endScreen").classList.add("hidden");
             document.getElementById("gameScreen").classList.remove("hidden");
             showQuestion();
         }
         function restartSameGame() {
-            index = 0; score = 0; error = 0;
+            index = 0;
+            score = 0;
+            error = 0;
             document.getElementById("endScreen").classList.add("hidden");
             document.getElementById("gameScreen").classList.remove("hidden");
             showQuestion();
         }
         function showQuestion() {
-            if (index >= 10) { finish(); return; }
+            if (index >= 10) {
+                finish();
+                return;
+            }
             updateUI();
             const current = gameLetters[index];
             currentLetterName = current[1];
             document.getElementById("question").textContent = "اختر الحرف : " + currentLetterName;
-            const wrong = shuffle(alphabet.filter((letter) => letter[0] !== current[0])).slice(0, 3);
+            const wrong = shuffle(
+                alphabet.filter((letter) => letter[0] !== current[0])
+            ).slice(0, 3);
             const choices = shuffle([current, ...wrong]);
             const options = document.getElementById("options");
             options.innerHTML = "";
-            setTimeout(() => speakArabic("اختر حرف : " + currentLetterName), 300);
+            speakCurrentQuestion();
             choices.forEach((choice, idx) => {
                 const button = document.createElement("button");
                 button.className = `option tile-${idx}`;
                 button.textContent = choice[0];
-                button.onclick = () => {
-                    [...options.children].forEach((item) => { item.disabled = true; });
+                button.addEventListener("click", () => {
+                    [...options.children].forEach((item) => {
+                        item.disabled = true;
+                    });
                     if (choice[0] === current[0]) {
-                        score++; updateUI(); button.classList.add("correct"); triggerStars(button);
+                        score++;
+                        updateUI();
+                        button.classList.add("correct");
+                        triggerStars(button);
                     } else {
-                        error++; updateUI(); button.classList.add("wrong");
-                        const correctButton = [...options.children].find((item) => item.textContent === current[0]);
-                        if (correctButton) correctButton.classList.add("correct");
+                        error++;
+                        updateUI();
+                        button.classList.add("wrong");
+                        const correctButton = [...options.children].find(
+                            (item) => item.textContent === current[0]
+                        );
+                        if (correctButton) {
+                            correctButton.classList.add("correct");
+                        }
                     }
-                    setTimeout(() => { index++; showQuestion(); }, 1050);
-                };
+                    setTimeout(() => {
+                        index++;
+                        showQuestion();
+                    }, 1050);
+                });
                 options.appendChild(button);
             });
         }
@@ -240,13 +288,26 @@
             document.getElementById("progressBar").style.width = "100%";
         }
         document.addEventListener("DOMContentLoaded", () => {
+            document
+                .getElementById("startButton")
+                .addEventListener("click", startGame);
+            document
+                .getElementById("restartSameGameButton")
+                .addEventListener("click", restartSameGame);
+            document
+                .getElementById("newGameButton")
+                .addEventListener("click", startGame);
             document.getElementById("voiceToggle").addEventListener("click", () => {
                 voiceEnabled = !voiceEnabled;
-                document.getElementById("voiceToggle").textContent = voiceEnabled ? "🔊 صوت" : "🔇 صوت";
-                if (!voiceEnabled && "speechSynthesis" in window) speechSynthesis.cancel();
+                document.getElementById("voiceToggle").textContent = voiceEnabled
+                    ? "🔊 صوت"
+                    : "🔇 صوت";
+                if (!voiceEnabled && "speechSynthesis" in window) {
+                    speechSynthesis.cancel();
+                }
             });
             document.getElementById("repeatBtn").addEventListener("click", () => {
-                if (currentLetterName) speakArabic("اختر حرف : " + currentLetterName);
+                speakCurrentQuestion();
             });
         });
     </script>
