@@ -179,10 +179,73 @@
       function findArabicVoice(){if(!("speechSynthesis" in window))return;const voices=speechSynthesis.getVoices();arabicVoice=voices.find(voice=>voice.lang==="ar-SA")||voices.find(voice=>voice.lang==="ar-EG")||voices.find(voice=>voice.lang.startsWith("ar"))||null}
       if("speechSynthesis" in window){speechSynthesis.onvoiceschanged=findArabicVoice;setTimeout(findArabicVoice,500)}
       function unlockSpeech(){if(soundEnabled&&"speechSynthesis" in window)speechSynthesis.speak(new SpeechSynthesisUtterance(""))}
-      function speak(text){if(!soundEnabled||!("speechSynthesis" in window))return;speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.rate=.9;utterance.pitch=1;if(arabicVoice){utterance.voice=arabicVoice;utterance.lang=arabicVoice.lang}else utterance.lang="ar";speechSynthesis.speak(utterance)}
+      function speak(text, onComplete){
+        if(!soundEnabled||!("speechSynthesis" in window)){
+          if(onComplete)onComplete();
+          return;
+        }
+        speechSynthesis.cancel();
+        const utterance=new SpeechSynthesisUtterance(text);
+        utterance.rate=.9;
+        utterance.pitch=1;
+        if(arabicVoice){
+          utterance.voice=arabicVoice;
+          utterance.lang=arabicVoice.lang;
+        }else{
+          utterance.lang="ar";
+        }
+        if(onComplete){
+          let completed=false;
+          const complete=()=>{
+            if(completed)return;
+            completed=true;
+            clearTimeout(fallbackTimer);
+            onComplete();
+          };
+          const fallbackTimer=setTimeout(complete,Math.max(3000,text.length*140));
+          utterance.onend=complete;
+          utterance.onerror=complete;
+        }
+        speechSynthesis.speak(utterance);
+      }
       function startGame(){if("speechSynthesis" in window)speechSynthesis.cancel();rounds=shuffle(letters).slice(0,roundsCount).map(letter=>{const matches=shuffle(things.filter(thing=>thing.name.includes(letter))).slice(0,3);const misses=shuffle(things.filter(thing=>!thing.name.includes(letter))).slice(0,6-matches.length);return {letter,correct:matches.map(thing=>thing.name),choices:shuffle([...matches,...misses])}});roundIndex=0;score=0;$("startScreen").classList.add("hidden");$("endScreen").classList.add("hidden");$("gameScreen").classList.remove("hidden");unlockSpeech();showRound()}
       function showRound(){locked=false;const current=rounds[roundIndex];$("score").textContent=`⭐ النقاط: ${score}`;$("round").textContent=`الجولة ${roundIndex+1} / ${roundsCount}`;$("progressBar").style.width=`${roundIndex/roundsCount*100}%`;$("targetLetter").textContent=current.letter;$("targetLetter").setAttribute("aria-label",`الحرف ${current.letter}`);$("feedback").textContent="";$("feedback").className="feedback";$("instruction").textContent="اضغط على كل الإجابات الصحيحة، ثم اختر «تأكيد».";const grid=$("objects");grid.innerHTML="";current.choices.forEach(thing=>{const button=document.createElement("button");button.type="button";button.className="object";button.setAttribute("aria-pressed","false");button.setAttribute("aria-label",thing.name);button.innerHTML=`<span class="pic" aria-hidden="true">${thing.emoji}</span><span class="label">${thing.name}</span>`;button.addEventListener("click",()=>{if(locked)return;button.classList.toggle("selected");button.setAttribute("aria-pressed",String(button.classList.contains("selected")))});grid.appendChild(button)});speak(`ابحث عن الكلمات التي تحتوي على حرف ${current.letter}`)}
-      function submitRound(){if(locked)return;const current=rounds[roundIndex],buttons=[...$("objects").querySelectorAll(".object")],selected=buttons.filter(button=>button.classList.contains("selected"));if(!selected.length){$("feedback").textContent="اختر شيئاً واحداً على الأقل!";$("feedback").className="feedback bad";return}locked=true;let roundPoints=0;buttons.forEach(button=>{const isCorrect=current.correct.includes(button.getAttribute("aria-label"));const wasSelected=button.classList.contains("selected");if(isCorrect){button.classList.add("correct");if(wasSelected)roundPoints++}else if(wasSelected){button.classList.add("wrong")}});score+=roundPoints;$("score").textContent=`⭐ النقاط: ${score}`;const perfect=roundPoints===current.correct.length&&selected.length===current.correct.length;$("feedback").textContent=perfect?"أحسنت! وجدت كل الكنوز الصحيحة! 🎉":`وجدت ${roundPoints} من ${current.correct.length} كنوز. الأخضر هو الجواب الصحيح!`;$("feedback").className=`feedback ${roundPoints?"good":"bad"}`;$("instruction").textContent="";speak(perfect?"أحسنت! إجابة صحيحة":"حاول مرة أخرى في الجولة التالية");$("progressBar").style.width=`${(roundIndex+1)/roundsCount*100}%`;setTimeout(()=>{roundIndex++;if(roundIndex<roundsCount)showRound();else finishGame()},1500)}
+      function submitRound(){
+        if(locked)return;
+        const current=rounds[roundIndex];
+        const buttons=[...$("objects").querySelectorAll(".object")];
+        const selected=buttons.filter(button=>button.classList.contains("selected"));
+        if(!selected.length){
+          $("feedback").textContent="اختر شيئاً واحداً على الأقل!";
+          $("feedback").className="feedback bad";
+          return;
+        }
+        locked=true;
+        let roundPoints=0;
+        buttons.forEach(button=>{
+          const isCorrect=current.correct.includes(button.getAttribute("aria-label"));
+          const wasSelected=button.classList.contains("selected");
+          if(isCorrect){
+            button.classList.add("correct");
+            if(wasSelected)roundPoints++;
+          }else if(wasSelected){
+            button.classList.add("wrong");
+          }
+        });
+        score+=roundPoints;
+        $("score").textContent=`⭐ النقاط: ${score}`;
+        const perfect=roundPoints===current.correct.length&&selected.length===current.correct.length;
+        $("feedback").textContent=perfect?"أحسنت! وجدت كل الكنوز الصحيحة! 🎉":`وجدت ${roundPoints} من ${current.correct.length} كنوز. الأخضر هو الجواب الصحيح!`;
+        $("feedback").className=`feedback ${roundPoints?"good":"bad"}`;
+        $("instruction").textContent="";
+        $("progressBar").style.width=`${(roundIndex+1)/roundsCount*100}%`;
+        const feedbackMessage=perfect?"أحسنت! إجابة صحيحة":"حاول مرة أخرى في الجولة التالية";
+        speak(feedbackMessage,()=>{
+          roundIndex++;
+          if(roundIndex<roundsCount)showRound();
+          else finishGame();
+        });
+      }
       function finishGame(){const maximumScore=rounds.reduce((total,round)=>total+round.correct.length,0);$("gameScreen").classList.add("hidden");$("endScreen").classList.remove("hidden");$("finalScore").textContent=`${score} / ${maximumScore} ⭐`;$("finalMessage").textContent=score>=maximumScore*.8?"يا لك من مكتشف ذكي! لقد وجدت كنوز الحروف! ✨":"أحسنت المحاولة! جرّب جولة جديدة للعثور على كنوز أكثر. 💎"}
       $("startButton").addEventListener("click",startGame);$("submitButton").addEventListener("click",submitRound);$("againButton").addEventListener("click",startGame);$("soundButton").addEventListener("click",()=>{soundEnabled=!soundEnabled;$("soundButton").textContent=soundEnabled?"🔊 الصوت":"🔇 الصوت";$("soundButton").setAttribute("aria-pressed",String(soundEnabled));if(!soundEnabled&&"speechSynthesis" in window)window.speechSynthesis.cancel()});
     </script>
@@ -199,19 +262,19 @@
         ه: "الهاء", و: "الواو", ي: "الياء", ة: "التاء المربوطة", ى: "الألف المقصورة"
       });
       const originalTreasureSpeak = speak;
-      function speakTreasureQuestion() {
+      function speakTreasureQuestion(onComplete) {
         if (!rounds.length) return;
         const letter = rounds[roundIndex].letter;
         const letterName = treasureLetterNames[letter] || `حرف ${letter}`;
-        originalTreasureSpeak(`ابحث عن الكلمات التي تحتوي على حرف ${letterName}`);
+        originalTreasureSpeak(`ابحث عن الكلمات التي تحتوي على حرف ${letterName}`, onComplete);
       }
-      speak = text => {
+      speak = (text, onComplete) => {
         const match = text.match(/^ابحث عن الكلمات التي تحتوي على حرف (.)$/);
         if (!match) {
-          originalTreasureSpeak(text);
+          originalTreasureSpeak(text, onComplete);
           return;
         }
-        speakTreasureQuestion();
+        speakTreasureQuestion(onComplete);
       };
       const repeatQuestionButton = document.createElement("button");
       repeatQuestionButton.type = "button";
