@@ -5,43 +5,346 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>تعلم الحروف العربية</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #a7d8f0; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; overflow: hidden; user-select: none; }
-        .card { background: #ffffff; width: 90%; max-width: 750px; padding: 30px; border-radius: 24px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,.12); position: relative; z-index: 10; }
-        .hidden { display: none !important; }
-        button { font-family: Arial,sans-serif; cursor: pointer; border: none; border-radius: 16px; padding: 12px 20px; transition: transform .12s ease,background-color .2s ease; }
-        button:active { transform: scale(.96); }
-        .btn-main { background: #e5e7eb; color: #1f2937; font-size: 1.25rem; font-weight: bold; padding: 14px 28px; margin: 6px; }
-        .btn-control { background: #f3f4f6; color: #1f2937; font-size: 1rem; }
-        #options { display: grid; grid-template-columns: repeat(2,1fr); gap: 15px; margin-top: 20px; }
-        .option { font-family: Arial,sans-serif; font-size: 64px; font-weight: normal; min-height: 125px; color: #111827; border-radius: 18px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(0,0,0,.05); }
-        .tile-0 { background: #eff6ff; }.tile-1 { background: #f0fdf4; }.tile-2 { background: #fefce8; }.tile-3 { background: #faf5ff; }
-        .option.correct { background: #22c55e !important; color: white !important; animation: gentlePop .4s ease; }.option.wrong { background: #ef4444 !important; color: white !important; animation: gentleShake .35s ease; }
-        @keyframes gentlePop { 0%,100%{transform:scale(1)}50%{transform:scale(1.06)} } @keyframes gentleShake { 0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)} }
-        #progressOuter { height: 22px; background: #e5e7eb; border-radius: 999px; overflow: hidden; } #progressBar { height: 100%; width: 0; background: linear-gradient(90deg,#22c55e,#3b82f6); transition: width .3s ease; }
-        .info { display: flex; justify-content: space-between; font-weight: bold; margin: 10px 0; color: #1f2937; }.controls { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 15px 0; }
-        #fxLayer { position: fixed; inset: 0; pointer-events: none; z-index: 999; overflow: hidden; }.star-burst { position: absolute; font-size: 1.8rem; animation: flyStar .9s ease-out forwards; }
-        @keyframes flyStar { 0%{transform:translate(-50%,-50%) scale(.4);opacity:1}100%{transform:translate(var(--tx),var(--ty)) scale(1.15);opacity:0} }
-        .back-link { display:block;margin-bottom:12px;color:#315b70;text-decoration:none;font-weight:bold; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #a7d8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            user-select: none;
+        }
+        .card {
+            background: #ffffff;
+            width: 90%;
+            max-width: 750px;
+            padding: 30px;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            position: relative;
+            z-index: 10;
+        }
+        .hidden {
+            display: none !important;
+        }
+        button {
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+            border: none;
+            border-radius: 16px;
+            padding: 12px 20px;
+            transition: transform 0.12s ease, background-color 0.2s ease;
+        }
+        button:active {
+            transform: scale(0.96);
+        }
+        .btn-main {
+            background: #e5e7eb;
+            color: #1f2937;
+            font-size: 1.25rem;
+            font-weight: bold;
+            padding: 14px 28px;
+            margin: 6px;
+        }
+        .btn-control {
+            background: #f3f4f6;
+            color: #1f2937;
+            font-size: 1rem;
+        }
+        #options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .option {
+            font-family: Arial, sans-serif;
+            font-size: 64px;
+            font-weight: normal;
+            min-height: 125px;
+            color: #111827;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        /* Teintes pastel douces et apaisantes */
+        .tile-0 { background: #eff6ff; }
+        .tile-1 { background: #f0fdf4; }
+        .tile-2 { background: #fefce8; }
+        .tile-3 { background: #faf5ff; }
+
+        .option.correct {
+            background: #22c55e !important;
+            color: #ffffff !important;
+            animation: gentlePop 0.4s ease;
+        }
+        .option.wrong {
+            background: #ef4444 !important;
+            color: #ffffff !important;
+            animation: gentleShake 0.35s ease;
+        }
+        @keyframes gentlePop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+            100% { transform: scale(1); }
+        }
+        @keyframes gentleShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+        #progressOuter {
+            height: 22px;
+            background: #e5e7eb;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        #progressBar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #22c55e, #3b82f6);
+            transition: width 0.3s ease;
+        }
+        .info {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #1f2937;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+        #fxLayer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 999;
+            overflow: hidden;
+        }
+        .star-burst {
+            position: absolute;
+            font-size: 1.8rem;
+            animation: flyStar 0.9s ease-out forwards;
+        }
+        @keyframes flyStar {
+            0% {
+                transform: translate(-50%, -50%) scale(0.4);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(1.15);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
     <div id="fxLayer"></div>
-    <div class="card" id="startScreen"><a class="back-link" href="./index.html">↩ ألعاب الحروف العربية</a><h1>🎓 تعلم الحروف العربية</h1><p>10 أسئلة ��ي كل لعبة</p><button class="btn-main" onclick="startGame()">بدء اللعبة</button></div>
-    <div class="card hidden" id="gameScreen"><div class="info"><span id="score">⭐ 0/10</span><span id="errors">❌ 0</span></div><div id="progressOuter"><div id="progressBar"></div></div><div id="counter" style="margin:10px 0"></div><div class="controls"><button class="btn-control" id="voiceToggle">🔊 صوت</button><button class="btn-control" id="repeatBtn">🔄 إعادة السؤال</button></div><h2 id="question"></h2><div id="options"></div></div>
-    <div class="card hidden" id="endScreen"><h2>🏆 انتهت اللعبة</h2><p id="result"></p><p id="percent"></p><button class="btn-main" onclick="restartSameGame()">إعادة البدء</button><button class="btn-main" onclick="startGame()">🎲 لعبة جديدة</button><a class="back-link" href="./index.html">↩ ألعاب الحروف</a></div>
+
+    <div class="card" id="startScreen">
+        <h1>🎓 تعلم الحروف العربية</h1>
+        <p>10 أسئلة في كل لعبة</p>
+        <button class="btn-main" onclick="startGame()">بدء اللعبة</button>
+    </div>
+
+    <div class="card hidden" id="gameScreen">
+        <div class="info">
+            <span id="score">⭐ 0/10</span>
+            <span id="errors">❌ 0</span>
+        </div>
+        <div id="progressOuter"><div id="progressBar"></div></div>
+        <div id="counter" style="margin: 10px 0"></div>
+        <div class="controls">
+            <button class="btn-control" id="voiceToggle">🔊 صوت</button>
+            <button class="btn-control" id="repeatBtn">🔄 إعادة السؤال</button>
+        </div>
+        <h2 id="question"></h2>
+        <div id="options"></div>
+    </div>
+
+    <div class="card hidden" id="endScreen">
+        <h2>🏆 انتهت اللعبة</h2>
+        <p id="result"></p>
+        <p id="percent"></p>
+        <button class="btn-main" onclick="restartSameGame()">إعادة البدء</button>
+        <button class="btn-main" onclick="startGame()">🎲 لعبة جديدة</button>
+    </div>
+
     <script>
-        const alphabet = [["ا","ألف"],["ب","باء"],["ت","تاء"],["ث","ثاء"],["ج","جيم"],["ح","حاء"],["خ","خاء"],["د","دال"],["ذ","ذال"],["ر","راء"],["ز","زاي"],["س","سين"],["ش","شين"],["ص","صاد"],["ض","ضاد"],["ط","طاء"],["ظ","ظاء"],["ع","عين"],["غ","غين"],["ف","فاء"],["ق","قاف"],["ك","كاف"],["ل","لام"],["م","ميم"],["ن","نون"],["ه","هاء"],["و","واو"],["ي","ياء"]];
-        let gameLetters=[],index=0,score=0,error=0,currentLetterName="",voiceEnabled=true,arabicVoice=null;
-        function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
-        function triggerStars(buttonEl){const layer=document.getElementById("fxLayer"),rect=buttonEl.getBoundingClientRect(),x=rect.left+rect.width/2,y=rect.top+rect.height/2,icons=["⭐","🌟","✨"];for(let i=0;i<12;i++){const star=document.createElement("div");star.className="star-burst";star.textContent=icons[i%icons.length];star.style.left=x+"px";star.style.top=y+"px";const angle=Math.PI*2*i/12,distance=75+Math.random()*85;star.style.setProperty("--tx",`${Math.cos(angle)*distance}px`);star.style.setProperty("--ty",`${Math.sin(angle)*distance-25}px`);layer.appendChild(star);setTimeout(()=>star.remove(),950)}}
-        function findArabicVoice(){if(!("speechSynthesis"in window))return;const voices=speechSynthesis.getVoices();arabicVoice=voices.find(v=>v.lang==="ar-SA")||voices.find(v=>v.lang==="ar-EG")||voices.find(v=>v.lang.startsWith("ar"))||null}if("speechSynthesis"in window){speechSynthesis.onvoiceschanged=findArabicVoice;setTimeout(findArabicVoice,500)}
-        function speakArabic(text){if(!voiceEnabled||!("speechSynthesis"in window))return;speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.rate=.9;utterance.pitch=1;if(arabicVoice){utterance.voice=arabicVoice;utterance.lang=arabicVoice.lang}else utterance.lang="ar";speechSynthesis.speak(utterance)}
-        function updateUI(){document.getElementById("score").textContent=`⭐ ${score}/10`;document.getElementById("errors").textContent=`❌ ${error}`;document.getElementById("counter").textContent=`السؤال ${index+1} / 10`;document.getElementById("progressBar").style.width=`${index*10}%`}
-        function startGame(){if("speechSynthesis"in window)speechSynthesis.speak(new SpeechSynthesisUtterance(""));gameLetters=shuffle(alphabet).slice(0,10);index=0;score=0;error=0;document.getElementById("startScreen").classList.add("hidden");document.getElementById("endScreen").classList.add("hidden");document.getElementById("gameScreen").classList.remove("hidden");showQuestion()}
-        function restartSameGame(){index=0;score=0;error=0;document.getElementById("endScreen").classList.add("hidden");document.getElementById("gameScreen").classList.remove("hidden");showQuestion()}
-        function showQuestion(){if(index>=10){finish();return}updateUI();const current=gameLetters[index];currentLetterName=current[1];document.getElementById("question").textContent="اختر الحرف: "+currentLetterName;const choices=shuffle([current,...shuffle(alphabet.filter(x=>x[0]!==current[0])).slice(0,3)]),container=document.getElementById("options");container.innerHTML="";setTimeout(()=>speakArabic("أين حرف "+currentLetterName+"؟"),300);choices.forEach((choice,idx)=>{const button=document.createElement("button");button.className=`option tile-${idx}`;button.textContent=choice[0];button.onclick=()=>{[...container.children].forEach(item=>item.disabled=true);if(choice[0]===current[0]){score++;updateUI();button.classList.add("correct");triggerStars(button)}else{error++;updateUI();button.classList.add("wrong");const right=[...container.children].find(item=>item.textContent===current[0]);if(right)right.classList.add("correct")}setTimeout(()=>{index++;showQuestion()},1050)};container.appendChild(button)})}
-        function finish(){document.getElementById("gameScreen").classList.add("hidden");document.getElementById("endScreen").classList.remove("hidden");document.getElementById("result").textContent=`النتيجة: ${score}/10`;document.getElementById("percent").textContent=`📊 ${Math.round(score*10)}%`;document.getElementById("progressBar").style.width="100%"}
-        document.addEventListener("DOMContentLoaded",()=>{document.getElementById("voiceToggle").addEventListener("click",()=>{voiceEnabled=!voiceEnabled;document.getElementById("voiceToggle").textContent=voiceEnabled?"🔊 صوت":"🔇 صوت";if(!voiceEnabled&&"speechSynthesis"in window)speechSynthesis.cancel()});document.getElementById("repeatBtn").addEventListener("click",()=>{if(currentLetterName)speakArabic("أين حرف "+currentLetterName+"؟")})});
+        const alphabet = [
+            ["ا", "ألف"], ["ب", "باء"], ["ت", "تاء"], ["ث", "ثاء"],
+            ["ج", "جيم"], ["ح", "حاء"], ["خ", "خاء"], ["د", "دال"],
+            ["ذ", "ذال"], ["ر", "راء"], ["ز", "زاي"], ["س", "سين"],
+            ["ش", "شين"], ["ص", "صاد"], ["ض", "ضاد"], ["ط", "طاء"],
+            ["ظ", "ظاء"], ["ع", "عين"], ["غ", "غين"], ["ف", "فاء"],
+            ["ق", "قاف"], ["ك", "كاف"], ["ل", "لام"], ["م", "ميم"],
+            ["ن", "نون"], ["ه", "هاء"], ["و", "واو"], ["ي", "ياء"]
+        ];
+
+        let gameLetters = [], index = 0, score = 0, error = 0, currentLetterName = "";
+        let voiceEnabled = true, arabicVoice = null;
+
+        function shuffle(a) {
+            return [...a].sort(() => Math.random() - 0.5);
+        }
+
+        function triggerStars(buttonEl) {
+            const fxLayer = document.getElementById("fxLayer");
+            const rect = buttonEl.getBoundingClientRect();
+            const originX = rect.left + rect.width / 2;
+            const originY = rect.top + rect.height / 2;
+
+            const starIcons = ["⭐", "🌟", "✨"];
+            for (let i = 0; i < 12; i++) {
+                const star = document.createElement("div");
+                star.className = "star-burst";
+                star.textContent = starIcons[i % starIcons.length];
+                star.style.left = originX + "px";
+                star.style.top = originY + "px";
+                const angle = (Math.PI * 2 * i) / 12;
+                const distance = 75 + Math.random() * 85;
+                star.style.setProperty("--tx", `${Math.cos(angle) * distance}px`);
+                star.style.setProperty("--ty", `${Math.sin(angle) * distance - 25}px`);
+                fxLayer.appendChild(star);
+                setTimeout(() => star.remove(), 950);
+            }
+        }
+
+        function findArabicVoice() {
+            if (!("speechSynthesis" in window)) return;
+            const v = speechSynthesis.getVoices();
+            arabicVoice =
+                v.find((x) => x.lang === "ar-SA") ||
+                v.find((x) => x.lang === "ar-EG") ||
+                v.find((x) => x.lang.startsWith("ar")) ||
+                null;
+        }
+
+        if ("speechSynthesis" in window) {
+            speechSynthesis.onvoiceschanged = findArabicVoice;
+            setTimeout(findArabicVoice, 500);
+        }
+
+        function unlockSpeech() {
+            if (!("speechSynthesis" in window)) return;
+            speechSynthesis.speak(new SpeechSynthesisUtterance(""));
+        }
+
+        function speakArabic(text) {
+            if (!voiceEnabled || !("speechSynthesis" in window)) return;
+            speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(text);
+            u.rate = 0.9;
+            u.pitch = 1;
+            if (arabicVoice) {
+                u.voice = arabicVoice;
+                u.lang = arabicVoice.lang;
+            } else {
+                u.lang = "ar";
+            }
+            speechSynthesis.speak(u);
+        }
+
+        function updateUI() {
+            document.getElementById("score").textContent = `⭐ ${score}/10`;
+            document.getElementById("errors").textContent = `❌ ${error}`;
+            document.getElementById("counter").textContent = `السؤال ${index + 1} / 10`;
+            document.getElementById("progressBar").style.width = `${index * 10}%`;
+        }
+
+        function startGame() {
+            unlockSpeech();
+            gameLetters = shuffle(alphabet).slice(0, 10);
+            index = 0;
+            score = 0;
+            error = 0;
+            document.getElementById("startScreen").classList.add("hidden");
+            document.getElementById("endScreen").classList.add("hidden");
+            document.getElementById("gameScreen").classList.remove("hidden");
+            showQuestion();
+        }
+
+        function restartSameGame() {
+            index = 0;
+            score = 0;
+            error = 0;
+            document.getElementById("endScreen").classList.add("hidden");
+            document.getElementById("gameScreen").classList.remove("hidden");
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (index >= 10) {
+                finish();
+                return;
+            }
+            updateUI();
+            const current = gameLetters[index];
+            currentLetterName = current[1];
+            document.getElementById("question").textContent = "اختر الحرف : " + currentLetterName;
+
+            const wrong = shuffle(alphabet.filter((x) => x[0] !== current[0])).slice(0, 3);
+            const choices = shuffle([current, ...wrong]);
+            const div = document.getElementById("options");
+            div.innerHTML = "";
+
+            setTimeout(() => speakArabic("أين حرف " + currentLetterName + " ؟"), 300);
+
+            choices.forEach((c, idx) => {
+                const b = document.createElement("button");
+                b.className = `option tile-${idx}`;
+                b.textContent = c[0];
+                b.onclick = () => {
+                    [...div.children].forEach((x) => (x.disabled = true));
+                    if (c[0] === current[0]) {
+                        score++;
+                        updateUI();
+                        b.classList.add("correct");
+                        triggerStars(b);
+                    } else {
+                        error++;
+                        updateUI();
+                        b.classList.add("wrong");
+                        const rightBtn = [...div.children].find((x) => x.textContent === current[0]);
+                        if (rightBtn) rightBtn.classList.add("correct");
+                    }
+                    setTimeout(() => {
+                        index++;
+                        showQuestion();
+                    }, 1050);
+                };
+                div.appendChild(b);
+            });
+        }
+
+        function finish() {
+            document.getElementById("gameScreen").classList.add("hidden");
+            document.getElementById("endScreen").classList.remove("hidden");
+            document.getElementById("result").textContent = `النتيجة: ${score}/10`;
+            document.getElementById("percent").textContent = `📊 ${Math.round(score * 10)}%`;
+            document.getElementById("progressBar").style.width = "100%";
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("voiceToggle").addEventListener("click", () => {
+                voiceEnabled = !voiceEnabled;
+                document.getElementById("voiceToggle").textContent = voiceEnabled ? "🔊 صوت" : "🔇 صوت";
+                if (!voiceEnabled && "speechSynthesis" in window) speechSynthesis.cancel();
+            });
+            document.getElementById("repeatBtn").addEventListener("click", () => {
+                if (currentLetterName) speakArabic("أين حرف " + currentLetterName + " ؟");
+            });
+        });
     </script>
 </body>
 </html>
