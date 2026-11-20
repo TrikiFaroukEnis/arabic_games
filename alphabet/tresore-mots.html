@@ -1,81 +1,225 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#8ed7e4">
-<title>كنز الحرف المفقود</title>
-<style>
-:root{--navy:#173e50;--sea:#7fcbdc;--deep:#218ca5;--sand:#ffdc83;--paper:#fffdf5;--green:#32a875;--red:#df655a}*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial,sans-serif;color:var(--navy);background:linear-gradient(#d9f3f5 0 38%,#8bd3df 38% 100%);user-select:none}.page{width:min(1000px,96%);margin:auto;padding:15px 0 28px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 8px 10px}.topbar a,.sound{border:0;border-radius:999px;padding:10px 15px;background:#ffffffd9;color:var(--navy);font-weight:bold;text-decoration:none;cursor:pointer}.scene{height:250px;position:relative;overflow:hidden;border-radius:22px;background:linear-gradient(#bceaf0 0 47%,#6fc0d0 47% 100%);box-shadow:inset 0 -12px 0 #ffffff25}.sun{position:absolute;top:24px;left:8%;font-size:42px}.cloud{position:absolute;top:36px;right:13%;font-size:42px}.wave{position:absolute;left:-4%;right:-4%;bottom:21px;height:53px;border-radius:50% 50% 0 0;background:#ffffff35}.ship{position:absolute;left:50%;bottom:29px;transform:translateX(-50%);width:260px;height:190px}.ship svg{width:100%;height:100%;overflow:visible}.ship.bob{animation:bob 3s ease-in-out infinite}@keyframes bob{50%{transform:translate(-50%,-9px) rotate(1deg)}}.island{position:absolute;bottom:15px;right:5%;font-size:46px}.island.left{left:5%;right:auto}.panel{margin-top:14px;padding:20px clamp(14px,4vw,36px) 25px;background:#ffffffec;border:1px solid #fff;border-radius:24px;box-shadow:0 12px 30px #17485b18;text-align:center}.hidden{display:none!important}.intro h1{margin:5px 0;font-size:clamp(1.7rem,5vw,2.4rem)}.intro p{line-height:1.7;color:#52727b}.primary,.secondary{border:0;border-radius:16px;padding:13px 24px;font:700 1.08rem Arial;cursor:pointer;transition:transform .15s,filter .15s}.primary{background:var(--sand);color:#583e14;box-shadow:0 4px 0 #d9aa47}.secondary{background:#e5f4f4;color:var(--navy)}button:active{transform:scale(.97)}button:focus-visible,a:focus-visible{outline:3px solid #edaa30;outline-offset:3px}.hud{display:flex;justify-content:space-between;gap:10px;font-weight:bold}.progress{height:12px;margin:13px 0 18px;border-radius:99px;background:#e8eeee;overflow:hidden}.progress span{display:block;width:0;height:100%;background:linear-gradient(90deg,#f6bd4b,#32a875);transition:width .3s}.prompt{margin:7px 0 2px;font-size:1.1rem}.target{display:inline-flex;align-items:center;justify-content:center;width:92px;height:92px;margin:12px 0 4px;border-radius:50%;background:#fff1c8;color:#ad7414;font-size:4.7rem;font-weight:bold;box-shadow:0 5px 0 #e9ca7a}.instruction{margin:6px 0 17px;color:#476a75}.objects{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.object{min-height:120px;padding:12px 6px;border:3px solid transparent;border-radius:19px;background:#f0f8f6;color:var(--navy);font:inherit;cursor:pointer;transition:.18s}.object:hover{transform:translateY(-3px);background:#e4f5f2}.object .pic{display:block;font-size:43px;line-height:1.3}.object .label{display:block;margin-top:3px;font-size:1.08rem;font-weight:bold}.object.selected{border-color:#e4ae3f;background:#fff2ce}.object.correct{border-color:var(--green);background:#e0f6e8}.object.wrong{border-color:var(--red);background:#ffe5df}.object:disabled{cursor:default}.feedback{min-height:32px;margin:12px 0 6px;font-weight:bold}.feedback.good{color:#168454}.feedback.bad{color:#b84b41}.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.round-result h2,.intro h2{margin-top:4px}.final-score{font-size:2rem;color:#bc811c}.stars{font-size:1.8rem;letter-spacing:5px;color:#e5ae32}.note{display:flex;justify-content:center;align-items:center;gap:7px;font-size:.9rem;color:#52727b;margin:14px auto 0}.note-icon{width:18px;height:18px;flex:0 0 auto;color:#218ca5}.treasure-illustration{width:min(340px,88%);margin:0 auto 2px;filter:drop-shadow(0 8px 8px #17485b22)}.treasure-illustration svg{display:block;width:100%;height:auto}.title-icon,.anchor-icon,.button-icon{display:inline-flex;vertical-align:middle;color:#218ca5}.title-icon{width:46px;height:46px;margin-inline-end:6px;transform:translateY(-2px)}.anchor-icon{width:24px;height:24px;margin-inline-start:5px}.button-icon{width:22px;height:22px;margin-inline-end:5px}.title-icon svg,.anchor-icon svg,.button-icon svg,.note-icon svg{display:block;width:100%;height:100%}.intro h1{display:flex;align-items:center;justify-content:center;gap:2px}.intro h1 span:last-child{display:inline-block}@media(min-width:700px){.scene{height:290px}.objects{grid-template-columns:repeat(6,minmax(0,1fr))}}@media(max-width:420px){.scene{height:205px}.ship{transform:translateX(-50%) scale(.82);transform-origin:bottom center}.ship.bob{animation:bobSmall 3s ease-in-out infinite}@keyframes bobSmall{50%{transform:translate(-50%,-7px) scale(.82)}}.objects{gap:8px}.object{min-height:106px}.object .pic{font-size:36px}.panel{padding:16px 12px 20px}.treasure-illustration{width:min(280px,86%)}.title-icon{width:38px;height:38px}.intro h1{font-size:clamp(1.55rem,7vw,2.1rem)}}
-</style>
-<style>
-.treasure-illustration{height:185px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 220'%3E%3Cpath d='M43 99h274v86H43z' fill='%23c88926' stroke='%235b3219' stroke-width='6'/%3E%3Cpath d='M51 101h258v70H51z' fill='%23a43f2f' stroke='%23f4c34d' stroke-width='5'/%3E%3Cpath d='M39 101c2-42 28-68 62-77 50-13 104-13 155 0 34 9 60 35 65 77z' fill='%23e4ae2f' stroke='%235b3219' stroke-width='6'/%3E%3Cpath d='M58 93c9-29 26-46 48-52 47-13 101-13 148 0 22 6 39 23 48 52z' fill='%238e3329' stroke='%23f7d15e' stroke-width='6'/%3E%3Cpath d='M101 25l-10 73M180 14v84M259 25l10 73' stroke='%23f7d15e' stroke-width='12'/%3E%3Cpath d='M43 101h274v14H43z' fill='%23f7d15e' stroke='%235b3219' stroke-width='4'/%3E%3Cpath d='M149 99h62v67h-62z' fill='%23e4ae2f' stroke='%235b3219' stroke-width='5'/%3E%3Cpath d='M155 103h50v55h-50z' fill='%23ffe477'/%3E%3Ccircle cx='180' cy='129' r='11' fill='%235b3219'/%3E%3Cpath d='M180 129v22' stroke='%235b3219' stroke-width='5'/%3E%3Cpath d='M120 76l14-17 18 7-5 20-20 5zM178 58l15-14 17 10-7 19-20 1zM234 70l16-12 16 12-9 18-20-4z' fill='%23ffcf61' stroke='%23fff2a1' stroke-width='4'/%3E%3Cpath d='M43 171h274l-7 20H50z' fill='%23e4ae2f' stroke='%235b3219' stroke-width='6'/%3E%3Ccircle cx='77' cy='54' r='7' fill='%23fff2a1'/%3E%3Ccircle cx='289' cy='46' r='6' fill='%23fff2a1'/%3E%3C/svg%3E") center/contain no-repeat}.treasure-illustration>svg{visibility:hidden}.anchor-icon svg{display:none}.anchor-icon:after{content:"✦";font-size:1.35rem;color:#d29a25}.hidden .anchor-icon:after{display:none}@media(max-width:420px){.treasure-illustration{height:150px}}
-</style>
-</head>
-<body>
-<main class="page">
-<div class="topbar"><a href="./index.html">↩ ألعاب الحروف</a><button class="sound" id="soundButton" type="button" aria-pressed="true">🔊 الصوت</button></div>
-<section class="panel intro" id="startScreen"><div class="treasure-illustration" role="img" aria-label="خريطة كنز وصندوق مليء بالجواهر"><svg viewBox="0 0 360 170" role="img" aria-labelledby="treasureTitle treasureDesc"><title id="treasureTitle">خريطة الكنز</title><desc id="treasureDesc">خريطة بحرية تقود إلى صندوق كنز مفتوح</desc><defs><linearGradient id="mapPaper" x1="0" x2="1"><stop stop-color="#fff5c9"/><stop offset="1" stop-color="#f2d783"/></linearGradient><linearGradient id="chestWood" x1="0" x2="1"><stop stop-color="#a96c35"/><stop offset="1" stop-color="#72401f"/></linearGradient><linearGradient id="gold" x1="0" x2="1"><stop stop-color="#ffe477"/><stop offset="1" stop-color="#e7a52f"/></linearGradient></defs><path d="M25 42c34-25 68-29 104-9 31-20 66-19 98 4 35-20 72-15 108 12l-8 91H34z" fill="#6fc0d0" opacity=".8"/><path d="M33 53c28-16 58-19 87-3 31-19 63-17 91 5 31-16 65-10 103 11l-3 68H39z" fill="url(#mapPaper)" stroke="#d1a950" stroke-width="4" stroke-linejoin="round"/><path d="M62 112c27-18 46-13 65-27 21-16 39-12 54 2 17 15 36 15 62 3 19-9 34-7 54 8" fill="none" stroke="#b57b2c" stroke-width="4" stroke-linecap="round" stroke-dasharray="7 7"/><path d="M244 77l6 13 14 2-10 10 3 14-13-7-13 7 3-14-10-10 14-2z" fill="#df655a"/><path d="M125 124c0-17 15-30 34-30s34 13 34 30v28h-68z" fill="url(#chestWood)" stroke="#5b321b" stroke-width="4"/><path d="M119 126c0-27 18-43 40-43s40 16 40 43z" fill="#c58640" stroke="#5b321b" stroke-width="4"/><path d="M123 125h72v9h-72z" fill="#f3c34e" stroke="#85501f" stroke-width="3"/><rect x="151" y="122" width="17" height="18" rx="3" fill="url(#gold)" stroke="#85501f" stroke-width="3"/><circle cx="142" cy="99" r="8" fill="#5ed5ca"/><circle cx="161" cy="91" r="9" fill="#ffcf61"/><circle cx="181" cy="101" r="8" fill="#b88cff"/><path d="M226 48l4 9 10 1-7 7 2 10-9-5-9 5 2-10-7-7 10-1zM93 38l4 9 10 1-7 7 2 10-9-5-9 5 2-10-7-7 10-1z" fill="#fff5b0"/></svg></div><h1><span class="title-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M7 16h34v25H7z" fill="#9b5b2c" stroke="#63391f" stroke-width="3"/><path d="M5 17C5 8 13 4 24 4s19 4 19 13z" fill="#c17a36" stroke="#63391f" stroke-width="3"/><path d="M7 25h34" stroke="#f4c34d" stroke-width="4"/><rect x="20" y="22" width="8" height="10" rx="2" fill="#ffe17a" stroke="#63391f" stroke-width="2"/><circle cx="15" cy="13" r="4" fill="#5ed5ca"/><circle cx="24" cy="9" r="5" fill="#ffcf61"/><circle cx="33" cy="13" r="4" fill="#b88cff"/></svg></span><span>كنز الحرف المفقود</span></h1><p>ساعد القراصنة في العثور على الكنز! ستظهر لك حروف عربية عشوائية. اختر كل الأشياء التي يحتوي اسمها على الحرف المطلوب.</p><p><span class="anchor-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v14M8 7h8M5 17c1 3 4 4 7 4s6-1 7-4M12 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>خمس جولات مليئة بالمغامرة — هل أنت مستعد؟</p><button class="primary" id="startButton" type="button"><span class="button-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z" fill="#fff5c9" stroke="#8d6320" stroke-width="1.5"/><path d="M7 17c3-4 5-6 10-8" fill="none" stroke="#218ca5" stroke-width="1.5" stroke-linecap="round"/><path d="M15 7l2 2-2 2" fill="none" stroke="#df655a" stroke-width="1.5" stroke-linecap="round"/></svg></span>ابدأ المغامرة</button></section>
-<section class="panel hidden" id="gameScreen" aria-live="polite"><div class="hud"><span id="score">⭐ النقاط: 0</span><span id="round">الجولة 1 / 5</span></div><div class="progress"><span id="progressBar"></span></div><p class="prompt">ابحث عن الأشياء التي تحتوي أسماؤها على الحرف:</p><div class="target" id="targetLetter" aria-label="الحرف المطلوب"></div><p class="instruction" id="instruction">اضغط على كل الإجابات الصحيحة، ثم اختر «تأكيد».</p><div class="objects" id="objects"></div><p class="feedback" id="feedback" role="status"></p><div class="actions"><button class="primary" id="submitButton" type="button">تأكيد الاختيار ✓</button></div></section>
-<section class="panel hidden round-result" id="endScreen" aria-live="polite"><div class="stars" aria-hidden="true">🏆 ✨ 🏆</div><h2>انتهت المغامرة!</h2><p class="final-score" id="finalScore"></p><p id="finalMessage"></p><button class="primary" id="againButton" type="button">مغامرة جديدة 🔄</button></section>
-<p class="note"><span class="note-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 10v6M12 7h.01" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></span>الرسومات مدمجة داخل اللعبة — لا حاجة إلى تنزيل صور.</p>
-</main>
-<script>
-const roundsCount = 5;
-const things = [
-  {name:"أسد", emoji:"🦁"},{name:"أرنب", emoji:"🐇"},{name:"إبريق", emoji:"🫖"},
-  {name:"باب", emoji:"🚪"},{name:"بطة", emoji:"🦆"},{name:"بئر", emoji:"🪣"},
-  {name:"تفاحة", emoji:"🍎"},{name:"تاج", emoji:"👑"},{name:"ثعلب", emoji:"🦊"},{name:"ثوب", emoji:"👘"},
-  {name:"جمل", emoji:"🐪"},{name:"جزر", emoji:"🥕"},{name:"حوت", emoji:"🐳"},{name:"حليب", emoji:"🥛"},
-  {name:"خبز", emoji:"🍞"},{name:"خروف", emoji:"🐑"},{name:"دجاجة", emoji:"🐔"},{name:"دلو", emoji:"🪣"},
-  {name:"ذرة", emoji:"🌽"},{name:"ذئب", emoji:"🐺"},{name:"رمان", emoji:"🍎"},{name:"ريشة", emoji:"🪶"},
-  {name:"زيتون", emoji:"🫒"},{name:"زرافة", emoji:"🦒"},{name:"سمكة", emoji:"🐟"},{name:"ساعة", emoji:"⌚"},
-  {name:"شمس", emoji:"☀️"},{name:"سيارة", emoji:"🚗"},{name:"صقر", emoji:"🦅"},{name:"صندوق", emoji:"📦"},
-  {name:"ضفدع", emoji:"🐸"},{name:"ضرس", emoji:"🦷"},{name:"طائرة", emoji:"✈️"},{name:"طبل", emoji:"🥁"},
-  {name:"ظبي", emoji:"🦌"},{name:"ظرف", emoji:"✉️"},{name:"عنب", emoji:"🍇"},{name:"عصفور", emoji:"🐦"},
-  {name:"غيمة", emoji:"☁️"},{name:"غراب", emoji:"🐦‍⬛"},{name:"فلفل", emoji:"🫑"},{name:"فراشة", emoji:"🦋"},
-  {name:"قمر", emoji:"🌙"},{name:"قلم", emoji:"✏️"},{name:"كتاب", emoji:"📚"},{name:"كرسي", emoji:"🪑"},
-  {name:"ليمون", emoji:"🍋"},{name:"لؤلؤ", emoji:"🦪"},{name:"موز", emoji:"🍌"},{name:"منزل", emoji:"🏠"},
-  {name:"نجمة", emoji:"⭐"},{name:"نمر", emoji:"🐅"},{name:"هلال", emoji:"🌙"},{name:"هدية", emoji:"🎁"},
-  {name:"وردة", emoji:"🌹"},{name:"وجه", emoji:"😊"},{name:"يد", emoji:"✋"},{name:"يخت", emoji:"🛥️"}
-];
-const letters = [...new Set(things.flatMap(thing => [...thing.name]))].filter(letter => things.some(thing => thing.name.includes(letter)));
-const $ = id => document.getElementById(id);
-let rounds = [], roundIndex = 0, score = 0, soundEnabled = true, locked = false;
-function shuffle(items){const copy=[...items];for(let i=copy.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[copy[i],copy[j]]=[copy[j],copy[i]]}return copy}
-let arabicVoice = null;
-function findArabicVoice(){if(!("speechSynthesis" in window))return;const voices=speechSynthesis.getVoices();arabicVoice=voices.find(voice=>voice.lang==="ar-SA")||voices.find(voice=>voice.lang==="ar-EG")||voices.find(voice=>voice.lang.startsWith("ar"))||null}
-if("speechSynthesis" in window){speechSynthesis.onvoiceschanged=findArabicVoice;setTimeout(findArabicVoice,500)}
-function unlockSpeech(){if(soundEnabled&&"speechSynthesis" in window)speechSynthesis.speak(new SpeechSynthesisUtterance(""))}
-function speak(text){if(!soundEnabled||!("speechSynthesis" in window))return;speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.rate=.9;utterance.pitch=1;if(arabicVoice){utterance.voice=arabicVoice;utterance.lang=arabicVoice.lang}else utterance.lang="ar";speechSynthesis.speak(utterance)}
-function startGame(){if("speechSynthesis" in window)speechSynthesis.cancel();rounds=shuffle(letters).slice(0,roundsCount).map(letter=>{const matches=shuffle(things.filter(thing=>thing.name.includes(letter))).slice(0,3);const misses=shuffle(things.filter(thing=>!thing.name.includes(letter))).slice(0,6-matches.length);return {letter,correct:matches.map(thing=>thing.name),choices:shuffle([...matches,...misses])}});roundIndex=0;score=0;$("startScreen").classList.add("hidden");$("endScreen").classList.add("hidden");$("gameScreen").classList.remove("hidden");unlockSpeech();showRound()}
-function showRound(){locked=false;const current=rounds[roundIndex];$("score").textContent=`⭐ النقاط: ${score}`;$("round").textContent=`الجولة ${roundIndex+1} / ${roundsCount}`;$("progressBar").style.width=`${roundIndex/roundsCount*100}%`;$("targetLetter").textContent=current.letter;$("targetLetter").setAttribute("aria-label",`الحرف ${current.letter}`);$("feedback").textContent="";$("feedback").className="feedback";$("instruction").textContent="اضغط على كل الإجابات الصحيحة، ثم اختر «تأكيد».";const grid=$("objects");grid.innerHTML="";current.choices.forEach(thing=>{const button=document.createElement("button");button.type="button";button.className="object";button.setAttribute("aria-pressed","false");button.setAttribute("aria-label",thing.name);button.innerHTML=`<span class="pic" aria-hidden="true">${thing.emoji}</span><span class="label">${thing.name}</span>`;button.addEventListener("click",()=>{if(locked)return;button.classList.toggle("selected");button.setAttribute("aria-pressed",String(button.classList.contains("selected")))});grid.appendChild(button)});speak(`ابحث عن الأشياء التي تحتوي على حرف ${current.letter}`)}
-function submitRound(){if(locked)return;const current=rounds[roundIndex],buttons=[...$("objects").querySelectorAll(".object")],selected=buttons.filter(button=>button.classList.contains("selected"));if(!selected.length){$("feedback").textContent="اختر شيئاً واحداً على الأقل!";$("feedback").className="feedback bad";return}locked=true;let roundPoints=0;buttons.forEach(button=>{const isCorrect=current.correct.includes(button.getAttribute("aria-label"));const wasSelected=button.classList.contains("selected");if(isCorrect){button.classList.add("correct");if(wasSelected)roundPoints++}else if(wasSelected){button.classList.add("wrong")}});score+=roundPoints;$("score").textContent=`⭐ النقاط: ${score}`;const perfect=roundPoints===current.correct.length&&selected.length===current.correct.length;$("feedback").textContent=perfect?"أحسنت! وجدت كل الكنوز الصحيحة! 🎉":`وجدت ${roundPoints} من ${current.correct.length} كنوز. الأخضر هو الجواب الصحيح!`;$("feedback").className=`feedback ${roundPoints?"good":"bad"}`;$("instruction").textContent="";speak(perfect?"أحسنت! إجابة صحيحة":"حاول مرة أخرى في الجولة التالية");$("progressBar").style.width=`${(roundIndex+1)/roundsCount*100}%`;setTimeout(()=>{roundIndex++;if(roundIndex<roundsCount)showRound();else finishGame()},1500)}
-function finishGame(){const maximumScore=rounds.reduce((total,round)=>total+round.correct.length,0);$("gameScreen").classList.add("hidden");$("endScreen").classList.remove("hidden");$("finalScore").textContent=`${score} / ${maximumScore} ⭐`;$("finalMessage").textContent=score>=maximumScore*.8?"يا لك من مكتشف ذكي! لقد وجدت كنوز الحروف! ✨":"أحسنت المحاولة! جرّب جولة جديدة للعثور على كنوز أكثر. 💎"}
-$("startButton").addEventListener("click",startGame);$("submitButton").addEventListener("click",submitRound);$("againButton").addEventListener("click",startGame);$("soundButton").addEventListener("click",()=>{soundEnabled=!soundEnabled;$("soundButton").textContent=soundEnabled?"🔊 الصوت":"🔇 الصوت";$("soundButton").setAttribute("aria-pressed",String(soundEnabled));if(!soundEnabled&&"speechSynthesis" in window)window.speechSynthesis.cancel()});
-</script>
-<script>
-const introParagraphs = document.querySelectorAll("#startScreen p");
-document.querySelector(".treasure-illustration").setAttribute("aria-label", "صندوق كنز ذهبي مفتوح مليء بالجواهر");
-introParagraphs[0].textContent = "ساعد في العثور على الكنز! ستظهر لك حروف عربية عشوائية. اختر كل الأشياء التي يحتوي اسمها على الحرف المطلوب.";
-introParagraphs[1].lastChild.textContent = "خمس جولات مليئة بالكنوز — هل أنت مستعد؟";
-const treasureLetterNames = Object.freeze({
-  ا: "الألف", أ: "الألف", إ: "الألف", آ: "الألف", ب: "الباء", ت: "التاء", ث: "الثاء",
-  ج: "الجيم", ح: "الحاء", خ: "الخاء", د: "الدال", ذ: "الذال", ر: "الراء", ز: "الزاي",
-  س: "السين", ش: "الشين", ص: "الصاد", ض: "الضاد", ط: "الطاء", ظ: "الظاء", ع: "العين",
-  غ: "الغين", ف: "الفاء", ق: "القاف", ك: "الكاف", ل: "اللام", م: "الميم", ن: "النون",
-  ه: "الهاء", و: "الواو", ي: "الياء", ة: "التاء المربوطة", ى: "الألف المقصورة"
-});
-const originalTreasureSpeak = speak;
-speak = text => {
-    const match = text.match(/^ابحث عن الأشياء التي تحتوي على حرف (.)$/);
-    if (!match) {
-        originalTreasureSpeak(text);
-        return;
-    }
-    const letterName = treasureLetterNames[match[1]] || `حرف ${match[1]}`;
-    originalTreasureSpeak(`الحرف المطلوب هو ${letterName}. ابحث عن الأشياء التي تحتوي على ${letterName}`);
-};
-</script>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#8ed7e4">
+    <title>
+      كنز الحرف المفقود
+    </title>
+    <style>
+      :root{--navy:#173e50;--sea:#7fcbdc;--deep:#218ca5;--sand:#ffdc83;--paper:#fffdf5;--green:#32a875;--red:#df655a}*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial,sans-serif;color:var(--navy);background:linear-gradient(#d9f3f5 0 38%,#8bd3df 38% 100%);user-select:none}.page{width:min(1000px,96%);margin:auto;padding:15px 0 28px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 8px 10px}.topbar a,.sound{border:0;border-radius:999px;padding:10px 15px;background:#ffffffd9;color:var(--navy);font-weight:bold;text-decoration:none;cursor:pointer}.scene{height:250px;position:relative;overflow:hidden;border-radius:22px;background:linear-gradient(#bceaf0 0 47%,#6fc0d0 47% 100%);box-shadow:inset 0 -12px 0 #ffffff25}.sun{position:absolute;top:24px;left:8%;font-size:42px}.cloud{position:absolute;top:36px;right:13%;font-size:42px}.wave{position:absolute;left:-4%;right:-4%;bottom:21px;height:53px;border-radius:50% 50% 0 0;background:#ffffff35}.ship{position:absolute;left:50%;bottom:29px;transform:translateX(-50%);width:260px;height:190px}.ship svg{width:100%;height:100%;overflow:visible}.ship.bob{animation:bob 3s ease-in-out infinite}@keyframes bob{50%{transform:translate(-50%,-9px) rotate(1deg)}}.island{position:absolute;bottom:15px;right:5%;font-size:46px}.island.left{left:5%;right:auto}.panel{margin-top:14px;padding:20px clamp(14px,4vw,36px) 25px;background:#ffffffec;border:1px solid #fff;border-radius:24px;box-shadow:0 12px 30px #17485b18;text-align:center}.hidden{display:none!important}.intro h1{margin:5px 0;font-size:clamp(1.7rem,5vw,2.4rem)}.intro p{line-height:1.7;color:#52727b}.primary,.secondary{border:0;border-radius:16px;padding:13px 24px;font:700 1.08rem Arial;cursor:pointer;transition:transform .15s,filter .15s}.primary{background:var(--sand);color:#583e14;box-shadow:0 4px 0 #d9aa47}.secondary{background:#e5f4f4;color:var(--navy)}button:active{transform:scale(.97)}button:focus-visible,a:focus-visible{outline:3px solid #edaa30;outline-offset:3px}.hud{display:flex;justify-content:space-between;gap:10px;font-weight:bold}.progress{height:12px;margin:13px 0 18px;border-radius:99px;background:#e8eeee;overflow:hidden}.progress span{display:block;width:0;height:100%;background:linear-gradient(90deg,#f6bd4b,#32a875);transition:width .3s}.prompt{margin:7px 0 2px;font-size:1.1rem}.target{display:inline-flex;align-items:center;justify-content:center;width:92px;height:92px;margin:12px 0 4px;border-radius:50%;background:#fff1c8;color:#ad7414;font-size:4.7rem;font-weight:bold;box-shadow:0 5px 0 #e9ca7a}.instruction{margin:6px 0 17px;color:#476a75}.objects{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.object{min-height:120px;padding:12px 6px;border:3px solid transparent;border-radius:19px;background:#f0f8f6;color:var(--navy);font:inherit;cursor:pointer;transition:.18s}.object:hover{transform:translateY(-3px);background:#e4f5f2}.object .pic{display:block;font-size:43px;line-height:1.3}.object .label{display:block;margin-top:3px;font-size:1.08rem;font-weight:bold}.object.selected{border-color:#e4ae3f;background:#fff2ce}.object.correct{border-color:var(--green);background:#e0f6e8}.object.wrong{border-color:var(--red);background:#ffe5df}.object:disabled{cursor:default}.feedback{min-height:32px;margin:12px 0 6px;font-weight:bold}.feedback.good{color:#168454}.feedback.bad{color:#b84b41}.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.round-result h2,.intro h2{margin-top:4px}.final-score{font-size:2rem;color:#bc811c}.stars{font-size:1.8rem;letter-spacing:5px;color:#e5ae32}.note{display:flex;justify-content:center;align-items:center;gap:7px;font-size:.9rem;color:#52727b;margin:14px auto 0}.note-icon{width:18px;height:18px;flex:0 0 auto;color:#218ca5}.treasure-illustration{width:min(340px,88%);margin:0 auto 2px;filter:drop-shadow(0 8px 8px #17485b22)}.treasure-illustration svg{display:block;width:100%;height:auto}.title-icon,.anchor-icon,.button-icon{display:inline-flex;vertical-align:middle;color:#218ca5}.title-icon{width:46px;height:46px;margin-inline-end:6px;transform:translateY(-2px)}.anchor-icon{width:24px;height:24px;margin-inline-start:5px}.button-icon{width:22px;height:22px;margin-inline-end:5px}.title-icon svg,.anchor-icon svg,.button-icon svg,.note-icon svg{display:block;width:100%;height:100%}.intro h1{display:flex;align-items:center;justify-content:center;gap:2px}.intro h1 span:last-child{display:inline-block}@media(min-width:700px){.scene{height:290px}.objects{grid-template-columns:repeat(6,minmax(0,1fr))}}@media(max-width:420px){.scene{height:205px}.ship{transform:translateX(-50%) scale(.82);transform-origin:bottom center}.ship.bob{animation:bobSmall 3s ease-in-out infinite}@keyframes bobSmall{50%{transform:translate(-50%,-7px) scale(.82)}}.objects{gap:8px}.object{min-height:106px}.object .pic{font-size:36px}.panel{padding:16px 12px 20px}.treasure-illustration{width:min(280px,86%)}.title-icon{width:38px;height:38px}.intro h1{font-size:clamp(1.55rem,7vw,2.1rem)}}
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="topbar">
+        <a href="./index.html">
+          ↩ ألعاب الحروف
+        </a>
+        <button class="sound" id="soundButton" type="button" aria-pressed="true">
+          🔊 الصوت
+        </button>
+      </div>
+      <section class="panel intro" id="startScreen">
+        <div class="treasure-illustration" role="img" aria-label="خريطة كنز وصندوق مليء بالجواهر">
+          <svg viewBox="0 0 360 170" role="img" aria-labelledby="treasureTitle treasureDesc">
+            <title id="treasureTitle">
+              خريطة الكنز
+            </title>
+            <desc id="treasureDesc">
+              خريطة بحرية تقود إلى صندوق كنز مفتوح
+            </desc>
+            <defs>
+              <linearGradient id="mapPaper" x1="0" x2="1">
+                <stop stop-color="#fff5c9"/>
+                <stop offset="1" stop-color="#f2d783"/>
+              </linearGradient>
+              <linearGradient id="chestWood" x1="0" x2="1">
+                <stop stop-color="#a96c35"/>
+                <stop offset="1" stop-color="#72401f"/>
+              </linearGradient>
+              <linearGradient id="gold" x1="0" x2="1">
+                <stop stop-color="#ffe477"/>
+                <stop offset="1" stop-color="#e7a52f"/>
+              </linearGradient>
+            </defs>
+            <path d="M25 42c34-25 68-29 104-9 31-20 66-19 98 4 35-20 72-15 108 12l-8 91H34z" fill="#6fc0d0" opacity=".8"/>
+            <path d="M33 53c28-16 58-19 87-3 31-19 63-17 91 5 31-16 65-10 103 11l-3 68H39z" fill="url(#mapPaper)" stroke="#d1a950" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M62 112c27-18 46-13 65-27 21-16 39-12 54 2 17 15 36 15 62 3 19-9 34-7 54 8" fill="none" stroke="#b57b2c" stroke-width="4" stroke-linecap="round" stroke-dasharray="7 7"/>
+            <path d="M244 77l6 13 14 2-10 10 3 14-13-7-13 7 3-14-10-10 14-2z" fill="#df655a"/>
+            <path d="M125 124c0-17 15-30 34-30s34 13 34 30v28h-68z" fill="url(#chestWood)" stroke="#5b321b" stroke-width="4"/>
+            <path d="M119 126c0-27 18-43 40-43s40 16 40 43z" fill="#c58640" stroke="#5b321b" stroke-width="4"/>
+            <path d="M123 125h72v9h-72z" fill="#f3c34e" stroke="#85501f" stroke-width="3"/>
+            <rect x="151" y="122" width="17" height="18" rx="3" fill="url(#gold)" stroke="#85501f" stroke-width="3"/>
+            <circle cx="142" cy="99" r="8" fill="#5ed5ca"/>
+            <circle cx="161" cy="91" r="9" fill="#ffcf61"/>
+            <circle cx="181" cy="101" r="8" fill="#b88cff"/>
+            <path d="M226 48l4 9 10 1-7 7 2 10-9-5-9 5 2-10-7-7 10-1zM93 38l4 9 10 1-7 7 2 10-9-5-9 5 2-10-7-7 10-1z" fill="#fff5b0"/>
+          </svg>
+        </div>
+        <h1>
+          <span class="title-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48">
+              <path d="M7 16h34v25H7z" fill="#9b5b2c" stroke="#63391f" stroke-width="3"/>
+              <path d="M5 17C5 8 13 4 24 4s19 4 19 13z" fill="#c17a36" stroke="#63391f" stroke-width="3"/>
+              <path d="M7 25h34" stroke="#f4c34d" stroke-width="4"/>
+              <rect x="20" y="22" width="8" height="10" rx="2" fill="#ffe17a" stroke="#63391f" stroke-width="2"/>
+              <circle cx="15" cy="13" r="4" fill="#5ed5ca"/>
+              <circle cx="24" cy="9" r="5" fill="#ffcf61"/>
+              <circle cx="33" cy="13" r="4" fill="#b88cff"/>
+            </svg>
+          </span>
+          <span>
+            كنز الحرف المفقود
+          </span>
+        </h1>
+        <p>
+          ساعد القراصنة في العثور على الكنز! ستظهر لك حروف عربية عشوائية. اختر كل الكلمات التي تحتوي على الحرف المطلوب.
+        </p>
+        <p>
+          <span class="anchor-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 3v14M8 7h8M5 17c1 3 4 4 7 4s6-1 7-4M12 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </span>
+          خمس جولات مليئة بالمغامرة — هل أنت مستعد؟
+        </p>
+        <button class="primary" id="startButton" type="button">
+          <span class="button-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 4h16v16H4z" fill="#fff5c9" stroke="#8d6320" stroke-width="1.5"/>
+              <path d="M7 17c3-4 5-6 10-8" fill="none" stroke="#218ca5" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M15 7l2 2-2 2" fill="none" stroke="#df655a" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </span>
+          ابدأ المغامرة
+        </button>
+      </section>
+      <section class="panel hidden" id="gameScreen" aria-live="polite">
+        <div class="hud">
+          <span id="score">
+            ⭐ النقاط: 0
+          </span>
+          <span id="round">
+            الجولة 1 / 5
+          </span>
+        </div>
+        <div class="progress">
+          <span id="progressBar">
+          </span>
+        </div>
+        <p class="prompt">
+          ابحث عن الكلمات التي تحتوي على حرف:
+        </p>
+        <div class="target" id="targetLetter" aria-label="الحرف المطلوب">
+        </div>
+        <p class="instruction" id="instruction">
+          اضغط على كل الإجابات الصحيحة، ثم اختر «تأكيد».
+        </p>
+        <div class="objects" id="objects">
+        </div>
+        <p class="feedback" id="feedback" role="status">
+        </p>
+        <div class="actions">
+          <button class="primary" id="submitButton" type="button">
+            تأكيد الاختيار ✓
+          </button>
+        </div>
+      </section>
+      <section class="panel hidden round-result" id="endScreen" aria-live="polite">
+        <div class="stars" aria-hidden="true">
+          🏆 ✨ 🏆
+        </div>
+        <h2>
+          انتهت المغامرة!
+        </h2>
+        <p class="final-score" id="finalScore">
+        </p>
+        <p id="finalMessage">
+        </p>
+        <button class="primary" id="againButton" type="button">
+          مغامرة جديدة 🔄
+        </button>
+      </section>
+      <p class="note">
+        <span class="note-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 10v6M12 7h.01" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+        الرسومات مدمجة داخل اللعبة — لا حاجة إلى تنزيل صور.
+      </p>
+    </main>
+    <script>
+      const roundsCount = 5;
+      const things = [
+      {name:"أسد", emoji:"🦁"},{name:"أرنب", emoji:"🐇"},{name:"إبريق", emoji:"🫖"},
+      {name:"باب", emoji:"🚪"},{name:"بطة", emoji:"🦆"},{name:"بئر", emoji:"🪣"},
+      {name:"تفاحة", emoji:"🍎"},{name:"تاج", emoji:"👑"},{name:"ثعلب", emoji:"🦊"},{name:"ثوب", emoji:"👘"},
+      {name:"جمل", emoji:"🐪"},{name:"جزر", emoji:"🥕"},{name:"حوت", emoji:"🐳"},{name:"حليب", emoji:"🥛"},
+      {name:"خبز", emoji:"🍞"},{name:"خروف", emoji:"🐑"},{name:"دجاجة", emoji:"🐔"},{name:"دلو", emoji:"🪣"},
+      {name:"ذرة", emoji:"🌽"},{name:"ذئب", emoji:"🐺"},{name:"رمان", emoji:"🍎"},{name:"ريشة", emoji:"🪶"},
+      {name:"زيتون", emoji:"🫒"},{name:"زرافة", emoji:"🦒"},{name:"سمكة", emoji:"🐟"},{name:"ساعة", emoji:"⌚"},
+      {name:"شمس", emoji:"☀️"},{name:"سيارة", emoji:"🚗"},{name:"صقر", emoji:"🦅"},{name:"صندوق", emoji:"📦"},
+      {name:"ضفدع", emoji:"🐸"},{name:"ضرس", emoji:"🦷"},{name:"طائرة", emoji:"✈️"},{name:"طبل", emoji:"🥁"},
+      {name:"ظبي", emoji:"🦌"},{name:"ظرف", emoji:"✉️"},{name:"عنب", emoji:"🍇"},{name:"عصفور", emoji:"🐦"},
+      {name:"غيمة", emoji:"☁️"},{name:"غراب", emoji:"🐦‍⬛"},{name:"فلفل", emoji:"🫑"},{name:"فراشة", emoji:"🦋"},
+      {name:"قمر", emoji:"🌙"},{name:"قلم", emoji:"✏️"},{name:"كتاب", emoji:"📚"},{name:"كرسي", emoji:"🪑"},
+      {name:"ليمون", emoji:"🍋"},{name:"لؤلؤ", emoji:"🦪"},{name:"موز", emoji:"🍌"},{name:"منزل", emoji:"🏠"},
+      {name:"نجمة", emoji:"⭐"},{name:"نمر", emoji:"🐅"},{name:"هلال", emoji:"🌙"},{name:"هدية", emoji:"🎁"},
+      {name:"وردة", emoji:"🌹"},{name:"وجه", emoji:"😊"},{name:"يد", emoji:"✋"},{name:"يخت", emoji:"🛥️"}
+      ];
+      const letters = [...new Set(things.flatMap(thing => [...thing.name]))].filter(letter => things.some(thing => thing.name.includes(letter)));
+      const $ = id => document.getElementById(id);
+      let rounds = [], roundIndex = 0, score = 0, soundEnabled = true, locked = false;
+      function shuffle(items){const copy=[...items];for(let i=copy.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[copy[i],copy[j]]=[copy[j],copy[i]]}return copy}
+      let arabicVoice = null;
+      function findArabicVoice(){if(!("speechSynthesis" in window))return;const voices=speechSynthesis.getVoices();arabicVoice=voices.find(voice=>voice.lang==="ar-SA")||voices.find(voice=>voice.lang==="ar-EG")||voices.find(voice=>voice.lang.startsWith("ar"))||null}
+      if("speechSynthesis" in window){speechSynthesis.onvoiceschanged=findArabicVoice;setTimeout(findArabicVoice,500)}
+      function unlockSpeech(){if(soundEnabled&&"speechSynthesis" in window)speechSynthesis.speak(new SpeechSynthesisUtterance(""))}
+      function speak(text){if(!soundEnabled||!("speechSynthesis" in window))return;speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.rate=.9;utterance.pitch=1;if(arabicVoice){utterance.voice=arabicVoice;utterance.lang=arabicVoice.lang}else utterance.lang="ar";speechSynthesis.speak(utterance)}
+      function startGame(){if("speechSynthesis" in window)speechSynthesis.cancel();rounds=shuffle(letters).slice(0,roundsCount).map(letter=>{const matches=shuffle(things.filter(thing=>thing.name.includes(letter))).slice(0,3);const misses=shuffle(things.filter(thing=>!thing.name.includes(letter))).slice(0,6-matches.length);return {letter,correct:matches.map(thing=>thing.name),choices:shuffle([...matches,...misses])}});roundIndex=0;score=0;$("startScreen").classList.add("hidden");$("endScreen").classList.add("hidden");$("gameScreen").classList.remove("hidden");unlockSpeech();showRound()}
+      function showRound(){locked=false;const current=rounds[roundIndex];$("score").textContent=`⭐ النقاط: ${score}`;$("round").textContent=`الجولة ${roundIndex+1} / ${roundsCount}`;$("progressBar").style.width=`${roundIndex/roundsCount*100}%`;$("targetLetter").textContent=current.letter;$("targetLetter").setAttribute("aria-label",`الحرف ${current.letter}`);$("feedback").textContent="";$("feedback").className="feedback";$("instruction").textContent="اضغط على كل الإجابات الصحيحة، ثم اختر «تأكيد».";const grid=$("objects");grid.innerHTML="";current.choices.forEach(thing=>{const button=document.createElement("button");button.type="button";button.className="object";button.setAttribute("aria-pressed","false");button.setAttribute("aria-label",thing.name);button.innerHTML=`<span class="pic" aria-hidden="true">${thing.emoji}</span><span class="label">${thing.name}</span>`;button.addEventListener("click",()=>{if(locked)return;button.classList.toggle("selected");button.setAttribute("aria-pressed",String(button.classList.contains("selected")))});grid.appendChild(button)});speak(`ابحث عن الكلمات التي تحتوي على حرف ${current.letter}`)}
+      function submitRound(){if(locked)return;const current=rounds[roundIndex],buttons=[...$("objects").querySelectorAll(".object")],selected=buttons.filter(button=>button.classList.contains("selected"));if(!selected.length){$("feedback").textContent="اختر شيئاً واحداً على الأقل!";$("feedback").className="feedback bad";return}locked=true;let roundPoints=0;buttons.forEach(button=>{const isCorrect=current.correct.includes(button.getAttribute("aria-label"));const wasSelected=button.classList.contains("selected");if(isCorrect){button.classList.add("correct");if(wasSelected)roundPoints++}else if(wasSelected){button.classList.add("wrong")}});score+=roundPoints;$("score").textContent=`⭐ النقاط: ${score}`;const perfect=roundPoints===current.correct.length&&selected.length===current.correct.length;$("feedback").textContent=perfect?"أحسنت! وجدت كل الكنوز الصحيحة! 🎉":`وجدت ${roundPoints} من ${current.correct.length} كنوز. الأخضر هو الجواب الصحيح!`;$("feedback").className=`feedback ${roundPoints?"good":"bad"}`;$("instruction").textContent="";speak(perfect?"أحسنت! إجابة صحيحة":"حاول مرة أخرى في الجولة التالية");$("progressBar").style.width=`${(roundIndex+1)/roundsCount*100}%`;setTimeout(()=>{roundIndex++;if(roundIndex<roundsCount)showRound();else finishGame()},1500)}
+      function finishGame(){const maximumScore=rounds.reduce((total,round)=>total+round.correct.length,0);$("gameScreen").classList.add("hidden");$("endScreen").classList.remove("hidden");$("finalScore").textContent=`${score} / ${maximumScore} ⭐`;$("finalMessage").textContent=score>=maximumScore*.8?"يا لك من مكتشف ذكي! لقد وجدت كنوز الحروف! ✨":"أحسنت المحاولة! جرّب جولة جديدة للعثور على كنوز أكثر. 💎"}
+      $("startButton").addEventListener("click",startGame);$("submitButton").addEventListener("click",submitRound);$("againButton").addEventListener("click",startGame);$("soundButton").addEventListener("click",()=>{soundEnabled=!soundEnabled;$("soundButton").textContent=soundEnabled?"🔊 الصوت":"🔇 الصوت";$("soundButton").setAttribute("aria-pressed",String(soundEnabled));if(!soundEnabled&&"speechSynthesis" in window)window.speechSynthesis.cancel()});
+    </script>
+    <script>
+      const introParagraphs = document.querySelectorAll("#startScreen p");
+      document.querySelector(".treasure-illustration").setAttribute("aria-label", "صندوق كنز ذهبي مفتوح مليء بالجواهر");
+      introParagraphs[0].textContent = "ساعد في العثور على الكنز! ستظهر لك حروف عربية عشوائية. اختر كل الكلمات التي تحتوي على الحرف المطلوب.";
+      introParagraphs[1].lastChild.textContent = "خمس جولات مليئة بالكنوز — هل أنت مستعد؟";
+      const treasureLetterNames = Object.freeze({
+        ا: "الألف", أ: "الألف", إ: "الألف", آ: "الألف", ب: "الباء", ت: "التاء", ث: "الثاء",
+        ج: "الجيم", ح: "الحاء", خ: "الخاء", د: "الدال", ذ: "الذال", ر: "الراء", ز: "الزاي",
+        س: "السين", ش: "الشين", ص: "الصاد", ض: "الضاد", ط: "الطاء", ظ: "الظاء", ع: "العين",
+        غ: "الغين", ف: "الفاء", ق: "القاف", ك: "الكاف", ل: "اللام", م: "الميم", ن: "النون",
+        ه: "الهاء", و: "الواو", ي: "الياء", ة: "التاء المربوطة", ى: "الألف المقصورة"
+      });
+      const originalTreasureSpeak = speak;
+      function speakTreasureQuestion() {
+        if (!rounds.length) return;
+        const letter = rounds[roundIndex].letter;
+        const letterName = treasureLetterNames[letter] || `حرف ${letter}`;
+        originalTreasureSpeak(`ابحث عن الكلمات التي تحتوي على حرف ${letterName}`);
+      }
+      speak = text => {
+        const match = text.match(/^ابحث عن الكلمات التي تحتوي على حرف (.)$/);
+        if (!match) {
+          originalTreasureSpeak(text);
+          return;
+        }
+        speakTreasureQuestion();
+      };
+      const repeatQuestionButton = document.createElement("button");
+      repeatQuestionButton.type = "button";
+      repeatQuestionButton.className = "secondary";
+      repeatQuestionButton.textContent = "🔊 أعد السؤال";
+      repeatQuestionButton.setAttribute("aria-label", "إعادة سماع السؤال");
+      repeatQuestionButton.addEventListener("click", speakTreasureQuestion);
+      $("gameScreen").querySelector(".actions").prepend(repeatQuestionButton);
+    </script>
+  </body>
 </html>
