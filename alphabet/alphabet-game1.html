@@ -213,7 +213,7 @@
             const choices = shuffle([current, ...wrong]);
             const options = document.getElementById("options");
             options.innerHTML = "";
-            setTimeout(() => speakArabic("الحرف المطلوب هو " + currentLetterName + ". اختره الآن"), 300);
+            setTimeout(() => speakArabic("اختر حرف : " + currentLetterName), 300);
             choices.forEach((choice, idx) => {
                 const button = document.createElement("button");
                 button.className = `option tile-${idx}`;
@@ -246,7 +246,7 @@
                 if (!voiceEnabled && "speechSynthesis" in window) speechSynthesis.cancel();
             });
             document.getElementById("repeatBtn").addEventListener("click", () => {
-                if (currentLetterName) speakArabic("الحرف المطلوب هو " + currentLetterName + ". اختره الآن");
+                if (currentLetterName) speakArabic("اختر حرف : " + currentLetterName);
             });
         });
     </script>
