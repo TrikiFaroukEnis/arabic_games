@@ -27,9 +27,19 @@
             position: relative;
             z-index: 10;
         }
-        .hidden {
-            display: none !important;
+        .back-link {
+            display: inline-block;
+            margin-bottom: 12px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            background: #e5f4f4;
+            color: #1f2937;
+            text-decoration: none;
+            font-weight: bold;
         }
+        .back-link:hover { background: #d3ebed; }
+        .back-link:focus-visible { outline: 3px solid #278da0; outline-offset: 3px; }
+        .hidden { display: none !important; }
         button {
             font-family: Arial, sans-serif;
             cursor: pointer;
@@ -38,9 +48,7 @@
             padding: 12px 20px;
             transition: transform 0.12s ease, background-color 0.2s ease;
         }
-        button:active {
-            transform: scale(0.96);
-        }
+        button:active { transform: scale(0.96); }
         .btn-main {
             background: #e5e7eb;
             color: #1f2937;
@@ -49,17 +57,8 @@
             padding: 14px 28px;
             margin: 6px;
         }
-        .btn-control {
-            background: #f3f4f6;
-            color: #1f2937;
-            font-size: 1rem;
-        }
-        #options {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-top: 20px;
-        }
+        .btn-control { background: #f3f4f6; color: #1f2937; font-size: 1rem; }
+        #options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
         .option {
             font-family: Arial, sans-serif;
             font-size: 64px;
@@ -72,79 +71,23 @@
             justify-content: center;
             border: 1px solid rgba(0, 0, 0, 0.05);
         }
-        /* Teintes pastel douces et apaisantes */
         .tile-0 { background: #eff6ff; }
         .tile-1 { background: #f0fdf4; }
         .tile-2 { background: #fefce8; }
         .tile-3 { background: #faf5ff; }
-
-        .option.correct {
-            background: #22c55e !important;
-            color: #ffffff !important;
-            animation: gentlePop 0.4s ease;
-        }
-        .option.wrong {
-            background: #ef4444 !important;
-            color: #ffffff !important;
-            animation: gentleShake 0.35s ease;
-        }
-        @keyframes gentlePop {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.06); }
-            100% { transform: scale(1); }
-        }
-        @keyframes gentleShake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-8px); }
-            75% { transform: translateX(8px); }
-        }
-        #progressOuter {
-            height: 22px;
-            background: #e5e7eb;
-            border-radius: 999px;
-            overflow: hidden;
-        }
-        #progressBar {
-            height: 100%;
-            width: 0;
-            background: linear-gradient(90deg, #22c55e, #3b82f6);
-            transition: width 0.3s ease;
-        }
-        .info {
-            display: flex;
-            justify-content: space-between;
-            font-weight: bold;
-            margin: 10px 0;
-            color: #1f2937;
-        }
-        .controls {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 15px 0;
-        }
-        #fxLayer {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 999;
-            overflow: hidden;
-        }
-        .star-burst {
-            position: absolute;
-            font-size: 1.8rem;
-            animation: flyStar 0.9s ease-out forwards;
-        }
+        .option.correct { background: #22c55e !important; color: #ffffff !important; animation: gentlePop 0.4s ease; }
+        .option.wrong { background: #ef4444 !important; color: #ffffff !important; animation: gentleShake 0.35s ease; }
+        @keyframes gentlePop { 0% { transform: scale(1); } 50% { transform: scale(1.06); } 100% { transform: scale(1); } }
+        @keyframes gentleShake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+        #progressOuter { height: 22px; background: #e5e7eb; border-radius: 999px; overflow: hidden; }
+        #progressBar { height: 100%; width: 0; background: linear-gradient(90deg, #22c55e, #3b82f6); transition: width 0.3s ease; }
+        .info { display: flex; justify-content: space-between; font-weight: bold; margin: 10px 0; color: #1f2937; }
+        .controls { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 15px 0; }
+        #fxLayer { position: fixed; inset: 0; pointer-events: none; z-index: 999; overflow: hidden; }
+        .star-burst { position: absolute; font-size: 1.8rem; animation: flyStar 0.9s ease-out forwards; }
         @keyframes flyStar {
-            0% {
-                transform: translate(-50%, -50%) scale(0.4);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(var(--tx), var(--ty)) scale(1.15);
-                opacity: 0;
-            }
+            0% { transform: translate(-50%, -50%) scale(0.4); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(1.15); opacity: 0; }
         }
     </style>
 </head>
@@ -152,12 +95,14 @@
     <div id="fxLayer"></div>
 
     <div class="card" id="startScreen">
+        <a class="back-link" href="./index.html">↩ ألعاب الحروف</a>
         <h1>🎓 تعلم الحروف العربية</h1>
         <p>10 أسئلة في كل لعبة</p>
         <button class="btn-main" onclick="startGame()">بدء اللعبة</button>
     </div>
 
     <div class="card hidden" id="gameScreen">
+        <a class="back-link" href="./index.html">↩ ألعاب الحروف</a>
         <div class="info">
             <span id="score">⭐ 0/10</span>
             <span id="errors">❌ 0</span>
@@ -173,6 +118,7 @@
     </div>
 
     <div class="card hidden" id="endScreen">
+        <a class="back-link" href="./index.html">↩ ألعاب الحروف</a>
         <h2>🏆 انتهت اللعبة</h2>
         <p id="result"></p>
         <p id="percent"></p>
@@ -190,20 +136,14 @@
             ["ق", "قاف"], ["ك", "كاف"], ["ل", "لام"], ["م", "ميم"],
             ["ن", "نون"], ["ه", "هاء"], ["و", "واو"], ["ي", "ياء"]
         ];
-
         let gameLetters = [], index = 0, score = 0, error = 0, currentLetterName = "";
         let voiceEnabled = true, arabicVoice = null;
-
-        function shuffle(a) {
-            return [...a].sort(() => Math.random() - 0.5);
-        }
-
+        function shuffle(a) { return [...a].sort(() => Math.random() - 0.5); }
         function triggerStars(buttonEl) {
             const fxLayer = document.getElementById("fxLayer");
             const rect = buttonEl.getBoundingClientRect();
             const originX = rect.left + rect.width / 2;
             const originY = rect.top + rect.height / 2;
-
             const starIcons = ["⭐", "🌟", "✨"];
             for (let i = 0; i < 12; i++) {
                 const star = document.createElement("div");
@@ -219,114 +159,79 @@
                 setTimeout(() => star.remove(), 950);
             }
         }
-
         function findArabicVoice() {
             if (!("speechSynthesis" in window)) return;
-            const v = speechSynthesis.getVoices();
-            arabicVoice =
-                v.find((x) => x.lang === "ar-SA") ||
-                v.find((x) => x.lang === "ar-EG") ||
-                v.find((x) => x.lang.startsWith("ar")) ||
-                null;
+            const voices = speechSynthesis.getVoices();
+            arabicVoice = voices.find((voice) => voice.lang === "ar-SA") || voices.find((voice) => voice.lang === "ar-EG") || voices.find((voice) => voice.lang.startsWith("ar")) || null;
         }
-
         if ("speechSynthesis" in window) {
             speechSynthesis.onvoiceschanged = findArabicVoice;
             setTimeout(findArabicVoice, 500);
         }
-
         function unlockSpeech() {
             if (!("speechSynthesis" in window)) return;
             speechSynthesis.speak(new SpeechSynthesisUtterance(""));
         }
-
         function speakArabic(text) {
             if (!voiceEnabled || !("speechSynthesis" in window)) return;
             speechSynthesis.cancel();
-            const u = new SpeechSynthesisUtterance(text);
-            u.rate = 0.9;
-            u.pitch = 1;
-            if (arabicVoice) {
-                u.voice = arabicVoice;
-                u.lang = arabicVoice.lang;
-            } else {
-                u.lang = "ar";
-            }
-            speechSynthesis.speak(u);
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9;
+            utterance.pitch = 1;
+            if (arabicVoice) { utterance.voice = arabicVoice; utterance.lang = arabicVoice.lang; }
+            else { utterance.lang = "ar"; }
+            speechSynthesis.speak(utterance);
         }
-
         function updateUI() {
             document.getElementById("score").textContent = `⭐ ${score}/10`;
             document.getElementById("errors").textContent = `❌ ${error}`;
             document.getElementById("counter").textContent = `السؤال ${index + 1} / 10`;
             document.getElementById("progressBar").style.width = `${index * 10}%`;
         }
-
         function startGame() {
             unlockSpeech();
             gameLetters = shuffle(alphabet).slice(0, 10);
-            index = 0;
-            score = 0;
-            error = 0;
+            index = 0; score = 0; error = 0;
             document.getElementById("startScreen").classList.add("hidden");
             document.getElementById("endScreen").classList.add("hidden");
             document.getElementById("gameScreen").classList.remove("hidden");
             showQuestion();
         }
-
         function restartSameGame() {
-            index = 0;
-            score = 0;
-            error = 0;
+            index = 0; score = 0; error = 0;
             document.getElementById("endScreen").classList.add("hidden");
             document.getElementById("gameScreen").classList.remove("hidden");
             showQuestion();
         }
-
         function showQuestion() {
-            if (index >= 10) {
-                finish();
-                return;
-            }
+            if (index >= 10) { finish(); return; }
             updateUI();
             const current = gameLetters[index];
             currentLetterName = current[1];
             document.getElementById("question").textContent = "اختر الحرف : " + currentLetterName;
-
-            const wrong = shuffle(alphabet.filter((x) => x[0] !== current[0])).slice(0, 3);
+            const wrong = shuffle(alphabet.filter((letter) => letter[0] !== current[0])).slice(0, 3);
             const choices = shuffle([current, ...wrong]);
-            const div = document.getElementById("options");
-            div.innerHTML = "";
-
+            const options = document.getElementById("options");
+            options.innerHTML = "";
             setTimeout(() => speakArabic("أين حرف " + currentLetterName + " ؟"), 300);
-
-            choices.forEach((c, idx) => {
-                const b = document.createElement("button");
-                b.className = `option tile-${idx}`;
-                b.textContent = c[0];
-                b.onclick = () => {
-                    [...div.children].forEach((x) => (x.disabled = true));
-                    if (c[0] === current[0]) {
-                        score++;
-                        updateUI();
-                        b.classList.add("correct");
-                        triggerStars(b);
+            choices.forEach((choice, idx) => {
+                const button = document.createElement("button");
+                button.className = `option tile-${idx}`;
+                button.textContent = choice[0];
+                button.onclick = () => {
+                    [...options.children].forEach((item) => { item.disabled = true; });
+                    if (choice[0] === current[0]) {
+                        score++; updateUI(); button.classList.add("correct"); triggerStars(button);
                     } else {
-                        error++;
-                        updateUI();
-                        b.classList.add("wrong");
-                        const rightBtn = [...div.children].find((x) => x.textContent === current[0]);
-                        if (rightBtn) rightBtn.classList.add("correct");
+                        error++; updateUI(); button.classList.add("wrong");
+                        const correctButton = [...options.children].find((item) => item.textContent === current[0]);
+                        if (correctButton) correctButton.classList.add("correct");
                     }
-                    setTimeout(() => {
-                        index++;
-                        showQuestion();
-                    }, 1050);
+                    setTimeout(() => { index++; showQuestion(); }, 1050);
                 };
-                div.appendChild(b);
+                options.appendChild(button);
             });
         }
-
         function finish() {
             document.getElementById("gameScreen").classList.add("hidden");
             document.getElementById("endScreen").classList.remove("hidden");
@@ -334,7 +239,6 @@
             document.getElementById("percent").textContent = `📊 ${Math.round(score * 10)}%`;
             document.getElementById("progressBar").style.width = "100%";
         }
-
         document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("voiceToggle").addEventListener("click", () => {
                 voiceEnabled = !voiceEnabled;
