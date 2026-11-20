@@ -128,13 +128,13 @@
 
     <script>
         const alphabet = [
-            ["ا", "ألف"], ["ب", "باء"], ["ت", "تاء"], ["ث", "ثاء"],
-            ["ج", "جيم"], ["ح", "حاء"], ["خ", "خاء"], ["د", "دال"],
-            ["ذ", "ذال"], ["ر", "راء"], ["ز", "زاي"], ["س", "سين"],
-            ["ش", "شين"], ["ص", "صاد"], ["ض", "ضاد"], ["ط", "طاء"],
-            ["ظ", "ظاء"], ["ع", "عين"], ["غ", "غين"], ["ف", "فاء"],
-            ["ق", "قاف"], ["ك", "كاف"], ["ل", "لام"], ["م", "ميم"],
-            ["ن", "نون"], ["ه", "هاء"], ["و", "واو"], ["ي", "ياء"]
+            ["ا", "الألف"], ["ب", "الباء"], ["ت", "التاء"], ["ث", "الثاء"],
+            ["ج", "الجيم"], ["ح", "الحاء"], ["خ", "الخاء"], ["د", "الدال"],
+            ["ذ", "الذال"], ["ر", "الراء"], ["ز", "الزاي"], ["س", "السين"],
+            ["ش", "الشين"], ["ص", "الصاد"], ["ض", "الضاد"], ["ط", "الطاء"],
+            ["ظ", "الظاء"], ["ع", "العين"], ["غ", "الغين"], ["ف", "الفاء"],
+            ["ق", "القاف"], ["ك", "الكاف"], ["ل", "اللام"], ["م", "الميم"],
+            ["ن", "النون"], ["ه", "الهاء"], ["و", "الواو"], ["ي", "الياء"]
         ];
         let gameLetters = [], index = 0, score = 0, error = 0, currentLetterName = "";
         let voiceEnabled = true, arabicVoice = null;
@@ -213,7 +213,7 @@
             const choices = shuffle([current, ...wrong]);
             const options = document.getElementById("options");
             options.innerHTML = "";
-            setTimeout(() => speakArabic("أين حرف " + currentLetterName + " ؟"), 300);
+            setTimeout(() => speakArabic("الحرف المطلوب هو " + currentLetterName + ". اختره الآن"), 300);
             choices.forEach((choice, idx) => {
                 const button = document.createElement("button");
                 button.className = `option tile-${idx}`;
@@ -246,7 +246,7 @@
                 if (!voiceEnabled && "speechSynthesis" in window) speechSynthesis.cancel();
             });
             document.getElementById("repeatBtn").addEventListener("click", () => {
-                if (currentLetterName) speakArabic("أين حرف " + currentLetterName + " ؟");
+                if (currentLetterName) speakArabic("الحرف المطلوب هو " + currentLetterName + ". اختره الآن");
             });
         });
     </script>

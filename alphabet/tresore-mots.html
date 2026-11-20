@@ -59,6 +59,23 @@ const introParagraphs = document.querySelectorAll("#startScreen p");
 document.querySelector(".treasure-illustration").setAttribute("aria-label", "صندوق كنز ذهبي مفتوح مليء بالجواهر");
 introParagraphs[0].textContent = "ساعد في العثور على الكنز! ستظهر لك حروف عربية عشوائية. اختر كل الأشياء التي يحتوي اسمها على الحرف المطلوب.";
 introParagraphs[1].lastChild.textContent = "خمس جولات مليئة بالكنوز — هل أنت مستعد؟";
+const treasureLetterNames = Object.freeze({
+  ا: "الألف", أ: "الألف", إ: "الألف", آ: "الألف", ب: "الباء", ت: "التاء", ث: "الثاء",
+  ج: "الجيم", ح: "الحاء", خ: "الخاء", د: "الدال", ذ: "الذال", ر: "الراء", ز: "الزاي",
+  س: "السين", ش: "الشين", ص: "الصاد", ض: "الضاد", ط: "الطاء", ظ: "الظاء", ع: "العين",
+  غ: "الغين", ف: "الفاء", ق: "القاف", ك: "الكاف", ل: "اللام", م: "الميم", ن: "النون",
+  ه: "الهاء", و: "الواو", ي: "الياء", ة: "التاء المربوطة", ى: "الألف المقصورة"
+});
+const originalTreasureSpeak = speak;
+speak = text => {
+    const match = text.match(/^ابحث عن الأشياء التي تحتوي على حرف (.)$/);
+    if (!match) {
+        originalTreasureSpeak(text);
+        return;
+    }
+    const letterName = treasureLetterNames[match[1]] || `حرف ${match[1]}`;
+    originalTreasureSpeak(`الحرف المطلوب هو ${letterName}. ابحث عن الأشياء التي تحتوي على ${letterName}`);
+};
 </script>
 </body>
 </html>
