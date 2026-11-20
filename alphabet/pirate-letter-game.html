@@ -974,7 +974,7 @@ class Game {
     const speech = window.speechSynthesis;
     speech.cancel();
     const letterName = this.getLetterName(this.rounds[this.roundIndex].letter);
-    const utterance = new SpeechSynthesisUtterance(`الحرف المطلوب هو ${letterName}. اختر الكلمات التي تحتوي على ${letterName}`);
+    const utterance = new SpeechSynthesisUtterance(`اختر الكلمات التي تحتوي على حرف ${letterName}`);
     utterance.rate = .9;
     utterance.pitch = 1;
     if (arabicVoice) {
