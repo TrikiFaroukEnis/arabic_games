@@ -691,6 +691,19 @@ const shuffle = items => {
   }
   return copy;
 };
+let arabicVoice = null;
+function findArabicVoice() {
+  if (!("speechSynthesis" in window)) return;
+  const voices = window.speechSynthesis.getVoices();
+  arabicVoice = voices.find(voice => voice.lang === "ar-SA")
+    || voices.find(voice => voice.lang === "ar-EG")
+    || voices.find(voice => voice.lang.startsWith("ar"))
+    || null;
+}
+if ("speechSynthesis" in window) {
+  window.speechSynthesis.onvoiceschanged = findArabicVoice;
+  setTimeout(findArabicVoice, 500);
+}
 
 class WordCard {
   constructor(game, wordData) {
@@ -890,6 +903,7 @@ class Game {
     elements.startScreen.classList.add("hidden");
     elements.resultScreen.classList.add("hidden");
     elements.gameScreen.classList.remove("hidden");
+    this.unlockSpeech();
     this.showRound();
   }
 
@@ -940,17 +954,24 @@ class Game {
     this.speakTarget();
   }
 
+  unlockSpeech() {
+    if (!this.audio.enabled || !("speechSynthesis" in window)) return;
+    window.speechSynthesis.speak(new SpeechSynthesisUtterance(""));
+  }
+
   speakTarget() {
     if (!this.audio.enabled || !("speechSynthesis" in window) || !this.rounds.length) return;
     const speech = window.speechSynthesis;
     speech.cancel();
-    speech.resume();
-    const utterance = new SpeechSynthesisUtterance(`هيا! اختر الكلمات التي تحتوي على حرف ${this.rounds[this.roundIndex].letter}`);
-    utterance.lang = "ar-SA";
-    utterance.rate = .82;
-    utterance.pitch = 1.05;
-    const arabicVoice = speech.getVoices().find(voice => voice.lang.toLowerCase().startsWith("ar"));
-    if (arabicVoice) utterance.voice = arabicVoice;
+    const utterance = new SpeechSynthesisUtterance(`اختر الكلمات التي تحتوي على حرف ${this.rounds[this.roundIndex].letter}`);
+    utterance.rate = .9;
+    utterance.pitch = 1;
+    if (arabicVoice) {
+      utterance.voice = arabicVoice;
+      utterance.lang = arabicVoice.lang;
+    } else {
+      utterance.lang = "ar";
+    }
     speech.speak(utterance);
   }
 
