@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>الألعاب العربية</title>
+<title>ألعاب الحروف العربية</title>
 <style>
-body{font-family:Arial,sans-serif;margin:0;background-color:#f5f5f5;text-align:center}header{background-color:#4CAF50;color:white;padding:30px 20px}h1{margin:0;font-size:2.2rem}p{margin-top:10px}.container{max-width:800px;margin:40px auto;padding:20px}.game{display:block;background-color:white;text-decoration:none;color:#333;border-radius:10px;padding:25px;margin-bottom:20px;border:1px solid #ddd;transition:.2s}.game:hover{background-color:#f0fdf4;border-color:#4CAF50}.emoji{font-size:48px}.title{font-size:1.6rem;font-weight:bold;margin-top:10px}.description{margin-top:10px;color:#666}.soon{opacity:.6}footer{margin-top:50px;padding:20px;color:#777;font-size:14px}
+:root{--sea:#dff5f4;--blue:#278da0;--ink:#15394a;--gold:#ffcf61;--cream:#fffdf6}*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial,sans-serif;color:var(--ink);background:linear-gradient(180deg,#e9fbfc,#f8f2df);text-align:center}header{padding:42px 18px 34px;background:linear-gradient(135deg,#17677c,#2c9baa);color:white}header h1{font-size:clamp(2rem,6vw,3rem);margin:0 0 10px}header p{margin:0;font-size:1.15rem}.container{width:min(980px,92%);margin:38px auto}.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}.game{display:flex;flex-direction:column;align-items:center;min-height:300px;padding:28px 22px;background:var(--cream);border:2px solid #d5e9e7;border-radius:26px;color:inherit;text-decoration:none;box-shadow:0 12px 28px #16445d16;transition:transform .2s,box-shadow .2s}.game:hover,.game:focus-visible{transform:translateY(-5px);box-shadow:0 18px 32px #16445d25;outline:3px solid #f3c55f}.emoji{font-size:76px;line-height:1.2}.game h2{margin:16px 0 8px;font-size:1.55rem}.game p{margin:0 0 20px;line-height:1.7;color:#55717a}.tag{margin-top:auto;padding:10px 20px;border-radius:999px;background:#ffe5a0;font-weight:bold}.game.secondary .tag{background:#dff1ff}footer{padding:25px;color:#617982}@media(max-width:500px){header{padding:34px 14px}.container{margin:24px auto}.game{min-height:270px}}
 </style>
 </head>
 <body>
-<header><h1>🎮 الألعاب العربية</h1><p>تعلم العربية بطريقة ممتعة</p></header>
-<div class="container">
-<a href="./alphabet/" class="game"><div class="emoji">🔤</div><div class="title">ألعاب الحروف العربية</div><div class="description">اختر لعبة لتتعلم الحروف العربية وتستمع إلى نطقها أو تجمع كنز الكلمات مع القراصنة.</div></a>
-<div class="game soon"><div class="emoji">🔢</div><div class="title">الأرقام</div><div class="description">قريباً</div></div>
-<div class="game soon"><div class="emoji">🧠</div><div class="title">الاختبارات</div><div class="description">قريباً</div></div>
-</div><footer>Arabic Games</footer>
+<header><h1>🏝️ ألعاب الحروف العربية</h1><p>مغامرات ممتعة لاكتشاف الحروف والكلمات!</p></header>
+<main class="container"><section class="games" aria-label="اختر لعبة">
+<a class="game" href="./pirate-letter-game.html"><div class="emoji" aria-hidden="true">🏴‍☠️</div><h2>معركة القراصنة</h2><p>تعلم الحروف العربية، اسحب الكلمات الصحيحة إلى الترسانة، وأطلق المدافع على القراصنة.</p><span class="tag">⚓ ابدأ المعركة</span></a>
+<a class="game secondary" href="./alphabet-game1.html"><div class="emoji" aria-hidden="true">🔤</div><h2>لعبة الحروف</h2><p>استمع إلى اسم الحرف العربي واختره من بين عدة حروف.</p><span class="tag">🎓 العب الآن</span></a>
+<a class="game secondary" href="./tresore-mots.html"><div class="emoji" aria-hidden="true">💎</div><h2>كنز الحرف المفقود</h2><p>ابحث عن الكلمات التي تحتوي على الحرف المطلوب واجمع كنز الحروف.</p><span class="tag">🗺️ ابدأ المغامرة</span></a>
+</section></main><footer>نتعلم العربية باللعب ✨</footer>
 </body>
 </html>
