@@ -3,50 +3,1098 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#8ed7e4">
-<title>كنز الحرف المفقود | مغامرة القراصنة</title>
+<meta name="theme-color" content="#79cbdc">
+<title>معركة القراصنة - تعلم الحروف العربية</title>
 <style>
-:root{--navy:#173e50;--sea:#7fcbdc;--deep:#218ca5;--sand:#ffdc83;--paper:#fffdf5;--green:#32a875;--red:#df655a}*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial,sans-serif;color:var(--navy);background:linear-gradient(#d9f3f5 0 38%,#8bd3df 38% 100%);user-select:none}.page{width:min(1000px,96%);margin:auto;padding:15px 0 28px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 8px 10px}.topbar a,.sound{border:0;border-radius:999px;padding:10px 15px;background:#ffffffd9;color:var(--navy);font-weight:bold;text-decoration:none;cursor:pointer}.scene{height:250px;position:relative;overflow:hidden;border-radius:22px;background:linear-gradient(#bceaf0 0 47%,#6fc0d0 47% 100%);box-shadow:inset 0 -12px 0 #ffffff25}.sun{position:absolute;top:24px;left:8%;font-size:42px}.cloud{position:absolute;top:36px;right:13%;font-size:42px}.wave{position:absolute;left:-4%;right:-4%;bottom:21px;height:53px;border-radius:50% 50% 0 0;background:#ffffff35}.ship{position:absolute;left:50%;bottom:29px;transform:translateX(-50%);width:260px;height:190px}.ship svg{width:100%;height:100%;overflow:visible}.ship.bob{animation:bob 3s ease-in-out infinite}@keyframes bob{50%{transform:translate(-50%,-9px) rotate(1deg)}}.island{position:absolute;bottom:15px;right:5%;font-size:46px}.island.left{left:5%;right:auto}.panel{margin-top:14px;padding:20px clamp(14px,4vw,36px) 25px;background:#ffffffec;border:1px solid #fff;border-radius:24px;box-shadow:0 12px 30px #17485b18;text-align:center}.hidden{display:none!important}.intro h1{margin:5px 0;font-size:clamp(1.7rem,5vw,2.4rem)}.intro p{line-height:1.7;color:#52727b}.primary,.secondary{border:0;border-radius:16px;padding:13px 24px;font:700 1.08rem Arial;cursor:pointer;transition:transform .15s,filter .15s}.primary{background:var(--sand);color:#583e14;box-shadow:0 4px 0 #d9aa47}.secondary{background:#e5f4f4;color:var(--navy)}button:active{transform:scale(.97)}button:focus-visible,a:focus-visible{outline:3px solid #edaa30;outline-offset:3px}.hud{display:flex;justify-content:space-between;gap:10px;font-weight:bold}.progress{height:12px;margin:13px 0 18px;border-radius:99px;background:#e8eeee;overflow:hidden}.progress span{display:block;width:0;height:100%;background:linear-gradient(90deg,#f6bd4b,#32a875);transition:width .3s}.prompt{margin:7px 0 2px;font-size:1.1rem}.target{display:inline-flex;align-items:center;justify-content:center;width:92px;height:92px;margin:12px 0 4px;border-radius:50%;background:#fff1c8;color:#ad7414;font-size:4.7rem;font-weight:bold;box-shadow:0 5px 0 #e9ca7a}.instruction{margin:6px 0 17px;color:#476a75}.objects{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.object{min-height:120px;padding:12px 6px;border:3px solid transparent;border-radius:19px;background:#f0f8f6;color:var(--navy);font:inherit;cursor:pointer;transition:.18s}.object:hover{transform:translateY(-3px);background:#e4f5f2}.object .pic{display:block;font-size:43px;line-height:1.3}.object .label{display:block;margin-top:3px;font-size:1.08rem;font-weight:bold}.object.selected{border-color:#e4ae3f;background:#fff2ce}.object.correct{border-color:var(--green);background:#e0f6e8}.object.wrong{border-color:var(--red);background:#ffe5df}.object:disabled{cursor:default}.feedback{min-height:32px;margin:12px 0 6px;font-weight:bold}.feedback.good{color:#168454}.feedback.bad{color:#b84b41}.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.round-result h2,.intro h2{margin-top:4px}.final-score{font-size:2rem;color:#bc811c}.stars{font-size:1.8rem;letter-spacing:5px;color:#e5ae32}.note{font-size:.9rem;color:#668087;margin-top:14px}@media(min-width:700px){.scene{height:290px}.objects{grid-template-columns:repeat(6,minmax(0,1fr))}}@media(max-width:420px){.scene{height:205px}.ship{transform:translateX(-50%) scale(.82);transform-origin:bottom center}.ship.bob{animation:bobSmall 3s ease-in-out infinite}@keyframes bobSmall{50%{transform:translate(-50%,-7px) scale(.82)}}.objects{gap:8px}.object{min-height:106px}.object .pic{font-size:36px}.panel{padding:16px 12px 20px}}
+:root {
+  --sky: #c9eff5;
+  --sea: #76c9d8;
+  --deep-sea: #2e91a8;
+  --navy: #183f51;
+  --ink-soft: #486f79;
+  --paper: #fffdf6;
+  --glass: #ffffffc9;
+  --wood: #875137;
+  --wood-dark: #5d352d;
+  --gold: #ffd878;
+  --gold-dark: #dcaa43;
+  --green: #2aa675;
+  --red: #dc6258;
+  --shadow: 0 16px 35px #17485b26;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--navy);
+  font-family: Arial, "Tahoma", sans-serif;
+  background: linear-gradient(180deg, #e8fafb 0 22%, var(--sea) 22% 100%);
+  user-select: none;
+}
+
+button, a { font: inherit; }
+button { cursor: pointer; }
+button:focus-visible, a:focus-visible, [tabindex]:focus-visible {
+  outline: 4px solid #f4b52f;
+  outline-offset: 3px;
+}
+.hidden { display: none !important; }
+
+.page {
+  width: min(1120px, 96%);
+  margin: auto;
+  padding: 14px 0 30px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 4px 12px;
+}
+
+.back-link, .sound-button {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 16px;
+  color: var(--navy);
+  background: #ffffffdd;
+  box-shadow: 0 4px 12px #17485b12;
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform .18s, background .18s;
+}
+.back-link:hover, .sound-button:hover { transform: translateY(-2px); background: white; }
+
+.title-block { text-align: center; }
+.title-block h1 {
+  margin: 0;
+  color: var(--navy);
+  font-size: clamp(1.25rem, 3.2vw, 2rem);
+}
+.title-block p { margin: 3px 0 0; color: var(--ink-soft); font-weight: 700; }
+
+.ocean-scene {
+  position: relative;
+  height: clamp(225px, 30vw, 300px);
+  overflow: hidden;
+  border-radius: 28px;
+  background: linear-gradient(#b8eaf0 0 47%, #72c4d2 47% 100%);
+  box-shadow: var(--shadow);
+  isolation: isolate;
+}
+.ocean-scene::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 45%;
+  background: linear-gradient(180deg, #52aec0aa, #278da5bb);
+  z-index: -1;
+}
+.sun { position: absolute; top: 16px; left: 7%; font-size: clamp(2rem, 5vw, 3.4rem); }
+.cloud { position: absolute; top: 24px; right: 12%; font-size: clamp(2rem, 5vw, 3.4rem); opacity: .8; }
+
+.waves, .waves::before, .waves::after {
+  position: absolute;
+  right: -5%;
+  bottom: 28%;
+  left: -5%;
+  height: 70px;
+  content: "";
+  border-radius: 50%;
+  background: #ffffff32;
+  animation: wave-shift 7s ease-in-out infinite;
+}
+.waves::before { bottom: -18px; right: 13%; left: -8%; opacity: .6; animation-delay: -2s; }
+.waves::after { bottom: -34px; right: -12%; left: 28%; opacity: .5; animation-delay: -4s; }
+@keyframes wave-shift {
+  50% { transform: translateX(28px) scaleY(.8); }
+}
+
+.player-ship {
+  position: absolute;
+  z-index: 3;
+  bottom: 26px;
+  left: 50%;
+  width: min(280px, 35vw);
+  min-width: 190px;
+  transform: translateX(-50%);
+  animation: ship-bob 3s ease-in-out infinite;
+}
+.player-ship svg { display: block; width: 100%; height: auto; overflow: visible; }
+@keyframes ship-bob {
+  50% { transform: translate(-50%, -10px) rotate(1deg); }
+}
+.player-ship.sinking { animation: ship-sink 1.1s ease-in forwards; }
+@keyframes ship-sink {
+  35% { transform: translate(-50%, 8px) rotate(-4deg); }
+  100% { opacity: 0; transform: translate(-50%, 150px) rotate(18deg); }
+}
+
+.pirate {
+  position: absolute;
+  z-index: 2;
+  bottom: 30px;
+  width: clamp(130px, 20vw, 205px);
+  transition: transform .8s ease-out;
+}
+.pirate-left { left: -18px; transform: translateX(0); }
+.pirate-right { right: -18px; transform: scaleX(-1); }
+.pirate svg { display: block; width: 100%; height: auto; }
+.pirate.approaching.pirate-left { transform: translateX(35px); }
+.pirate.approaching.pirate-right { transform: translateX(-35px) scaleX(-1); }
+.pirate.hit { animation: pirate-hit .55s ease-in-out; }
+@keyframes pirate-hit {
+  20%, 60% { transform: translateX(-7px) rotate(-4deg); }
+  40%, 80% { transform: translateX(7px) rotate(4deg); }
+}
+.pirate-right.hit { animation-name: pirate-hit-right; }
+@keyframes pirate-hit-right {
+  20%, 60% { transform: translateX(-7px) scaleX(-1) rotate(-4deg); }
+  40%, 80% { transform: translateX(7px) scaleX(-1) rotate(4deg); }
+}
+.pirate-left.sinking { animation: pirate-sink-left .9s ease-in forwards; }
+.pirate-right.sinking { animation: pirate-sink-right .9s ease-in forwards; }
+@keyframes pirate-sink-left {
+  0% { opacity: 1; transform: translateX(0) rotate(0); }
+  45% { opacity: 1; transform: translateX(4px) translateY(28px) rotate(5deg); }
+  100% { opacity: 0; transform: translateX(16px) translateY(145px) rotate(18deg); }
+}
+@keyframes pirate-sink-right {
+  0% { opacity: 1; transform: scaleX(-1) rotate(0); }
+  45% { opacity: 1; transform: translateX(-4px) translateY(28px) scaleX(-1) rotate(-5deg); }
+  100% { opacity: 0; transform: translateX(-16px) translateY(145px) scaleX(-1) rotate(-18deg); }
+}
+
+.cannonball {
+  position: fixed;
+  z-index: 20;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  border-radius: 50%;
+  background: #242d35;
+  box-shadow: 0 0 0 5px #242d3540, 0 2px 6px #15212b;
+  transition: transform .48s cubic-bezier(.25,.7,.25,1), opacity .48s;
+}
+.cannonball.flying { transform: translate(var(--dx), var(--dy)) scale(.7); }
+.cannonball.fade { opacity: 0; }
+.explosion {
+  position: fixed;
+  z-index: 21;
+  pointer-events: none;
+  font-size: 4rem;
+  animation: explode .7s ease-out forwards;
+}
+.cannonball.incoming { background: #d75842; box-shadow: 0 0 0 5px #d7584240, 0 2px 6px #6d2119; }
+@keyframes explode {
+  0% { opacity: 0; transform: scale(.2); }
+  35% { opacity: 1; transform: scale(1.2) rotate(-8deg); }
+  100% { opacity: 0; transform: scale(1.65) rotate(18deg); }
+}
+
+.panel {
+  position: relative;
+  margin-top: 8px;
+  padding: clamp(16px, 3vw, 28px);
+  border: 1px solid #ffffffdd;
+  border-radius: 26px;
+  background: var(--glass);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(7px);
+}
+#gameScreen { padding: clamp(10px, 1.8vw, 18px); }
+#gameScreen .hud { gap: 6px; margin-bottom: 7px; }
+#gameScreen .hud-item { padding: 6px 5px; }
+#gameScreen .hud-item strong { margin-top: 1px; font-size: 1rem; }
+#gameScreen .progress-track { height: 8px; margin-bottom: 8px; }
+#gameScreen .round-heading p { margin: 2px 0; }
+#gameScreen .level-badge { margin-bottom: 4px; padding: 4px 10px; }
+#gameScreen .target-letter {
+  width: 70px;
+  height: 70px;
+  margin: 3px 0 1px;
+  font-size: 3.6rem;
+}
+#gameScreen .instruction { margin: 2px 0 7px; }
+
+.start-panel { text-align: center; }
+.start-panel h2 { margin: 2px 0 8px; font-size: clamp(1.6rem, 4vw, 2.3rem); }
+.start-panel p { max-width: 740px; margin: 8px auto; line-height: 1.8; color: var(--ink-soft); }
+.difficulty-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 18px auto;
+}
+.difficulty-list span {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #ffffffaa;
+  font-weight: 700;
+}
+.primary-button, .secondary-button {
+  border: 0;
+  border-radius: 16px;
+  padding: 13px 24px;
+  font-weight: 800;
+  transition: transform .16s, filter .16s;
+}
+.primary-button {
+  color: #5b4116;
+  background: var(--gold);
+  box-shadow: 0 5px 0 var(--gold-dark);
+}
+.secondary-button { color: var(--navy); background: #e6f4f3; }
+.primary-button:hover, .secondary-button:hover { filter: brightness(1.04); transform: translateY(-2px); }
+.primary-button:active, .secondary-button:active { transform: translateY(2px); }
+
+.hud {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 9px;
+  margin-bottom: 12px;
+}
+.hud-item {
+  padding: 10px 8px;
+  border-radius: 14px;
+  background: #ffffffaa;
+  text-align: center;
+  font-weight: 800;
+}
+.hud-item strong { display: block; margin-top: 3px; font-size: 1.13rem; }
+.progress-track {
+  height: 12px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #d7e8e7;
+}
+.progress-bar {
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #f3bb4e, #2eaa79);
+  transition: width .45s ease;
+}
+.round-heading { text-align: center; }
+.round-heading p { margin: 5px 0; color: var(--ink-soft); font-weight: 700; }
+.target-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 92px;
+  height: 92px;
+  margin: 7px 0 3px;
+  border-radius: 50%;
+  color: #9b6914;
+  background: #fff1c6;
+  box-shadow: 0 5px 0 #e7c779, inset 0 0 0 5px #ffffff90;
+  font-size: 4.7rem;
+  font-weight: 800;
+  line-height: 1;
+}
+.level-badge {
+  display: inline-block;
+  margin: 0 0 10px;
+  padding: 6px 13px;
+  border-radius: 999px;
+  color: #6a501b;
+  background: #ffe8a6;
+  font-weight: 800;
+}
+.instruction { margin: 4px 0 16px; text-align: center; color: var(--ink-soft); }
+
+.arsenal-row {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr) 92px;
+  align-items: center;
+  gap: 12px;
+  direction: ltr;
+}
+.drag-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+.arsenal {
+  position: relative;
+  z-index: 30;
+  display: flex;
+  width: 92px;
+  height: 92px;
+  align-items: center;
+  justify-content: center;
+  border: 3px dashed #ffffff80;
+  border-radius: 50%;
+  color: #fff;
+  background: #ffffff1c;
+  text-align: center;
+  transform: none;
+  transition: background .2s, transform .2s, border-color .2s;
+}
+.arsenal-left, .arsenal-right { left: auto; right: auto; }
+.arsenal-icon { display: block; width: 72px; height: 72px; }
+.cannon-art { display: block; width: 100%; height: 100%; overflow: visible; }
+.arsenal-right .cannon-art { transform: scaleX(-1); }
+.arsenal.is-over {
+  border-color: var(--gold);
+  background: #d09b3dcc;
+  transform: scale(1.08);
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.word-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  direction: rtl;
+}
+.word-card {
+  min-height: 112px;
+  padding: 7px 5px;
+  border: 3px solid transparent;
+  border-radius: 20px;
+  color: var(--navy);
+  background: #f7fcf8;
+  box-shadow: 0 5px 10px #17485b12;
+  touch-action: none;
+  transition: transform .16s, border-color .16s, background .16s, opacity .16s;
+}
+.word-card:hover, .word-card:focus-visible { transform: translateY(-4px); border-color: #e6b04a; }
+.word-card.dragging {
+  position: absolute;
+  z-index: 20;
+  pointer-events: none;
+  opacity: 1;
+  transform: none;
+  box-shadow: 0 16px 30px #17485b40;
+  transition: none;
+}
+.word-card-placeholder { display: block; }
+.word-card.used { opacity: .35; filter: grayscale(.6); pointer-events: none; }
+.word-card.correct { border-color: var(--green); background: #e3f7ea; }
+.word-card.wrong { border-color: var(--red); background: #ffe5df; }
+.word-card.wrong { animation: card-shake .45s ease-in-out; }
+@keyframes card-shake {
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+.word-card .picture { display: block; margin-bottom: 3px; font-size: clamp(1.8rem, 3.8vw, 2.7rem); line-height: 1.1; }
+.word-card .word { display: block; font-size: clamp(.88rem, 1.6vw, 1rem); font-weight: 800; }
+.feedback {
+  min-height: 32px;
+  margin: 15px 0 4px;
+  color: var(--green);
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+.feedback.bad { color: var(--red); }
+.feedback.pop { animation: feedback-pop .35s ease-out; }
+@keyframes feedback-pop {
+  50% { transform: scale(1.08); }
+}
+.round-actions { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.help-text { margin: 13px 0 0; color: var(--ink-soft); text-align: center; font-size: .9rem; }
+
+.result-panel { text-align: center; }
+.result-panel h2 { margin: 4px 0; font-size: clamp(1.8rem, 5vw, 2.8rem); }
+.result-panel p { color: var(--ink-soft); line-height: 1.8; }
+.result-score { color: #ae7517; font-size: 2.3rem; font-weight: 800; }
+.confetti {
+  position: absolute;
+  top: 15px;
+  right: 8%;
+  left: 8%;
+  height: 110px;
+  overflow: hidden;
+  pointer-events: none;
+}
+.confetti span {
+  position: absolute;
+  top: -20px;
+  width: 11px;
+  height: 22px;
+  border-radius: 5px;
+  background: var(--gold);
+  animation: confetti-fall 2.6s linear infinite;
+}
+.confetti span:nth-child(2n) { background: #ef7c6f; animation-delay: -.8s; }
+.confetti span:nth-child(3n) { background: #4ab6bd; animation-delay: -1.5s; }
+@keyframes confetti-fall {
+  to { transform: translateY(140px) rotate(480deg); }
+}
+.footer-note { margin: 16px 0 0; color: #557a82; text-align: center; font-size: .85rem; }
+
+@media (max-width: 700px) {
+  #gameScreen .hud {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4px;
+  }
+  #gameScreen .hud-item {
+    padding: 5px 2px;
+    font-size: .76rem;
+    white-space: nowrap;
+  }
+  #gameScreen .hud-item strong { font-size: .95rem; }
+  .arsenal-row { grid-template-columns: 64px minmax(0, 1fr) 64px; gap: 6px; }
+  .arsenal { width: 62px; height: 62px; }
+  .arsenal-icon { width: 50px; height: 50px; }
+}
+@media (max-width: 420px) {
+  .page { width: 94%; padding-top: 9px; }
+  .topbar { align-items: stretch; }
+  .back-link, .sound-button { padding: 8px 10px; font-size: .86rem; }
+  .title-block p { display: none; }
+  .ocean-scene { height: 200px; border-radius: 22px; }
+  #gameScreen { padding: 8px; }
+  #gameScreen .target-letter { width: 64px; height: 64px; font-size: 3.3rem; }
+  .player-ship { width: 215px; }
+  .pirate { width: 135px; bottom: 25px; }
+  .word-grid { gap: 7px; }
+  .word-card { min-height: 94px; padding: 5px 3px; border-radius: 16px; }
+  .word-card .picture { font-size: 2rem; }
+  .word-card .word { font-size: .82rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
 </style>
 </head>
 <body>
 <main class="page">
-<div class="topbar"><a href="./index.html">↩ ألعاب الحروف</a><button class="sound" id="soundButton" type="button" aria-pressed="true">🔊 الصوت</button></div>
-<div class="scene" aria-label="سفينة قراصنة تبحر في البحر"><span class="sun" aria-hidden="true">☀️</span><span class="cloud" aria-hidden="true">☁️</span><span class="island" aria-hidden="true">🏴‍☠️</span><span class="island left" aria-hidden="true">🌴</span><div class="wave"></div><div class="ship bob" aria-hidden="true"><svg viewBox="0 0 260 190" role="img"><path d="M38 116h184l-17 42q-8 20-30 20H80q-22 0-30-20z" fill="#8b4e36"/><path d="M44 145h174l-9 16H51z" fill="#663b32"/><rect x="126" y="22" width="8" height="104" rx="4" fill="#71492e"/><path d="M121 29H60L70 92h51z" fill="#fff1c4" stroke="#e1bd6c" stroke-width="3"/><path d="M141 42h58l-9 51h-49z" fill="#f7c95f" stroke="#d7a93f" stroke-width="3"/><path d="M100 121h57v25h-57z" fill="#d79539"/><circle cx="78" cy="163" r="7" fill="#91deea"/><circle cx="130" cy="163" r="7" fill="#91deea"/><circle cx="182" cy="163" r="7" fill="#91deea"/><path d="M44 111l-20-15 18-21 26 15zm172 0 20-15-18-21-26 15z" fill="#373b4d"/><circle cx="47" cy="99" r="11" fill="none" stroke="#b97a36" stroke-width="5"/><circle cx="213" cy="99" r="11" fill="none" stroke="#b97a36" stroke-width="5"/><path d="M130 22V9" stroke="#71492e" stroke-width="5" stroke-linecap="round"/></svg></div></div>
-<section class="panel intro" id="startScreen"><h1>🏴‍☠️ كنز الحرف المفقود</h1><p>ساعد القراصنة في العثور على الكنز! ستظهر لك حروف عربية عشوائية. اختر كل الأشياء التي يحتوي اسمها على الحرف المطلوب.</p><p>⚓ خمس جولات مليئة بالمغامرة — هل أنت مستعد؟</p><button class="primary" id="startButton" type="button">ابدأ المغامرة 🗺️</button></section>
-<section class="panel hidden" id="gameScreen" aria-live="polite"><div class="hud"><span id="score">⭐ النقاط: ٠</span><span id="round">الجولة ١ / ٥</span></div><div class="progress"><span id="progressBar"></span></div><p class="prompt">ابحث عن الأشياء التي تحتوي أسماؤها على الحرف:</p><div class="target" id="targetLetter" aria-label="الحرف المطلوب"></div><p class="instruction" id="instruction">اضغط على كل الإجابات الصحيحة، ثم اختر «تأكيد».</p><div class="objects" id="objects"></div><p class="feedback" id="feedback" role="status"></p><div class="actions"><button class="primary" id="submitButton" type="button">تأكيد الاختيار ✓</button></div></section>
-<section class="panel hidden round-result" id="endScreen" aria-live="polite"><div class="stars" aria-hidden="true">🏆 ✨ 🏆</div><h2>انتهت المغامرة!</h2><p class="final-score" id="finalScore"></p><p id="finalMessage"></p><button class="primary" id="againButton" type="button">مغامرة جديدة 🔄</button></section>
-<p class="note">كل الرسومات والرموز التعبيرية مدمجة في الصفحة — لا حاجة إلى تنزيل صور.</p>
+  <header class="topbar">
+    <a class="back-link" href="./index.html">↩ قائمة الألعاب</a>
+    <div class="title-block">
+      <h1>🏴‍☠️ معركة القراصنة</h1>
+      <p>تعلم الحروف العربية في البحر</p>
+    </div>
+    <button class="sound-button" id="soundButton" type="button" aria-pressed="true">🔊 الصوت</button>
+  </header>
+
+  <section class="ocean-scene" aria-label="بحر وسفينة القراصنة">
+    <span class="sun" aria-hidden="true">☀️</span>
+    <span class="cloud" aria-hidden="true">☁️</span>
+    <div class="waves" aria-hidden="true"></div>
+    <div class="pirate pirate-left" id="pirateLeft" aria-hidden="true">
+      <svg viewBox="0 0 210 150">
+        <path d="M22 89h163l-15 37q-7 14-25 14H55q-20 0-28-15z" fill="#75432f"/>
+        <path d="M28 115h151l-9 17H39z" fill="#57332c"/>
+        <path d="M80 89V28h6v61z" fill="#75492d"/>
+        <path d="M83 29H28l7 48h48z" fill="#202c39"/>
+        <circle cx="58" cy="50" r="13" fill="#f3f0e2"/>
+        <circle cx="53" cy="49" r="3.5" fill="#202c39"/><circle cx="64" cy="49" r="3.5" fill="#202c39"/>
+        <path d="M50 59h17v8H50z" fill="#f3f0e2"/>
+        <path d="M43 69l30 13M73 69L43 82" stroke="#f3f0e2" stroke-width="5" stroke-linecap="round"/>
+        <path d="M21 91l-16-13 12-17 23 14z" fill="#333846"/>
+        <circle cx="24" cy="72" r="9" fill="none" stroke="#b87738" stroke-width="4"/>
+        <circle cx="50" cy="117" r="6" fill="#88d8e4"/><circle cx="105" cy="117" r="6" fill="#88d8e4"/>
+      </svg>
+    </div>
+    <div class="pirate pirate-right" id="pirateRight" aria-hidden="true">
+      <svg viewBox="0 0 210 150">
+        <path d="M22 89h163l-15 37q-7 14-25 14H55q-20 0-28-15z" fill="#75432f"/>
+        <path d="M28 115h151l-9 17H39z" fill="#57332c"/>
+        <path d="M80 89V28h6v61z" fill="#75492d"/>
+        <path d="M83 29H28l7 48h48z" fill="#202c39"/>
+        <circle cx="58" cy="50" r="13" fill="#f3f0e2"/>
+        <circle cx="53" cy="49" r="3.5" fill="#202c39"/><circle cx="64" cy="49" r="3.5" fill="#202c39"/>
+        <path d="M50 59h17v8H50z" fill="#f3f0e2"/>
+        <path d="M43 69l30 13M73 69L43 82" stroke="#f3f0e2" stroke-width="5" stroke-linecap="round"/>
+        <path d="M21 91l-16-13 12-17 23 14z" fill="#333846"/>
+        <circle cx="24" cy="72" r="9" fill="none" stroke="#b87738" stroke-width="4"/>
+        <circle cx="50" cy="117" r="6" fill="#88d8e4"/><circle cx="105" cy="117" r="6" fill="#88d8e4"/>
+      </svg>
+    </div>
+    <div class="player-ship" id="playerShip" aria-hidden="true">
+      <svg viewBox="0 0 280 205">
+        <path d="M38 124h204l-19 47q-9 23-35 23H78q-27 0-37-23z" fill="#8b4e36"/>
+        <path d="M44 155h192l-12 19H56z" fill="#633a30"/>
+        <rect x="136" y="23" width="8" height="112" rx="4" fill="#70462d"/>
+        <path d="M131 30H62l11 67h58z" fill="#fdf1c8" stroke="#dfbd6c" stroke-width="3"/>
+        <path d="M151 44h67l-10 57h-57z" fill="#f5c95c" stroke="#d6a53c" stroke-width="3"/>
+        <rect x="106" y="128" width="67" height="27" rx="3" fill="#d79539"/>
+        <circle cx="79" cy="172" r="8" fill="#92dce6"/><circle cx="140" cy="172" r="8" fill="#92dce6"/><circle cx="201" cy="172" r="8" fill="#92dce6"/>
+        <path d="M48 117l-23-18 20-25 30 18zm184 0 23-18-20-25-30 18z" fill="#383b4c"/>
+        <circle cx="50" cy="102" r="13" fill="none" stroke="#b97a36" stroke-width="6"/><circle cx="230" cy="102" r="13" fill="none" stroke="#b97a36" stroke-width="6"/>
+        <path d="M140 23V9" stroke="#70462d" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </section>
+
+  <section class="panel start-panel" id="startScreen">
+    <h2>معركة القراصنة - تعلم الحروف العربية</h2>
+    <p>هيا نختار الكلمات التي تحتوي على الحرف المطلوب! اسحب صورة الكلمة إلى المدفع الأيسر أو الأيمن، ثم أطلق المدفع على القراصنة.</p>
+    <div class="difficulty-list" aria-label="مراحل اللعب">
+      <span>🟢 سهل: الحرف في البداية</span>
+      <span>🟡 متوسط: الحرف في أي مكان</span>
+      <span>🔴 صعب: انتبه للفخاخ</span>
+    </div>
+    <button class="primary-button" id="startButton" type="button">ابدأ المعركة 🗺️</button>
+  </section>
+
+  <section class="panel hidden" id="gameScreen" aria-live="polite">
+    <div class="hud">
+      <div class="hud-item">⭐ النقاط<strong id="scoreValue">0</strong></div>
+      <div class="hud-item">❤️ الأرواح<strong id="livesValue">3</strong></div>
+      <div class="hud-item">🏆 المستوى<strong id="levelValue">1</strong></div>
+      <div class="hud-item">🔥 السلسلة<strong id="streakValue">0</strong></div>
+    </div>
+    <div class="progress-track" aria-label="تقدم المعركة"><div class="progress-bar" id="progressBar"></div></div>
+    <div class="round-heading">
+      <p id="roundText">الجولة 1 / 12</p>
+      <div class="level-badge" id="levelBadge">🟢 المستوى السهل</div>
+      <p>هيا نختار الكلمات التي تحتوي على حرف:</p>
+      <div class="target-letter" id="targetLetter" aria-label="الحرف المطلوب"></div>
+    </div>
+    <p class="instruction" id="instruction">اسحب الصورة الصحيحة إلى الأرسان على اليمين أو اليسار.</p>
+    <div class="drag-layer" id="dragLayer"></div>
+    <div class="arsenal-row">
+      <div class="arsenal arsenal-left" data-arsenal="left" tabindex="0" role="button" aria-label="المدفع الأيسر">
+        <span class="arsenal-icon" aria-hidden="true">
+          <svg class="cannon-art" viewBox="0 0 100 80">
+            <path d="M25 29 78 9l8 24-53 20z" fill="#303e4d"/>
+            <path d="m22 34 12 20-8 5-15-20z" fill="#465464"/>
+            <circle cx="31" cy="61" r="15" fill="#ad7235" stroke="#714b2d" stroke-width="4"/>
+            <path d="M31 48v26M18 61h26M22 52l18 18M40 52 22 70" stroke="#6b4329" stroke-width="3"/>
+            <circle cx="31" cy="61" r="4" fill="#e0a14b"/>
+            <path d="M77 10 87 6" stroke="#273746" stroke-width="7" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="sr-only">المدفع الأيسر</span>
+      </div>
+      <div class="word-grid" id="wordGrid" aria-label="بطاقات الكلمات"></div>
+      <div class="arsenal arsenal-right" data-arsenal="right" tabindex="0" role="button" aria-label="المدفع الأيمن">
+        <span class="arsenal-icon" aria-hidden="true">
+          <svg class="cannon-art" viewBox="0 0 100 80">
+            <path d="M25 29 78 9l8 24-53 20z" fill="#303e4d"/>
+            <path d="m22 34 12 20-8 5-15-20z" fill="#465464"/>
+            <circle cx="31" cy="61" r="15" fill="#ad7235" stroke="#714b2d" stroke-width="4"/>
+            <path d="M31 48v26M18 61h26M22 52l18 18M40 52 22 70" stroke="#6b4329" stroke-width="3"/>
+            <circle cx="31" cy="61" r="4" fill="#e0a14b"/>
+            <path d="M77 10 87 6" stroke="#273746" stroke-width="7" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="sr-only">المدفع الأيمن</span>
+      </div>
+    </div>
+    <div class="feedback" id="feedback" role="status"></div>
+    <div class="round-actions">
+      <button class="secondary-button" id="repeatButton" type="button">🔊 اسمع الحرف</button>
+    </div>
+    <p class="help-text">اضغط على الصورة واسحبها إلى المدفع الأيسر أو الأيمن.</p>
+  </section>
+
+  <section class="panel result-panel hidden" id="resultScreen" aria-live="polite">
+    <div class="confetti" aria-hidden="true"><span style="left:5%"></span><span style="left:17%"></span><span style="left:30%"></span><span style="left:45%"></span><span style="left:61%"></span><span style="left:75%"></span><span style="left:89%"></span></div>
+    <div aria-hidden="true" style="font-size:4rem">🏆 ⚓ 🏆</div>
+    <h2 id="resultTitle">ممتاز!</h2>
+    <p id="resultSubtitle">لقد دافعت عن السفينة بنجاح</p>
+    <div class="result-score" id="resultScore"></div>
+    <p id="resultMessage"></p>
+    <button class="primary-button" id="againButton" type="button">إعادة اللعب 🔄</button>
+  </section>
+  <p class="footer-note">كل الرسومات والأصوات مدمجة في الصفحة — لا حاجة إلى تنزيل ملفات.</p>
 </main>
+
 <script>
-const roundsCount = 5;
-const things = [
-  {name:"أسد", emoji:"🦁"},{name:"أرنب", emoji:"🐇"},{name:"إبريق", emoji:"🫖"},
-  {name:"باب", emoji:"🚪"},{name:"بطة", emoji:"🦆"},{name:"بئر", emoji:"🪣"},
-  {name:"تفاحة", emoji:"🍎"},{name:"تاج", emoji:"👑"},{name:"ثعلب", emoji:"🦊"},{name:"ثوب", emoji:"👘"},
-  {name:"جمل", emoji:"🐪"},{name:"جزر", emoji:"🥕"},{name:"حوت", emoji:"🐳"},{name:"حليب", emoji:"🥛"},
-  {name:"خبز", emoji:"🍞"},{name:"خروف", emoji:"🐑"},{name:"دجاجة", emoji:"🐔"},{name:"دلو", emoji:"🪣"},
-  {name:"ذرة", emoji:"🌽"},{name:"ذئب", emoji:"🐺"},{name:"رمان", emoji:"🍎"},{name:"ريشة", emoji:"🪶"},
-  {name:"زيتون", emoji:"🫒"},{name:"زرافة", emoji:"🦒"},{name:"سمكة", emoji:"🐟"},{name:"ساعة", emoji:"⌚"},
-  {name:"شمس", emoji:"☀️"},{name:"سيارة", emoji:"🚗"},{name:"صقر", emoji:"🦅"},{name:"صندوق", emoji:"📦"},
-  {name:"ضفدع", emoji:"🐸"},{name:"ضرس", emoji:"🦷"},{name:"طائرة", emoji:"✈️"},{name:"طبل", emoji:"🥁"},
-  {name:"ظبي", emoji:"🦌"},{name:"ظرف", emoji:"✉️"},{name:"عنب", emoji:"🍇"},{name:"عصفور", emoji:"🐦"},
-  {name:"غيمة", emoji:"☁️"},{name:"غراب", emoji:"🐦‍⬛"},{name:"فلفل", emoji:"🫑"},{name:"فراشة", emoji:"🦋"},
-  {name:"قمر", emoji:"🌙"},{name:"قلم", emoji:"✏️"},{name:"كتاب", emoji:"📚"},{name:"كرسي", emoji:"🪑"},
-  {name:"ليمون", emoji:"🍋"},{name:"لؤلؤ", emoji:"🦪"},{name:"موز", emoji:"🍌"},{name:"منزل", emoji:"🏠"},
-  {name:"نجمة", emoji:"⭐"},{name:"نمر", emoji:"🐅"},{name:"هلال", emoji:"🌙"},{name:"هدية", emoji:"🎁"},
-  {name:"وردة", emoji:"🌹"},{name:"وجه", emoji:"😊"},{name:"يد", emoji:"✋"},{name:"يخت", emoji:"🛥️"}
+const WORDS = [
+  { word: "أسد", image: "🦁" }, { word: "أرنب", image: "🐇" }, { word: "إبريق", image: "🫖" }, { word: "أرز", image: "🍚" },
+  { word: "اوزة", image: "🪿" }, { word: "اجاصة", image: "🍐" }, { word: "اميرة", image: "👸" },
+  { word: "بطة", image: "🦆" }, { word: "باب", image: "🚪" }, { word: "بئر", image: "🪣" }, { word: "بطيخ", image: "🍉" },
+  { word: "تفاحة", image: "🍎" }, { word: "تاج", image: "👑" }, { word: "تمر", image: "🌴" }, { word: "تلفاز", image: "📺" },
+  { word: "ثوب", image: "👘" }, { word: "ثعلب", image: "🦊" }, { word: "ثريا", image: "💡" }, { word: "ثلج", image: "❄️" },
+  { word: "جمل", image: "🐪" }, { word: "جزر", image: "🥕" }, { word: "جرس", image: "🔔" }, { word: "جبن", image: "🧀" },
+  { word: "حوت", image: "🐳" }, { word: "حليب", image: "🥛" }, { word: "حصان", image: "🐎" }, { word: "حقيبة", image: "🎒" },
+  { word: "خبز", image: "🍞" }, { word: "خروف", image: "🐑" }, { word: "خيار", image: "🥒" }, { word: "خاتم", image: "💍" },
+  { word: "دجاجة", image: "🐔" }, { word: "دب", image: "🐻" }, { word: "دراجة", image: "🚲" }, { word: "دلفين", image: "🐬" },
+  { word: "ذرة", image: "🌽" }, { word: "ذئب", image: "🐺" }, { word: "ذهب", image: "🥇" }, { word: "ذراع", image: "💪" },
+  { word: "رمان", image: "🍎" }, { word: "ريشة", image: "🪶" }, { word: "رجل", image: "🧍" }, { word: "روبوت", image: "🤖" },
+  { word: "زيتون", image: "🫒" }, { word: "زرافة", image: "🦒" }, { word: "زهرة", image: "🌸" }, { word: "زبدة", image: "🧈" },
+  { word: "سمكة", image: "🐟" }, { word: "ساعة", image: "⌚" }, { word: "سفينة", image: "🚢" }, { word: "سحاب", image: "☁️" },
+  { word: "شمس", image: "☀️" }, { word: "شجرة", image: "🌳" }, { word: "شاي", image: "🍵" }, { word: "شمعة", image: "🕯️" },
+  { word: "صقر", image: "🦅" }, { word: "صندوق", image: "📦" }, { word: "صابون", image: "🧼" }, { word: "صورة", image: "🖼️" },
+  { word: "ضفدع", image: "🐸" }, { word: "ضرس", image: "🦷" }, { word: "ضفيرة", image: "👧" }, { word: "ضباب", image: "🌫️" },
+  { word: "طائرة", image: "✈️" }, { word: "طبل", image: "🥁" }, { word: "طماطم", image: "🍅" }, { word: "طاووس", image: "🦚" },
+  { word: "ظبي", image: "🦌" }, { word: "ظرف", image: "✉️" }, { word: "ظل", image: "🌳" }, { word: "ظفر", image: "💅" },
+  { word: "عنب", image: "🍇" }, { word: "عصفور", image: "🐦" }, { word: "عسل", image: "🍯" }, { word: "عجلة", image: "🎡" },
+  { word: "غيمة", image: "☁️" }, { word: "غراب", image: "🐦‍⬛" }, { word: "غزال", image: "🦌" }, { word: "غسالة", image: "🧺" },
+  { word: "فلفل", image: "🫑" }, { word: "فراشة", image: "🦋" }, { word: "فيل", image: "🐘" }, { word: "فستان", image: "👗" },
+  { word: "قمر", image: "🌙" }, { word: "قلم", image: "✏️" }, { word: "قبعة", image: "🧢" }, { word: "قطة", image: "🐱" },
+  { word: "كتاب", image: "📚" }, { word: "كرسي", image: "🪑" }, { word: "كعكة", image: "🍰" }, { word: "كرة", image: "⚽" },
+  { word: "ليمون", image: "🍋" }, { word: "لؤلؤ", image: "🦪" }, { word: "لعبة", image: "🧸" }, { word: "لسان", image: "👅" },
+  { word: "موز", image: "🍌" }, { word: "منزل", image: "🏠" }, { word: "مفتاح", image: "🔑" }, { word: "مطر", image: "🌧️" },
+  { word: "نجمة", image: "⭐" }, { word: "نمر", image: "🐅" }, { word: "نحلة", image: "🐝" }, { word: "نقود", image: "🪙" },
+  { word: "هلال", image: "🌙" }, { word: "هدية", image: "🎁" }, { word: "هاتف", image: "📱" }, { word: "هرم", image: "🔺" },
+  { word: "وردة", image: "🌹" }, { word: "وجه", image: "😊" }, { word: "ورق", image: "📄" }, { word: "وحش", image: "👾" },
+  { word: "يد", image: "✋" }, { word: "يخت", image: "🛥️" }, { word: "يمامة", image: "🕊️" }, { word: "ياقة", image: "👕" },
+  { word: "طبلة", image: "🥁" }, { word: "برتقال", image: "🍊" }, { word: "مشمش", image: "🍑" }, { word: "بسكويت", image: "🍪" }
 ];
-const letters = [...new Set(things.flatMap(thing => [...thing.name]))].filter(letter => things.filter(thing => thing.name.includes(letter)).length >= 2);
-const $ = id => document.getElementById(id);
-let rounds = [], roundIndex = 0, score = 0, soundEnabled = true, locked = false;
-function shuffle(items){const copy=[...items];for(let i=copy.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[copy[i],copy[j]]=[copy[j],copy[i]]}return copy}
-function speak(text){if(!soundEnabled||!("speechSynthesis" in window))return;window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.lang="ar";utterance.rate=.88;window.speechSynthesis.speak(utterance)}
-function startGame(){if("speechSynthesis" in window)window.speechSynthesis.cancel();rounds=shuffle(letters).slice(0,roundsCount).map(letter=>{const matches=shuffle(things.filter(thing=>thing.name.includes(letter))).slice(0,3);const misses=shuffle(things.filter(thing=>!thing.name.includes(letter))).slice(0,3);return {letter,correct:matches.map(thing=>thing.name),choices:shuffle([...matches,...misses])}});roundIndex=0;score=0;$("startScreen").classList.add("hidden");$("endScreen").classList.add("hidden");$("gameScreen").classList.remove("hidden");showRound()}
-function showRound(){locked=false;const current=rounds[roundIndex];$("score").textContent=`⭐ النقاط: ${score}`;$("round").textContent=`الجولة ${roundIndex+1} / ${roundsCount}`;$("progressBar").style.width=`${roundIndex/roundsCount*100}%`;$ ("targetLetter").textContent=current.letter;$ ("targetLetter").setAttribute("aria-label",`الحرف ${current.letter}`);$("feedback").textContent="";$("feedback").className="feedback";$("instruction").textContent="اضغط على كل الإجابات الصحيحة، ثم اختر «تأكيد».";const grid=$("objects");grid.innerHTML="";current.choices.forEach(thing=>{const button=document.createElement("button");button.type="button";button.className="object";button.setAttribute("aria-pressed","false");button.setAttribute("aria-label",thing.name);button.innerHTML=`<span class="pic" aria-hidden="true">${thing.emoji}</span><span class="label">${thing.name}</span>`;button.addEventListener("click",()=>{if(locked)return;button.classList.toggle("selected");button.setAttribute("aria-pressed",String(button.classList.contains("selected")))});grid.appendChild(button)});speak(`ابحث عن الأشياء التي تحتوي على حرف ${current.letter}`)}
-function submitRound(){if(locked)return;const current=rounds[roundIndex],buttons=[...$("objects").querySelectorAll(".object")],selected=buttons.filter(button=>button.classList.contains("selected"));if(!selected.length){$("feedback").textContent="اختر شيئاً واحداً على الأقل!";$("feedback").className="feedback bad";return}locked=true;let roundPoints=0;buttons.forEach(button=>{const isCorrect=current.correct.includes(button.getAttribute("aria-label"));const wasSelected=button.classList.contains("selected");if(isCorrect){button.classList.add("correct");if(wasSelected)roundPoints++}else if(wasSelected){button.classList.add("wrong")}});score+=roundPoints;$("score").textContent=`⭐ النقاط: ${score}`;const perfect=roundPoints===current.correct.length&&selected.length===current.correct.length;$("feedback").textContent=perfect?"أحسنت! وجدت كل الكنوز الصحيحة! 🎉":`وجدت ${roundPoints} من ${current.correct.length} كنوز. الأخضر هو الجواب الصحيح!`;$("feedback").className=`feedback ${roundPoints?"good":"bad"}`;$("instruction").textContent="";speak(perfect?"أحسنت! إجابة صحيحة":"حاول مرة أخرى في الجولة التالية");$("progressBar").style.width=`${(roundIndex+1)/roundsCount*100}%`;setTimeout(()=>{roundIndex++;if(roundIndex<roundsCount)showRound();else finishGame()},1500)}
-function finishGame(){$("gameScreen").classList.add("hidden");$("endScreen").classList.remove("hidden");$("finalScore").textContent=`${score} / ${roundsCount*3} ⭐`;$ ("finalMessage").textContent=score>=12?"يا لك من قرصان ذكي! لقد وجدت كنوز الحروف! 🏴‍☠️":"أحسنت المحاولة! جرّب مغامرة جديدة لتجد كنوزاً أكثر. ⚓"}
-$("startButton").addEventListener("click",startGame);$("submitButton").addEventListener("click",submitRound);$("againButton").addEventListener("click",startGame);$("soundButton").addEventListener("click",()=>{soundEnabled=!soundEnabled;$("soundButton").textContent=soundEnabled?"🔊 الصوت":"🔇 الصوت";$("soundButton").setAttribute("aria-pressed",String(soundEnabled));if(!soundEnabled&&"speechSynthesis" in window)window.speechSynthesis.cancel()});
+
+const ARABIC_LETTERS = ["ا", "ب", "ت", "ث", "ج", "ح", "خ", "د", "ذ", "ر", "ز", "س", "ش", "ص", "ض", "ط", "ظ", "ع", "غ", "ف", "ق", "ك", "ل", "م", "ن", "ه", "و", "ي"];
+const ROUND_COUNT = 12;
+const ROUND_CHOICE_COUNT = 3;
+const CORRECT_CHOICE_COUNT = 1;
+
+const elements = {
+  startScreen: document.getElementById("startScreen"),
+  gameScreen: document.getElementById("gameScreen"),
+  resultScreen: document.getElementById("resultScreen"),
+  startButton: document.getElementById("startButton"),
+  againButton: document.getElementById("againButton"),
+  repeatButton: document.getElementById("repeatButton"),
+  soundButton: document.getElementById("soundButton"),
+  scoreValue: document.getElementById("scoreValue"),
+  livesValue: document.getElementById("livesValue"),
+  levelValue: document.getElementById("levelValue"),
+  streakValue: document.getElementById("streakValue"),
+  progressBar: document.getElementById("progressBar"),
+  roundText: document.getElementById("roundText"),
+  levelBadge: document.getElementById("levelBadge"),
+  targetLetter: document.getElementById("targetLetter"),
+  instruction: document.getElementById("instruction"),
+  dragLayer: document.getElementById("dragLayer"),
+  wordGrid: document.getElementById("wordGrid"),
+  feedback: document.getElementById("feedback"),
+  resultTitle: document.getElementById("resultTitle"),
+  resultSubtitle: document.getElementById("resultSubtitle"),
+  resultScore: document.getElementById("resultScore"),
+  resultMessage: document.getElementById("resultMessage"),
+  pirateLeft: document.getElementById("pirateLeft"),
+  pirateRight: document.getElementById("pirateRight"),
+  playerShip: document.getElementById("playerShip")
+};
+
+const formatNumber = number => String(number);
+const shuffle = items => {
+  const copy = [...items];
+  for (let index = copy.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [copy[index], copy[swapIndex]] = [copy[swapIndex], copy[index]];
+  }
+  return copy;
+};
+
+class WordCard {
+  constructor(game, wordData) {
+    this.game = game;
+    this.wordData = wordData;
+    this.element = this.createElement();
+    this.bindPointerEvents();
+  }
+
+  createElement() {
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "word-card";
+    card.setAttribute("aria-label", this.wordData.word);
+    card.innerHTML = `<span class="picture" aria-hidden="true">${this.wordData.image}</span><span class="word">${this.wordData.word}</span>`;
+    return card;
+  }
+
+  bindPointerEvents() {
+    this.element.addEventListener("pointerdown", event => this.game.startDrag(event, this));
+  }
+
+  markCorrect() {
+    this.element.classList.add("correct", "used");
+    this.element.disabled = true;
+  }
+
+  showWrong() {
+    this.element.classList.add("wrong");
+    this.element.disabled = true;
+    setTimeout(() => {
+      this.element.classList.remove("wrong");
+      if (!this.game.isLocked) this.element.disabled = false;
+    }, 700);
+  }
+}
+
+class Pirate {
+  constructor(element) {
+    this.element = element;
+    this.reset();
+  }
+
+  reset() {
+    this.element.classList.remove("approaching", "hit", "sinking");
+  }
+
+  approach() {
+    this.element.classList.add("approaching");
+  }
+
+  hit() {
+    this.element.classList.remove("hit");
+    void this.element.offsetWidth;
+    this.element.classList.add("hit");
+  }
+
+  sink() {
+    this.element.classList.remove("approaching", "hit", "sinking");
+    void this.element.offsetWidth;
+    this.element.classList.add("sinking");
+  }
+}
+
+class Cannon {
+  constructor(game) {
+    this.game = game;
+  }
+
+  fire(targetElement, onImpact) {
+    const projectile = this.launch(elements.playerShip, targetElement);
+    setTimeout(() => {
+      projectile.ball.classList.add("fade");
+      this.createExplosion(projectile.targetRect);
+      if (onImpact) onImpact();
+      setTimeout(() => projectile.ball.remove(), 220);
+    }, 500);
+  }
+
+  fireAtPlayer(sourceElement) {
+    const projectile = this.launch(sourceElement, elements.playerShip, "cannonball incoming");
+    setTimeout(() => {
+      projectile.ball.classList.add("fade");
+      this.createExplosion(projectile.targetRect);
+      elements.playerShip.classList.add("sinking");
+      setTimeout(() => projectile.ball.remove(), 220);
+    }, 500);
+  }
+
+  launch(sourceElement, targetElement, className = "cannonball") {
+    const sourceRect = sourceElement.getBoundingClientRect();
+    const targetRect = targetElement.getBoundingClientRect();
+    const ball = document.createElement("div");
+    ball.className = className;
+    ball.style.left = `${sourceRect.left + sourceRect.width / 2}px`;
+    ball.style.top = `${sourceRect.top + sourceRect.height / 2}px`;
+    ball.style.setProperty("--dx", `${targetRect.left + targetRect.width / 2 - (sourceRect.left + sourceRect.width / 2)}px`);
+    ball.style.setProperty("--dy", `${targetRect.top + targetRect.height / 2 - (sourceRect.top + sourceRect.height / 2)}px`);
+    document.body.appendChild(ball);
+    requestAnimationFrame(() => ball.classList.add("flying"));
+    return { ball, targetRect };
+  }
+
+  createExplosion(targetRect) {
+    const explosion = document.createElement("div");
+    explosion.className = "explosion";
+    explosion.textContent = "💥";
+    explosion.style.left = `${targetRect.left + targetRect.width / 2 - 32}px`;
+    explosion.style.top = `${targetRect.top + targetRect.height / 2 - 40}px`;
+    document.body.appendChild(explosion);
+    setTimeout(() => explosion.remove(), 720);
+  }
+}
+
+class AudioFeedback {
+  constructor() {
+    this.enabled = true;
+    this.context = null;
+  }
+
+  toggle() {
+    this.enabled = !this.enabled;
+    return this.enabled;
+  }
+
+  playTone(frequency, duration, type = "sine", delay = 0) {
+    if (!this.enabled) return;
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    this.context = this.context || new AudioContext();
+    const oscillator = this.context.createOscillator();
+    const gain = this.context.createGain();
+    oscillator.type = type;
+    oscillator.frequency.value = frequency;
+    gain.gain.setValueAtTime(.0001, this.context.currentTime + delay);
+    gain.gain.exponentialRampToValueAtTime(.16, this.context.currentTime + delay + .02);
+    gain.gain.exponentialRampToValueAtTime(.0001, this.context.currentTime + delay + duration);
+    oscillator.connect(gain).connect(this.context.destination);
+    oscillator.start(this.context.currentTime + delay);
+    oscillator.stop(this.context.currentTime + delay + duration + .03);
+  }
+
+  success() {
+    this.playTone(523, .14, "triangle");
+    this.playTone(659, .2, "triangle", .1);
+  }
+
+  error() {
+    this.playTone(180, .25, "sawtooth");
+  }
+
+  victory() {
+    [523, 659, 784, 1047].forEach((frequency, index) => this.playTone(frequency, .22, "triangle", index * .12));
+  }
+}
+
+class Game {
+  constructor() {
+    this.audio = new AudioFeedback();
+    this.cannon = new Cannon(this);
+    this.pirates = [new Pirate(elements.pirateLeft), new Pirate(elements.pirateRight)];
+    this.rounds = [];
+    this.roundIndex = 0;
+    this.score = 0;
+    this.lives = 3;
+    this.streak = 0;
+    this.errorCount = 0;
+    this.roundCorrectCount = 0;
+    this.cards = [];
+    this.drag = null;
+    this.isLocked = false;
+    this.bindControls();
+  }
+
+  bindControls() {
+    elements.startButton.addEventListener("click", () => this.start());
+    elements.againButton.addEventListener("click", () => this.start());
+    elements.repeatButton.addEventListener("click", () => this.speakTarget());
+    elements.soundButton.addEventListener("click", () => {
+      const enabled = this.audio.toggle();
+      elements.soundButton.textContent = enabled ? "🔊 الصوت" : "🔇 الصوت";
+      elements.soundButton.setAttribute("aria-pressed", String(enabled));
+    });
+    document.addEventListener("pointermove", event => this.moveDrag(event));
+    document.addEventListener("pointerup", event => this.endDrag(event));
+    document.addEventListener("pointercancel", event => this.endDrag(event));
+  }
+
+  start() {
+    this.rounds = this.createRounds();
+    this.roundIndex = 0;
+    this.score = 0;
+    this.lives = 3;
+    this.streak = 0;
+    this.errorCount = 0;
+    elements.playerShip.classList.remove("sinking");
+    elements.startScreen.classList.add("hidden");
+    elements.resultScreen.classList.add("hidden");
+    elements.gameScreen.classList.remove("hidden");
+    this.showRound();
+  }
+
+  createRounds() {
+    const rounds = [];
+    const usedLetters = [];
+    const availableLetters = shuffle(ARABIC_LETTERS);
+    for (let index = 0; index < ROUND_COUNT; index += 1) {
+      const level = index < 4 ? 1 : index < 8 ? 2 : 3;
+      const candidates = availableLetters.filter(letter => !usedLetters.includes(letter) && this.getMatches(letter, level).length >= CORRECT_CHOICE_COUNT);
+      const letter = (candidates.length ? candidates : availableLetters).shift();
+      usedLetters.push(letter);
+      const correct = shuffle(this.getMatches(letter, level)).slice(0, CORRECT_CHOICE_COUNT);
+      const wrong = shuffle(WORDS.filter(item => !correct.includes(item) && !item.word.includes(letter))).slice(0, ROUND_CHOICE_COUNT - CORRECT_CHOICE_COUNT);
+      rounds.push({ letter, level, correct, choices: shuffle([...correct, ...wrong]) });
+    }
+    return rounds;
+  }
+
+  getMatches(letter, level) {
+    return WORDS.filter(item => level === 1 ? item.word.startsWith(letter) : item.word.includes(letter));
+  }
+
+  showRound() {
+    this.isLocked = false;
+    this.cards = [];
+    this.roundCorrectCount = 0;
+    const currentRound = this.rounds[this.roundIndex];
+    this.pirates.forEach(pirate => pirate.reset());
+    elements.scoreValue.textContent = formatNumber(this.score);
+    elements.livesValue.textContent = formatNumber(this.lives);
+    elements.levelValue.textContent = formatNumber(currentRound.level);
+    elements.streakValue.textContent = formatNumber(this.streak);
+    elements.roundText.textContent = `الجولة ${formatNumber(this.roundIndex + 1)} / ${formatNumber(ROUND_COUNT)}`;
+    elements.progressBar.style.width = `${this.roundIndex / ROUND_COUNT * 100}%`;
+    elements.targetLetter.textContent = currentRound.letter;
+    elements.targetLetter.setAttribute("aria-label", `الحرف ${currentRound.letter}`);
+    elements.levelBadge.textContent = currentRound.level === 1 ? "🟢 المستوى السهل" : currentRound.level === 2 ? "🟡 المستوى المتوسط" : "🔴 المستوى الصعب";
+    elements.instruction.textContent = currentRound.level === 1 ? "الحرف في بداية الكلمة — اسحب الصورة إلى أحد المدفعين." : "هل يوجد الحرف في أي مكان؟ اسحب الصورة إلى أحد المدفعين.";
+    elements.feedback.textContent = "";
+    elements.feedback.className = "feedback";
+    elements.wordGrid.replaceChildren();
+    currentRound.choices.forEach(wordData => {
+      const card = new WordCard(this, wordData);
+      this.cards.push(card);
+      elements.wordGrid.appendChild(card.element);
+    });
+    this.speakTarget();
+  }
+
+  speakTarget() {
+    if (!this.audio.enabled || !("speechSynthesis" in window) || !this.rounds.length) return;
+    const speech = window.speechSynthesis;
+    speech.cancel();
+    speech.resume();
+    const utterance = new SpeechSynthesisUtterance(`هيا! اختر الكلمات التي تحتوي على حرف ${this.rounds[this.roundIndex].letter}`);
+    utterance.lang = "ar-SA";
+    utterance.rate = .82;
+    utterance.pitch = 1.05;
+    const arabicVoice = speech.getVoices().find(voice => voice.lang.toLowerCase().startsWith("ar"));
+    if (arabicVoice) utterance.voice = arabicVoice;
+    speech.speak(utterance);
+  }
+
+  getArsenalAt(x, y) {
+    const arsenal = [...document.querySelectorAll(".arsenal")].find(element => {
+      const rect = element.getBoundingClientRect();
+      return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+    });
+    return arsenal ? arsenal.dataset.arsenal : null;
+  }
+
+  startDrag(event, card) {
+    if (this.isLocked || card.element.disabled) return;
+    event.preventDefault();
+    const cardRect = card.element.getBoundingClientRect();
+    const placeholder = document.createElement("span");
+    placeholder.className = "word-card-placeholder";
+    placeholder.style.width = `${cardRect.width}px`;
+    placeholder.style.height = `${cardRect.height}px`;
+    card.element.parentNode.insertBefore(placeholder, card.element);
+    const dragLayerRect = elements.dragLayer.getBoundingClientRect();
+    elements.dragLayer.appendChild(card.element);
+    card.element.classList.add("dragging");
+    card.element.style.width = `${cardRect.width}px`;
+    card.element.style.height = `${cardRect.height}px`;
+    card.element.style.left = `${cardRect.left - dragLayerRect.left}px`;
+    card.element.style.top = `${cardRect.top - dragLayerRect.top}px`;
+    this.drag = {
+      card,
+      placeholder,
+      offsetX: event.clientX - cardRect.left,
+      offsetY: event.clientY - cardRect.top
+    };
+    this.moveCard(event.clientX, event.clientY);
+  }
+
+  moveDrag(event) {
+    if (this.drag) this.moveCard(event.clientX, event.clientY);
+  }
+
+  moveCard(x, y) {
+    const { card, offsetX, offsetY } = this.drag;
+    const dragLayerRect = elements.dragLayer.getBoundingClientRect();
+    card.element.style.left = `${x - offsetX - dragLayerRect.left}px`;
+    card.element.style.top = `${y - offsetY - dragLayerRect.top}px`;
+    document.querySelectorAll(".arsenal").forEach(arsenal => {
+      const rect = arsenal.getBoundingClientRect();
+      const isOver = x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+      arsenal.classList.toggle("is-over", isOver);
+    });
+  }
+
+  endDrag(event) {
+    if (!this.drag) return;
+    const { card, placeholder } = this.drag;
+    card.element.classList.remove("dragging");
+    card.element.style.cssText = "";
+    placeholder.parentNode.insertBefore(card.element, placeholder);
+    placeholder.remove();
+    document.querySelectorAll(".arsenal").forEach(arsenal => arsenal.classList.remove("is-over"));
+    const arsenalName = this.getArsenalAt(event.clientX, event.clientY);
+    this.drag = null;
+    if (arsenalName) this.handleCardDrop(card, arsenalName);
+  }
+
+  handleCardDrop(card, arsenalName) {
+    if (this.isLocked || card.element.disabled || !arsenalName) return;
+    const currentRound = this.rounds[this.roundIndex];
+    const isCorrect = currentRound.correct.some(item => item.word === card.wordData.word);
+    if (isCorrect) {
+      card.markCorrect();
+      this.handleCorrect(arsenalName);
+    } else {
+      card.showWrong();
+      this.handleWrong();
+    }
+  }
+
+  handleCorrect(arsenalName) {
+    this.score += 10;
+    this.streak += 1;
+    this.roundCorrectCount += 1;
+    elements.feedback.textContent = "أحسنت! إصابة موفقة! 💥 +10";
+    elements.feedback.className = "feedback pop";
+    this.audio.success();
+    const targetPirate = arsenalName === "right" ? this.pirates[1] : this.pirates[0];
+    targetPirate.hit();
+    this.cannon.fire(targetPirate.element, () => targetPirate.sink());
+    this.updateHud();
+    if (this.roundCorrectCount >= this.rounds[this.roundIndex].correct.length) this.finishRoundSoon();
+  }
+
+  handleWrong() {
+    this.score = Math.max(0, this.score - 5);
+    this.lives -= 1;
+    this.errorCount += 1;
+    this.streak = 0;
+    elements.feedback.textContent = "أوه! هذه الكلمة لا تحتوي على الحرف. حاول مجدداً! -5 ❤️";
+    elements.feedback.className = "feedback bad pop";
+    this.audio.error();
+    this.pirates.forEach(pirate => pirate.approach());
+    this.updateHud();
+    if (this.errorCount >= 2) {
+      this.isLocked = true;
+      this.lives = 0;
+      elements.feedback.textContent = "خطآن! أطلق القراصنة قذيفة... السفينة تغرق! 🌊";
+      this.updateHud();
+      this.cannon.fireAtPlayer(this.pirates[0].element);
+      setTimeout(() => this.finishGame(false), 1150);
+    }
+  }
+
+  updateHud() {
+    elements.scoreValue.textContent = formatNumber(this.score);
+    elements.livesValue.textContent = formatNumber(Math.max(0, this.lives));
+    elements.streakValue.textContent = formatNumber(this.streak);
+  }
+
+  finishRoundSoon() {
+    if (this.isLocked) return;
+    this.isLocked = true;
+    elements.progressBar.style.width = `${(this.roundIndex + 1) / ROUND_COUNT * 100}%`;
+    setTimeout(() => {
+      if (this.lives <= 0) return;
+      this.roundIndex += 1;
+      if (this.roundIndex >= ROUND_COUNT) this.finishGame(true);
+      else this.showRound();
+    }, 1050);
+  }
+
+  finishGame(won) {
+    this.isLocked = true;
+    window.speechSynthesis?.cancel();
+    elements.gameScreen.classList.add("hidden");
+    elements.resultScreen.classList.remove("hidden");
+    elements.resultTitle.textContent = won ? "ممتاز! 🏆" : this.errorCount >= 2 ? "غَرِقَت السفينة! 🌊" : "حاول مرة أخرى! ⚓";
+    elements.resultSubtitle.textContent = won ? "لقد دافعت عن السفينة بنجاح" : "انتهت المعركة بعد تقدم القراصنة.";
+    elements.resultScore.textContent = `${formatNumber(this.score)} ⭐`;
+    elements.resultMessage.textContent = won ? "لقد دافعت عن السفينة بنجاح وأتقنت حروفاً عربية كثيرة!" : this.errorCount >= 2 ? "بعد خطأين، أصابت قذيفة القراصنة سفينتك. حاول مرة أخرى!" : "لا بأس يا بطل! تدرب مرة أخرى وستصبح قرصاناً رائعاً.";
+    if (won) this.audio.victory();
+  }
+}
+
+new Game();
 </script>
 </body>
 </html>
