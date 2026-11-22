@@ -1,0 +1,2662 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>مُغَامَرَةُ الحُرُوفِ | Abjad Adventure - Arabic Learning Game</title>
+  <!-- Google Fonts: Tajawal & Cairo for crisp, child-friendly Arabic + Fredoka for playful English -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Fredoka:wght@500;600;700&family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sky-top: #7DD3FC;
+      --sky-bottom: #E0F2FE;
+      --meadow-light: #86EFAC;
+      --meadow-dark: #22C55E;
+      --sun-yellow: #FACC15;
+      --sun-orange: #F59E0B;
+      --coral: #FB7185;
+      --coral-dark: #E11D48;
+      --purple: #A78BFA;
+      --purple-dark: #7C3AED;
+      --blue: #38BDF8;
+      --blue-dark: #0284C7;
+      --teal: #2DD4BF;
+      --teal-dark: #0D9488;
+      --card-bg: #FFFFFF;
+      --text-dark: #1E293B;
+      --text-muted: #475569;
+      --shadow-soft: 0 10px 25px rgba(15, 23, 42, 0.12);
+      --font-ar: 'Tajawal', 'Cairo', system-ui, -apple-system, sans-serif;
+      --font-en: 'Fredoka', system-ui, -apple-system, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100dvh;
+      font-family: var(--font-ar);
+      color: var(--text-dark);
+      background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 68%, var(--meadow-light) 68%, var(--meadow-dark) 100%);
+      background-attachment: fixed;
+      overflow-x: hidden;
+    }
+
+    .en-text {
+      font-family: var(--font-en);
+      direction: ltr;
+      display: inline-block;
+    }
+
+    /* Floating decorative clouds & sparkles in background */
+    .bg-decor {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .cloud {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.82);
+      border-radius: 999px;
+      filter: drop-shadow(0 6px 12px rgba(255,255,255,0.4));
+      animation: floatCloud linear infinite;
+    }
+    .cloud::before, .cloud::after {
+      content: '';
+      position: absolute;
+      background: inherit;
+      border-radius: 50%;
+    }
+    .cloud.c1 { width: 140px; height: 46px; top: 8%; left: -160px; animation-duration: 42s; }
+    .cloud.c1::before { width: 64px; height: 64px; top: -30px; left: 22px; }
+    .cloud.c1::after { width: 48px; height: 48px; top: -20px; left: 72px; }
+
+    .cloud.c2 { width: 110px; height: 38px; top: 22%; left: -140px; animation-duration: 55s; animation-delay: -18s; opacity: 0.7; }
+    .cloud.c2::before { width: 50px; height: 50px; top: -24px; left: 18px; }
+    .cloud.c2::after { width: 38px; height: 38px; top: -15px; left: 56px; }
+
+    .sun-orb {
+      position: absolute;
+      top: 18px;
+      left: 24px;
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #FEF08A, #FACC15 60%, #F59E0B);
+      box-shadow: 0 0 40px rgba(250, 204, 21, 0.75);
+      animation: pulseSun 4s ease-in-out infinite;
+    }
+
+    @keyframes floatCloud {
+      from { transform: translateX(0); }
+      to { transform: translateX(calc(100vw + 340px)); }
+    }
+    @keyframes pulseSun {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.07); }
+    }
+
+    /* Main App Container */
+    #app {
+      position: relative;
+      z-index: 1;
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 12px 16px 36px;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Navigation & Audio Control Bar */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      padding: 10px 16px;
+      border-radius: 26px;
+      box-shadow: 0 6px 0 rgba(14, 116, 144, 0.16), var(--shadow-soft);
+      border: 3px solid #FFFFFF;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .top-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Tactile 3D Child-Friendly Buttons */
+    .btn-3d {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 54px;
+      min-width: 54px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 22px;
+      font-family: var(--font-ar);
+      font-weight: 800;
+      font-size: 1.15rem;
+      cursor: pointer;
+      color: #FFFFFF;
+      background: linear-gradient(180deg, #38BDF8 0%, #0284C7 100%);
+      box-shadow: 0 6px 0 #0369A1, 0 10px 18px rgba(2, 132, 199, 0.28);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.15s ease;
+    }
+    .btn-3d:hover {
+      filter: brightness(1.05);
+      transform: translateY(-2px);
+    }
+    .btn-3d:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #0369A1, 0 4px 8px rgba(2, 132, 199, 0.25);
+    }
+
+    .btn-green {
+      background: linear-gradient(180deg, #4ADE80 0%, #16A34A 100%);
+      box-shadow: 0 6px 0 #15803D, 0 10px 18px rgba(22, 163, 74, 0.3);
+    }
+    .btn-green:active { box-shadow: 0 2px 0 #15803D; }
+
+    .btn-yellow {
+      color: #422006;
+      background: linear-gradient(180deg, #FDE047 0%, #F59E0B 100%);
+      box-shadow: 0 6px 0 #B45309, 0 10px 18px rgba(245, 158, 11, 0.32);
+    }
+    .btn-yellow:active { box-shadow: 0 2px 0 #B45309; }
+
+    .btn-coral {
+      background: linear-gradient(180deg, #FB7185 0%, #E11D48 100%);
+      box-shadow: 0 6px 0 #9F1239, 0 10px 18px rgba(225, 29, 72, 0.28);
+    }
+    .btn-coral:active { box-shadow: 0 2px 0 #9F1239; }
+
+    .btn-purple {
+      background: linear-gradient(180deg, #C084FC 0%, #7C3AED 100%);
+      box-shadow: 0 6px 0 #5B21B6, 0 10px 18px rgba(124, 58, 237, 0.28);
+    }
+    .btn-purple:active { box-shadow: 0 2px 0 #5B21B6; }
+
+    .btn-white {
+      color: var(--text-dark);
+      background: linear-gradient(180deg, #FFFFFF 0%, #F1F5F9 100%);
+      box-shadow: 0 5px 0 #CBD5E1, 0 8px 14px rgba(15, 23, 42, 0.1);
+      border: 2px solid #E2E8F0;
+    }
+    .btn-white:active { box-shadow: 0 2px 0 #CBD5E1; }
+
+    .btn-icon-only {
+      padding: 10px;
+      width: 54px;
+      height: 54px;
+      font-size: 1.5rem;
+    }
+
+    .speaker-pulse {
+      animation: speakerWave 1.8s infinite;
+    }
+    @keyframes speakerWave {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    .star-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(180deg, #FEF9C3 0%, #FDE047 100%);
+      border: 3px solid #F59E0B;
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-weight: 900;
+      font-size: 1.25rem;
+      color: #78350F;
+      box-shadow: 0 4px 0 #D97706;
+    }
+
+    /* Mascot Companion Dock */
+    .mascot-banner {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(255, 255, 255, 0.96);
+      border: 3px solid #FDE047;
+      border-radius: 28px;
+      padding: 10px 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 6px 0 rgba(245, 158, 11, 0.25), var(--shadow-soft);
+      transition: transform 0.25s ease;
+    }
+
+    .mascot-avatar {
+      width: 74px;
+      height: 74px;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .mascot-avatar:hover { transform: scale(1.08) rotate(-4deg); }
+    .mascot-avatar.bounce {
+      animation: mascotBounce 0.65s ease;
+    }
+    @keyframes mascotBounce {
+      0%, 100% { transform: translateY(0) scale(1); }
+      35% { transform: translateY(-14px) scale(1.1); }
+      65% { transform: translateY(0) scale(0.95); }
+    }
+
+    .speech-bubble {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .speech-texts {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .speech-ar {
+      font-size: 1.32rem;
+      font-weight: 800;
+      color: #0F172A;
+      line-height: 1.35;
+    }
+    .speech-en {
+      font-family: var(--font-en);
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: #0284C7;
+      direction: ltr;
+      text-align: right;
+    }
+    body.pure-arabic .speech-en,
+    body.pure-arabic .bilingual-sub {
+      display: none !important;
+    }
+
+    /* Screens */
+    .screen {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+      animation: fadeSlideIn 0.32s ease;
+    }
+    .screen.active {
+      display: flex;
+    }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(10px) scale(0.99); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* HOME SCREEN */
+    .home-hero {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 36px;
+      border: 4px solid #FFFFFF;
+      box-shadow: 0 12px 0 rgba(2, 132, 199, 0.16), 0 20px 40px rgba(15, 23, 42, 0.14);
+      padding: 28px 22px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin: auto 0;
+    }
+
+    .game-logo-badge {
+      background: linear-gradient(135deg, #FEF08A 0%, #FDE047 100%);
+      border: 3px solid #F59E0B;
+      color: #92400E;
+      padding: 6px 20px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 1rem;
+      box-shadow: 0 4px 0 #D97706;
+    }
+
+    .game-title-ar {
+      font-size: clamp(2.3rem, 6vw, 3.6rem);
+      font-weight: 900;
+      margin: 0;
+      background: linear-gradient(180deg, #0284C7 0%, #7C3AED 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 3px 0 rgba(255,255,255,0.9));
+      line-height: 1.2;
+    }
+
+    .game-title-en {
+      font-family: var(--font-en);
+      font-size: clamp(1.25rem, 3.2vw, 1.75rem);
+      font-weight: 700;
+      color: #F59E0B;
+      margin: -8px 0 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-mascot-wrap {
+      width: 165px;
+      height: 165px;
+      margin: 4px auto;
+      animation: floatGentle 3.2s ease-in-out infinite;
+    }
+    @keyframes floatGentle {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .play-big-btn {
+      font-size: 1.75rem;
+      padding: 18px 46px;
+      border-radius: 30px;
+      min-height: 76px;
+      animation: playPulse 2.2s infinite;
+    }
+    @keyframes playPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+    }
+
+    .home-secondary-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    /* ADVENTURE MAP & MINI-GAMES HUB */
+    .section-card {
+      background: rgba(255, 255, 255, 0.94);
+      border-radius: 30px;
+      border: 3px solid #FFFFFF;
+      padding: 20px;
+      box-shadow: 0 8px 0 rgba(15, 23, 42, 0.08), var(--shadow-soft);
+      margin-bottom: 18px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #0F172A;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .levels-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    .level-card {
+      position: relative;
+      background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+      border: 3px solid #CBD5E1;
+      border-radius: 26px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      box-shadow: 0 6px 0 #CBD5E1;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      text-align: right;
+    }
+    .level-card.unlocked {
+      border-color: #38BDF8;
+      box-shadow: 0 6px 0 #0284C7;
+    }
+    .level-card.completed {
+      border-color: #4ADE80;
+      background: linear-gradient(180deg, #F0FDF4 0%, #DCFCE7 100%);
+      box-shadow: 0 6px 0 #16A34A;
+    }
+    .level-card:hover {
+      transform: translateY(-3px);
+    }
+    .level-card:active {
+      transform: translateY(3px);
+    }
+    .level-card.locked {
+      opacity: 0.72;
+      filter: grayscale(0.35);
+    }
+
+    .level-badge-num {
+      width: 62px;
+      height: 62px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #FFF;
+      flex-shrink: 0;
+      box-shadow: inset 0 -4px 0 rgba(0,0,0,0.18);
+    }
+
+    .level-info {
+      flex: 1;
+    }
+    .level-info h3 {
+      margin: 0 0 4px;
+      font-size: 1.2rem;
+      font-weight: 900;
+    }
+    .level-info p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    /* Mini-Games Direct Launcher Grid */
+    .minigames-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+      gap: 14px;
+    }
+
+    .mg-tile {
+      border: none;
+      border-radius: 26px;
+      padding: 18px 14px;
+      color: #FFF;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 8px;
+      transition: transform 0.15s ease;
+    }
+    .mg-tile:hover { transform: translateY(-4px) scale(1.01); }
+    .mg-tile:active { transform: translateY(3px); }
+    .mg-emoji {
+      font-size: 2.7rem;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.18));
+    }
+    .mg-title-ar {
+      font-size: 1.25rem;
+      font-weight: 900;
+    }
+    .mg-title-en {
+      font-family: var(--font-en);
+      font-size: 0.9rem;
+      opacity: 0.95;
+      font-weight: 600;
+    }
+
+    /* GAMEPLAY ARENA */
+    .game-arena {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 34px;
+      border: 4px solid #FFFFFF;
+      box-shadow: 0 10px 0 rgba(2, 132, 199, 0.14), var(--shadow-soft);
+      padding: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .progress-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .progress-track {
+      flex: 1;
+      height: 20px;
+      background: #E2E8F0;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 2px solid #CBD5E1;
+      padding: 2px;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #FACC15 0%, #4ADE80 50%, #22C55E 100%);
+      transition: width 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .progress-label {
+      font-weight: 900;
+      font-size: 1.05rem;
+      color: #0284C7;
+      min-width: 58px;
+      text-align: center;
+    }
+
+    /* Big Arabic Letter & Option Cards */
+    .big-letter-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 10px;
+    }
+
+    .letter-showcase-card {
+      background: linear-gradient(180deg, #FFFBEB 0%, #FEF3C7 100%);
+      border: 4px solid #F59E0B;
+      border-radius: 34px;
+      padding: 20px 30px;
+      box-shadow: 0 10px 0 #D97706;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      width: 100%;
+      max-width: 680px;
+    }
+
+    .giant-arabic-char {
+      font-size: clamp(6.5rem, 18vw, 9.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      color: #E11D48;
+      text-shadow: 0 5px 0 rgba(225, 29, 72, 0.16);
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      padding: 0 14px;
+    }
+    .giant-arabic-char:hover {
+      transform: scale(1.08);
+    }
+
+    .example-word-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      background: #FFFFFF;
+      border: 3px solid #FDE68A;
+      border-radius: 26px;
+      padding: 14px 24px;
+      cursor: pointer;
+    }
+    .example-emoji {
+      font-size: 4.5rem;
+      line-height: 1.1;
+    }
+    .example-word-ar {
+      font-size: 2.1rem;
+      font-weight: 900;
+      color: #0F172A;
+    }
+    .highlight-letter {
+      color: #E11D48;
+      text-decoration: underline wavy #FACC15 3px;
+    }
+
+    /* Choice Grids */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    @media (min-width: 640px) {
+      .options-grid.cols-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .choice-card {
+      background: linear-gradient(180deg, #FFFFFF 0%, #F0F9FF 100%);
+      border: 4px solid #38BDF8;
+      border-radius: 28px;
+      min-height: 124px;
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: 0 8px 0 #0284C7;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
+    }
+    .choice-card:hover {
+      transform: translateY(-4px);
+      background: linear-gradient(180deg, #FFFFFF 0%, #E0F2FE 100%);
+    }
+    .choice-card:active {
+      transform: translateY(4px);
+      box-shadow: 0 3px 0 #0284C7;
+    }
+    .choice-card .big-char {
+      font-size: clamp(3.4rem, 9vw, 4.8rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: #0F172A;
+    }
+    .choice-card .word-label {
+      font-size: clamp(1.5rem, 4.5vw, 2rem);
+      font-weight: 900;
+      color: #0F172A;
+    }
+
+    .choice-card.correct-state {
+      background: linear-gradient(180deg, #DCFCE7 0%, #86EFAC 100%) !important;
+      border-color: #16A34A !important;
+      box-shadow: 0 8px 0 #15803D !important;
+      animation: popCelebrate 0.5s ease;
+    }
+    .choice-card.wrong-state {
+      background: linear-gradient(180deg, #FFE4E6 0%, #FECDD3 100%) !important;
+      border-color: #FB7185 !important;
+      box-shadow: 0 4px 0 #E11D48 !important;
+      opacity: 0.65;
+      animation: gentleShake 0.45s ease;
+    }
+
+    @keyframes popCelebrate {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    @keyframes gentleShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-8px); }
+      75% { transform: translateX(8px); }
+    }
+
+    /* Game 3: Tap-to-Match Letters & Pictures */
+    .match-arena {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      max-width: 680px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 6px;
+    }
+    .match-col {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      z-index: 2;
+    }
+    .match-node {
+      min-height: 78px;
+      border-radius: 24px;
+      border: 4px solid #A78BFA;
+      background: #FFFFFF;
+      box-shadow: 0 6px 0 #7C3AED;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-weight: 900;
+      transition: transform 0.15s ease, background 0.2s ease;
+    }
+    .match-node.selected {
+      background: #FEF08A;
+      border-color: #F59E0B;
+      box-shadow: 0 6px 0 #D97706;
+      transform: scale(1.05);
+    }
+    .match-node.matched {
+      background: #DCFCE7;
+      border-color: #22C55E;
+      box-shadow: 0 4px 0 #16A34A;
+      opacity: 0.85;
+      pointer-events: none;
+    }
+    .match-svg-lines {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Game 4: Memory Flip Cards */
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      max-width: 620px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    @media (max-width: 480px) {
+      .memory-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .mem-card {
+      aspect-ratio: 1 / 1.08;
+      perspective: 800px;
+      cursor: pointer;
+    }
+    .mem-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-style: preserve-3d;
+    }
+    .mem-card.flipped .mem-inner,
+    .mem-card.matched .mem-inner {
+      transform: rotateY(180deg);
+    }
+    .mem-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      border-radius: 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      font-weight: 900;
+    }
+    .mem-front {
+      background: linear-gradient(135deg, #38BDF8 0%, #818CF8 100%);
+      border: 4px solid #FFFFFF;
+      box-shadow: 0 6px 0 #4F46E5;
+      color: #FFF;
+      font-size: 2.2rem;
+    }
+    .mem-back {
+      background: #FFFBEB;
+      border: 4px solid #F59E0B;
+      box-shadow: 0 6px 0 #D97706;
+      transform: rotateY(180deg);
+      color: #0F172A;
+    }
+    .mem-card.matched .mem-back {
+      background: #DCFCE7;
+      border-color: #22C55E;
+      box-shadow: 0 6px 0 #16A34A;
+    }
+
+    /* Game 6: Counting Garden & Color Splash */
+    .counting-garden {
+      background: linear-gradient(180deg, #ECFDF5 0%, #D1FAE5 100%);
+      border: 3px dashed #34D399;
+      border-radius: 28px;
+      padding: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      min-height: 150px;
+      max-width: 680px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .count-item {
+      font-size: 3.3rem;
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      padding: 4px;
+    }
+    .count-item.counted {
+      transform: scale(1.18) rotate(-6deg);
+      filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.95));
+    }
+    .count-badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: #E11D48;
+      color: #FFF;
+      font-size: 0.95rem;
+      font-weight: 900;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #FFF;
+    }
+
+    .color-blob {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      border: 4px solid #FFFFFF;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.18);
+      margin-bottom: 4px;
+    }
+
+    /* Trophy & Alphabet Mastery Grid */
+    .badges-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .badge-card {
+      background: #F8FAFC;
+      border: 3px solid #CBD5E1;
+      border-radius: 24px;
+      padding: 14px;
+      text-align: center;
+      opacity: 0.55;
+    }
+    .badge-card.earned {
+      opacity: 1;
+      background: linear-gradient(180deg, #FEFCE8 0%, #FEF08A 100%);
+      border-color: #F59E0B;
+      box-shadow: 0 6px 0 #D97706;
+    }
+    .alphabet-mastery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+      gap: 10px;
+    }
+    .alpha-cell {
+      aspect-ratio: 1;
+      border-radius: 18px;
+      border: 3px solid #CBD5E1;
+      background: #F8FAFC;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    .alpha-cell:hover { transform: scale(1.08); }
+    .alpha-cell.mastered {
+      background: #DCFCE7;
+      border-color: #22C55E;
+      color: #15803D;
+      box-shadow: 0 4px 0 #16A34A;
+    }
+
+    /* Celebration Modal Overlay */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.58);
+      backdrop-filter: blur(5px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 100;
+    }
+    .modal-overlay.open {
+      display: flex;
+      animation: fadeSlideIn 0.25s ease;
+    }
+    .celebrate-box {
+      background: linear-gradient(180deg, #FFFFFF 0%, #FEFCE8 100%);
+      border: 5px solid #FACC15;
+      border-radius: 36px;
+      padding: 28px 24px;
+      max-width: 460px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 14px 0 #D97706, 0 24px 48px rgba(0,0,0,0.3);
+    }
+
+    /* Confetti Canvas */
+    #confetti-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 99;
+    }
+
+    /* Toast Notification for Voice/Fallback Info */
+    .voice-toast {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #1E293B;
+      color: #FFF;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      z-index: 120;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      transition: transform 0.3s ease;
+      max-width: 92vw;
+      text-align: center;
+    }
+    .voice-toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 600px) {
+      .top-bar { padding: 8px 12px; }
+      .btn-3d { min-height: 48px; padding: 8px 14px; font-size: 1rem; }
+      .btn-icon-only { width: 48px; height: 48px; }
+      .speech-ar { font-size: 1.12rem; }
+      .mascot-avatar { width: 60px; height: 60px; }
+      .game-arena { padding: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Decorative Sky & Sunshine Background -->
+  <div class="bg-decor" aria-hidden="true">
+    <div class="sun-orb"></div>
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+  </div>
+
+  <canvas id="confetti-canvas"></canvas>
+  <div id="voice-toast" class="voice-toast" role="status" aria-live="polite"></div>
+
+  <div id="app">
+    <!-- Persistent Top Bar with Navigation & Voice Controls -->
+    <header class="top-bar">
+      <div class="top-group">
+        <button id="btn-home" class="btn-3d btn-white btn-icon-only" title="الرئيسية / Home" aria-label="Home">🏠</button>
+        <button id="btn-map" class="btn-3d btn-purple" title="خريطة المغامرة / Levels">
+          <span>🗺️</span>
+          <span>المَرَاحِل</span>
+        </button>
+        <button id="btn-trophies" class="btn-3d btn-yellow btn-icon-only" title="الجوائز والحروف / Trophies" aria-label="Trophies">🏆</button>
+      </div>
+
+      <div class="top-group">
+        <div class="star-pill" title="النجوم المكتسبة / Collected Stars">
+          <span>⭐</span>
+          <span id="star-count">0</span>
+        </div>
+        <button id="btn-bilingual" class="btn-3d btn-white" title="تبديل المساعدة بالإنجليزية / Toggle Bilingual Helper" style="font-size:0.95rem; padding: 8px 12px;">
+          <span>عربي / EN</span>
+        </button>
+        <button id="btn-replay-voice" class="btn-3d btn-green btn-icon-only speaker-pulse" title="أعد سماع السؤال / Replay Voice" aria-label="Replay question">🔊</button>
+        <button id="btn-mute" class="btn-3d btn-coral btn-icon-only" title="كتم أو تشغيل الصوت / Mute or Unmute" aria-label="Mute toggle">🔔</button>
+      </div>
+    </header>
+
+    <!-- Friendly Animated Mascot "Kareem" Companion Bar -->
+    <section class="mascot-banner" id="mascot-banner">
+      <div class="mascot-avatar" id="mascot-avatar" title="اضغط على كريم! / Tap Kareem!">
+        <!-- Custom Cute Owl Explorer SVG Mascot -->
+        <svg viewBox="0 0 120 120" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="owlBody" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#38BDF8"/>
+              <stop offset="100%" stop-color="#0284C7"/>
+            </linearGradient>
+            <linearGradient id="owlBelly" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#FEF9C3"/>
+              <stop offset="100%" stop-color="#FDE047"/>
+            </linearGradient>
+          </defs>
+          <!-- Ears/Tufts -->
+          <polygon points="26,34 38,14 48,30" fill="#0369A1"/>
+          <polygon points="94,34 82,14 72,30" fill="#0369A1"/>
+          <!-- Main Body -->
+          <ellipse cx="60" cy="68" rx="42" ry="44" fill="url(#owlBody)"/>
+          <!-- Wings -->
+          <ellipse cx="18" cy="70" rx="11" ry="24" transform="rotate(14 18 70)" fill="#0369A1"/>
+          <ellipse cx="102" cy="70" rx="11" ry="24" transform="rotate(-14 102 70)" fill="#0369A1"/>
+          <!-- Belly -->
+          <ellipse cx="60" cy="80" rx="28" ry="28" fill="url(#owlBelly)"/>
+          <!-- Star Badge on Belly -->
+          <polygon points="60,66 63,74 72,74 65,79 68,87 60,82 52,87 55,79 48,74 57,74" fill="#F59E0B"/>
+          <!-- Eye Patches -->
+          <circle cx="44" cy="46" r="17" fill="#FFFFFF"/>
+          <circle cx="76" cy="46" r="17" fill="#FFFFFF"/>
+          <!-- Pupils -->
+          <circle cx="46" cy="46" r="8" fill="#0F172A"/>
+          <circle cx="74" cy="46" r="8" fill="#0F172A"/>
+          <circle cx="48" cy="43" r="3" fill="#FFFFFF"/>
+          <circle cx="76" cy="43" r="3" fill="#FFFFFF"/>
+          <!-- Rosy Cheeks -->
+          <ellipse cx="30" cy="58" rx="6" ry="4" fill="#FB7185" opacity="0.75"/>
+          <ellipse cx="90" cy="58" rx="6" ry="4" fill="#FB7185" opacity="0.75"/>
+          <!-- Beak -->
+          <polygon points="53,53 67,53 60,64" fill="#F59E0B"/>
+          <!-- Little Explorer Cap -->
+          <path d="M36,26 Q60,12 84,26 Z" fill="#FACC15"/>
+          <rect x="34" y="24" width="52" height="5" rx="2.5" fill="#E11D48"/>
+          <!-- Feet -->
+          <ellipse cx="45" cy="111" rx="10" ry="5" fill="#F59E0B"/>
+          <ellipse cx="75" cy="111" rx="10" ry="5" fill="#F59E0B"/>
+        </svg>
+      </div>
+      <div class="speech-bubble">
+        <div class="speech-texts">
+          <div class="speech-ar" id="speech-ar">مَرْحَبًا يَا صَدِيقِي! أَنَا كَرِيم، هَيَّا نَتَعَلَّمْ العَرَبِيَّةَ مَعًا!</div>
+          <div class="speech-en" id="speech-en">Hello friend! I'm Kareem. Let's learn Arabic together!</div>
+        </div>
+        <button id="btn-bubble-speak" class="btn-3d btn-yellow btn-icon-only" title="استمع لكريم / Listen to Kareem" aria-label="Speak prompt">🗣️</button>
+      </div>
+    </section>
+
+    <!-- SCREEN 1: HOME SCREEN -->
+    <main id="screen-home" class="screen active">
+      <div class="home-hero">
+        <div class="game-logo-badge">✨ لُعْبَةٌ تَعْلِيمِيَّةٌ لِلْأَطْفَالِ (٥–٧ سَنَوَات) ✨</div>
+        <h1 class="game-title-ar">مُغَامَرَةُ الحُرُوفِ</h1>
+        <div class="game-title-en">ABJAD ADVENTURE</div>
+
+        <div class="hero-mascot-wrap" onclick="App.replayCurrentPrompt()">
+          <svg viewBox="0 0 160 160" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="80" cy="84" r="68" fill="#E0F2FE" stroke="#38BDF8" stroke-width="5"/>
+            <text x="80" y="76" text-anchor="middle" font-size="44" font-weight="900" fill="#E11D48" font-family="Tajawal, sans-serif">أ ب ت</text>
+            <text x="80" y="124" text-anchor="middle" font-size="34" font-weight="900" fill="#16A34A" font-family="Tajawal, sans-serif">١ ٢ ٣ ⭐</text>
+          </svg>
+        </div>
+
+        <button id="btn-start-play" class="btn-3d btn-green play-big-btn">
+          <span>🚀</span>
+          <span>اِبْدَأ اللَّعِبَ</span>
+          <span class="en-text bilingual-sub" style="font-size:1.15rem;">(PLAY)</span>
+        </button>
+
+        <div class="home-secondary-actions">
+          <button class="btn-3d btn-yellow" onclick="App.startMiniGame('learn')">
+            <span>📖</span>
+            <span>تَعَلَّمْ الحُرُوفَ</span>
+          </button>
+          <button class="btn-3d btn-purple" onclick="App.showScreen('map')">
+            <span>🎮</span>
+            <span>كُلُّ الأَلْعَابِ (٧)</span>
+          </button>
+          <button class="btn-3d btn-white" onclick="App.showScreen('trophies')">
+            <span>🏅</span>
+            <span>إِنْجَازَاتِي</span>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- SCREEN 2: ADVENTURE MAP (6 LEVELS + 7 MINI-GAMES) -->
+    <section id="screen-map" class="screen">
+      <div class="section-card">
+        <div class="section-header">
+          <h2 class="section-title">🗺️ رِحْلَةُ التَّعَلُّمِ <span class="en-text bilingual-sub" style="font-size:1rem;color:#0284C7;">(6 Learning Levels)</span></h2>
+          <button id="btn-unlock-all" class="btn-3d btn-white" style="min-height:42px; font-size:0.9rem; padding:6px 14px;">
+            🔓 فَتْحُ الكُلِّ <span class="en-text bilingual-sub">(Unlock All)</span>
+          </button>
+        </div>
+        <div class="levels-grid" id="levels-grid"></div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-header">
+          <h2 class="section-title">🎯 الأَلْعَابُ المُصَغَّرَةُ <span class="en-text bilingual-sub" style="font-size:1rem;color:#7C3AED;">(7 Fun Mini-Games)</span></h2>
+        </div>
+        <div class="minigames-grid" id="minigames-grid"></div>
+      </div>
+    </section>
+
+    <!-- SCREEN 3: ACTIVE MINI-GAME ARENA -->
+    <section id="screen-game" class="screen">
+      <div class="game-arena">
+        <div class="progress-header">
+          <button class="btn-3d btn-white" onclick="App.showScreen('map')" style="min-height:46px; padding:6px 14px;">
+            ➡️ رُجُوع
+          </button>
+          <div class="progress-track">
+            <div class="progress-fill" id="game-progress-fill"></div>
+          </div>
+          <div class="progress-label" id="game-progress-text">1 / 5</div>
+        </div>
+
+        <div id="game-stage-content" style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+          <!-- Dynamic Mini-Game Content Injected Here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 4: TROPHIES & 28-LETTER MASTERY -->
+    <section id="screen-trophies" class="screen">
+      <div class="section-card">
+        <div class="section-header">
+          <h2 class="section-title">🏆 أَوْسِمَةُ البَطَلِ <span class="en-text bilingual-sub" style="font-size:1rem;color:#D97706;">(Badges & Rewards)</span></h2>
+          <button class="btn-3d btn-white" onclick="App.showScreen('map')" style="min-height:44px;">➡️ عَوْدَة</button>
+        </div>
+        <div class="badges-grid" id="badges-grid"></div>
+
+        <h3 class="section-title" style="margin-top:14px; margin-bottom:12px;">🔤 شَجَرَةُ الحُرُوفِ العَرَبِيَّةِ (٢٨ حَرْفًا)</h3>
+        <p style="margin:0 0 12px; color:var(--text-muted); font-weight:700;">اضْغَطْ عَلَى أَيِّ حَرْفٍ لِسَمَاعِ نُطْقِهِ! <span class="en-text bilingual-sub">(Tap any letter to hear it!)</span></p>
+        <div class="alphabet-mastery-grid" id="alphabet-mastery-grid"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- CELEBRATION MODAL -->
+  <div id="celebrate-modal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="celebrate-box">
+      <div style="font-size:4.2rem; line-height:1.1;" id="celeb-emoji">🎉⭐🏆</div>
+      <h2 style="font-size:2.2rem; font-weight:900; color:#15803D; margin:10px 0 4px;" id="celeb-title-ar">أَحْسَنْتَ يَا بَطَل!</h2>
+      <div class="en-text bilingual-sub" style="font-size:1.25rem; font-weight:700; color:#D97706; margin-bottom:12px;" id="celeb-title-en">Awesome Job, Champion!</div>
+      <p style="font-size:1.25rem; font-weight:800; color:#1E293B; margin:0 0 18px;" id="celeb-stars-earned">+3 نُجُومٍ جَدِيدَة! ⭐⭐⭐</p>
+      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+        <button id="btn-celeb-next" class="btn-3d btn-green" style="font-size:1.25rem; padding:14px 28px;">
+          <span>🚀</span>
+          <span>التَّالِي</span>
+        </button>
+        <button id="btn-celeb-map" class="btn-3d btn-yellow">
+          <span>🗺️</span>
+          <span>المَرَاحِل</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * =========================================================================
+     * COMPLETE EDUCATIONAL DATASET FOR ABJAD ADVENTURE (AGES 5-7)
+     * All 28 Arabic Letters + Harakat Sounds + Vocabulary + Colors + Numbers
+     * =========================================================================
+     */
+    const ARABIC_ALPHABET = [
+      { id: 'alif', char: 'أ', name: 'أَلِف', sound: 'أَ', word: 'أَسَد', wordPlain: 'أسد', enWord: 'Lion', emoji: '🦁', group: 1, dots: 'همزة من فوق', dotsEn: 'Hamza on top', family: null },
+      { id: 'baa', char: 'ب', name: 'بَاء', sound: 'بَ', word: 'بَطَّة', wordPlain: 'بطة', enWord: 'Duck', emoji: '🦆', group: 1, dots: 'نُقْطَةٌ وَاحِدَةٌ مِنْ تَحْت', dotsEn: 'One dot underneath', family: 'baa-family' },
+      { id: 'taa', char: 'ت', name: 'تَاء', sound: 'تَ', word: 'تُفَّاح', wordPlain: 'تفاح', enWord: 'Apple', emoji: '🍎', group: 1, dots: 'نُقْطَتَانِ مِنْ فَوْق', dotsEn: 'Two dots on top', family: 'baa-family' },
+      { id: 'thaa', char: 'ث', name: 'ثَاء', sound: 'ثَ', word: 'ثَعْلَب', wordPlain: 'ثعلب', enWord: 'Fox', emoji: '🦊', group: 1, dots: 'ثَلَاثُ نِقَاطٍ مِنْ فَوْق', dotsEn: 'Three dots on top', family: 'baa-family' },
+      { id: 'jeem', char: 'ج', name: 'جِيم', sound: 'جَ', word: 'جَمَل', wordPlain: 'جمل', enWord: 'Camel', emoji: '🐪', group: 1, dots: 'نُقْطَةٌ وَاحِدَةٌ فِي البَطْن', dotsEn: 'One dot in the middle', family: 'jeem-family' },
+      { id: 'haa', char: 'ح', name: 'حَاء', sound: 'حَ', word: 'حِصَان', wordPlain: 'حصان', enWord: 'Horse', emoji: '🐴', group: 1, dots: 'بِدُونِ نِقَاط', dotsEn: 'No dots at all', family: 'jeem-family' },
+      { id: 'khaa', char: 'خ', name: 'خَاء', sound: 'خَ', word: 'خَرُوف', wordPlain: 'خروف', enWord: 'Sheep', emoji: '🐑', group: 1, dots: 'نُقْطَةٌ وَاحِدَةٌ مِنْ فَوْق', dotsEn: 'One dot on top', family: 'jeem-family' },
+      { id: 'dal', char: 'د', name: 'دَال', sound: 'دَ', word: 'دُبّ', wordPlain: 'دب', enWord: 'Bear', emoji: '🐻', group: 2, dots: 'بِدُونِ نِقَاط', dotsEn: 'No dots', family: 'dal-family' },
+      { id: 'thal', char: 'ذ', name: 'ذَال', sound: 'ذَ', word: 'ذُرَة', wordPlain: 'ذرة', enWord: 'Corn', emoji: '🌽', group: 2, dots: 'نُقْطَةٌ وَاحِدَةٌ مِنْ فَوْق', dotsEn: 'One dot on top', family: 'dal-family' },
+      { id: 'raa', char: 'ر', name: 'رَاء', sound: 'رَ', word: 'رُمَّان', wordPlain: 'رمان', enWord: 'Pomegranate', emoji: '🍒', group: 2, dots: 'بِدُونِ نِقَاط', dotsEn: 'No dots', family: 'raa-family' },
+      { id: 'zay', char: 'ز', name: 'زَاي', sound: 'زَ', word: 'زَرَافَة', wordPlain: 'زرافة', enWord: 'Giraffe', emoji: '🦒', group: 2, dots: 'نُقْطَةٌ وَاحِدَةٌ مِنْ فَوْق', dotsEn: 'One dot on top', family: 'raa-family' },
+      { id: 'seen', char: 'س', name: 'سِين', sound: 'سَ', word: 'سَمَكَة', wordPlain: 'سمكة', enWord: 'Fish', emoji: '🐟', group: 2, dots: 'بِدُونِ نِقَاط', dotsEn: 'No dots', family: 'seen-family' },
+      { id: 'sheen', char: 'ش', name: 'شِين', sound: 'شَ', word: 'شَمْس', wordPlain: 'شمس', enWord: 'Sun', emoji: '☀️', group: 2, dots: 'ثَلَاثُ نِقَاطٍ مِنْ فَوْق', dotsEn: 'Three dots on top', family: 'seen-family' },
+      { id: 'sad', char: 'ص', name: 'صَاد', sound: 'صَ', word: 'صَقْر', wordPlain: 'صقر', enWord: 'Falcon', emoji: '🦅', group: 2, dots: 'بِدُونِ نِقَاط', dotsEn: 'No dots', family: 'sad-family' },
+      { id: 'dad', char: 'ض', name: 'ضَاد', sound: 'ضَ', word: 'ضِفْدَع', wordPlain: 'ضفدع', enWord: 'Frog', emoji: '🐸', group: 3, dots: 'نُقْطَةٌ وَاحِدَةٌ مِنْ فَوْق', dotsEn: 'One dot on top', family: 'sad-family' },
+      { id: 'tah', char: 'ط', name: 'طَاء', sound: 'طَ', word: 'طَائِرَة', wordPlain: 'طائرة', enWord: 'Airplane', emoji: '✈️', group: 3, dots: 'بِدُونِ نِقَاط', dotsEn: 'No dots', family: 'tah-family' },
+      { id: 'zah', char: 'ظ', name: 'ظَاء', sound: 'ظَ', word: 'ظَرْف', wordPlain: 'ظرف', enWord: 'Envelope', emoji: '✉️', group: 3, dots: 'نُقْطَةٌ وَاحِدَةٌ مِنْ فَوْق', dotsEn: 'One dot on top', family: 'tah-family' },
+      { id: 'ain', char: 'ع', name: 'عَيْن', sound: 'عَ', word: 'عِنَب', wordPlain: 'عنب', enWord: 'Grapes', emoji: '🍇', group: 3, dots: 'بِدُونِ نِقَاط', dotsEn: 'No dots', family: 'ain-family' },
+      { id: 'ghain', char: 'غ', name: 'غَيْن', sound: 'غَ', word: 'غَزَال', wordPlain: 'غزال', enWord: 'Gazelle', emoji: '🦌', group: 3, dots: 'نُقْطَةٌ وَاحِدَةٌ مِنْ فَوْق', dotsEn: 'One dot on top', family: 'ain-family' },
+      { id: 'faa', char: 'ف', name: 'فَاء', sound: 'فَ', word: 'فِيل', wordPlain: 'فيل', enWord: 'Elephant', emoji: '🐘', group: 3, dots: 'نُقْطَةٌ وَاحِدَةٌ مِنْ فَوْق', dotsEn: 'One dot on top', family: 'faa-family' },
+      { id: 'qaf', char: 'ق', name: 'قَاف', sound: 'قَ', word: 'قَمَر', wordPlain: 'قمر', enWord: 'Moon', emoji: '🌙', group: 3, dots: 'نُقْطَتَانِ مِنْ فَوْق', dotsEn: 'Two dots on top', family: 'faa-family' },
+      { id: 'kaf', char: 'ك', name: 'كَاف', sound: 'كَ', word: 'كَلْب', wordPlain: 'كلب', enWord: 'Dog', emoji: '🐶', group: 4, dots: 'بِدُونِ نِقَاط', dotsEn: 'No dots', family: null },
+      { id: 'lam', char: 'ل', name: 'لَام', sound: 'لَ', word: 'لَيْمُون', wordPlain: 'ليمون', enWord: 'Lemon', emoji: '🍋', group: 4, dots: 'بِدُونِ نِقَاط', dotsEn: 'No dots', family: null },
+      { id: 'meem', char: 'م', name: 'مِيم', sound: 'مَ', word: 'مَوْز', wordPlain: 'موز', enWord: 'Banana', emoji: '🍌', group: 4, dots: 'بِدُونِ نِقَاط', dotsEn: 'No dots', family: null },
+      { id: 'noon', char: 'ن', name: 'نُون', sound: 'نَ', word: 'نَحْلَة', wordPlain: 'نحلة', enWord: 'Bee', emoji: '🐝', group: 4, dots: 'نُقْطَةٌ وَاحِدَةٌ مِنْ فَوْق', dotsEn: 'One dot on top', family: null },
+      { id: 'ha', char: 'هـ', name: 'هَاء', sound: 'هَ', word: 'هِرَّة', wordPlain: 'هرة', enWord: 'Kitten', emoji: '🐱', group: 4, dots: 'بِدُونِ نِقَاط', dotsEn: 'No dots', family: null },
+      { id: 'waw', char: 'و', name: 'وَاو', sound: 'وَ', word: 'وَرْدَة', wordPlain: 'وردة', enWord: 'Flower', emoji: '🌹', group: 4, dots: 'بِدُونِ نِقَاط', dotsEn: 'No dots', family: null },
+      { id: 'yaa', char: 'ي', name: 'يَاء', sound: 'يَ', word: 'يَد', wordPlain: 'يد', enWord: 'Hand', emoji: '✋', group: 4, dots: 'نُقْطَتَانِ مِنْ تَحْت', dotsEn: 'Two dots underneath', family: null }
+    ];
+
+    const VOCABULARY_ITEMS = [
+      { word: 'أَسَد', plain: 'أسد', en: 'Lion', emoji: '🦁', cat: 'حيوانات' },
+      { word: 'فِيل', plain: 'فيل', en: 'Elephant', emoji: '🐘', cat: 'حيوانات' },
+      { word: 'قِطَّة', plain: 'قطة', en: 'Cat', emoji: '🐱', cat: 'حيوانات' },
+      { word: 'أَرْنَب', plain: 'أرنب', en: 'Rabbit', emoji: '🐰', cat: 'حيوانات' },
+      { word: 'سَمَكَة', plain: 'سمكة', en: 'Fish', emoji: '🐠', cat: 'حيوانات' },
+      { word: 'فَرَاشَة', plain: 'فراشة', en: 'Butterfly', emoji: '🦋', cat: 'حيوانات' },
+      { word: 'تُفَّاحَة', plain: 'تفاحة', en: 'Apple', emoji: '🍎', cat: 'فواكه' },
+      { word: 'مَوْزَة', plain: 'موزة', en: 'Banana', emoji: '🍌', cat: 'فواكه' },
+      { word: 'بُرْتُقَالَة', plain: 'برتقالة', en: 'Orange', emoji: '🍊', cat: 'فواكه' },
+      { word: 'فَرَاوِلَة', plain: 'فراولة', en: 'Strawberry', emoji: '🍓', cat: 'فواكه' },
+      { word: 'بِطِّيخ', plain: 'بطيخ', en: 'Watermelon', emoji: '🍉', cat: 'فواكه' },
+      { word: 'عِنَب', plain: 'عنب', en: 'Grapes', emoji: '🍇', cat: 'فواكه' },
+      { word: 'بَيْت', plain: 'بيت', en: 'House', emoji: '🏠', cat: 'أشياء' },
+      { word: 'سَيَّارَة', plain: 'سيارة', en: 'Car', emoji: '🚗', cat: 'أشياء' },
+      { word: 'كِتَاب', plain: 'كتاب', en: 'Book', emoji: '📘', cat: 'أشياء' },
+      { word: 'شَمْس', plain: 'شمس', en: 'Sun', emoji: '☀️', cat: 'أشياء' },
+      { word: 'قَمَر', plain: 'قمر', en: 'Moon', emoji: '🌙', cat: 'أشياء' },
+      { word: 'نَجْمَة', plain: 'نجمة', en: 'Star', emoji: '⭐', cat: 'أشياء' }
+    ];
+
+    const ARABIC_NUMBERS = [
+      { num: 1, arNum: '١', word: 'وَاحِد', en: 'One', emoji: '🍎' },
+      { num: 2, arNum: '٢', word: 'اِثْنَان', en: 'Two', emoji: '🦆' },
+      { num: 3, arNum: '٣', word: 'ثَلَاثَة', en: 'Three', emoji: '🌟' },
+      { num: 4, arNum: '٤', word: 'أَرْبَعَة', en: 'Four', emoji: '🦋' },
+      { num: 5, arNum: '٥', word: 'خَمْسَة', en: 'Five', emoji: '🍓' },
+      { num: 6, arNum: '٦', word: 'سِتَّة', en: 'Six', emoji: '🐟' },
+      { num: 7, arNum: '٧', word: 'سَبْعَة', en: 'Seven', emoji: '🌸' },
+      { num: 8, arNum: '٨', word: 'ثَمَانِيَة', en: 'Eight', emoji: '🍌' },
+      { num: 9, arNum: '٩', word: 'تِسْعَة', en: 'Nine', emoji: '🎈' },
+      { num: 10, arNum: '١٠', word: 'عَشَرَة', en: 'Ten', emoji: '🐝' }
+    ];
+
+    const ARABIC_COLORS = [
+      { id: 'red', name: 'أَحْمَر', plain: 'أحمر', en: 'Red', hex: '#EF4444', itemEmoji: '🍎' },
+      { id: 'blue', name: 'أَزْرَق', plain: 'أزرق', en: 'Blue', hex: '#3B82F6', itemEmoji: '🐳' },
+      { id: 'yellow', name: 'أَصْفَر', plain: 'أصفر', en: 'Yellow', hex: '#FACC15', itemEmoji: '🌟' },
+      { id: 'green', name: 'أَخْضَر', plain: 'أخضر', en: 'Green', hex: '#22C55E', itemEmoji: '🐸' },
+      { id: 'orange', name: 'بُرْتُقَالِي', plain: 'برتقالي', en: 'Orange', hex: '#F97316', itemEmoji: '🍊' },
+      { id: 'purple', name: 'بَنَفْسَجِي', plain: 'بنفسجي', en: 'Purple', hex: '#A855F7', itemEmoji: '🍇' },
+      { id: 'pink', name: 'وَرْدِي', plain: 'وردي', en: 'Pink', hex: '#EC4899', itemEmoji: '🌸' },
+      { id: 'brown', name: 'بُنِّي', plain: 'بني', en: 'Brown', hex: '#92400E', itemEmoji: '🐻' }
+    ];
+
+    const PRAISE_PHRASES = [
+      { ar: 'رَائِع!', en: 'Wonderful!' },
+      { ar: 'مُمْتَاز!', en: 'Excellent!' },
+      { ar: 'أَحْسَنْت!', en: 'Well done!' },
+      { ar: 'أَنْتَ بَطَل!', en: 'You are a champion!' },
+      { ar: 'ذَكِيٌّ جِدًّا!', en: 'So smart!' }
+    ];
+
+    const LEVELS_CONFIG = [
+      { id: 1, titleAr: 'المُسْتَوَى ١: الحُرُوفُ الأُولَى', titleEn: 'First Arabic Letters (أ – خ)', color: '#38BDF8', icon: '🌱', gameType: 'learn', subset: 'group1' },
+      { id: 2, titleAr: 'المُسْتَوَى ٢: كُلُّ الحُرُوفِ', titleEn: 'All 28 Arabic Letters', color: '#8B5CF6', icon: '🔤', gameType: 'findLetter', subset: 'all' },
+      { id: 3, titleAr: 'المُسْتَوَى ٣: أَصْوَاتُ الحُرُوفِ', titleEn: 'Letter Sounds & Matching', color: '#EC4899', icon: '🎵', gameType: 'match', subset: 'all' },
+      { id: 4, titleAr: 'المُسْتَوَى ٤: كَلِمَاتِي الأُولَى', titleEn: 'Basic Vocabulary', color: '#F59E0B', icon: '🦁', gameType: 'guessWord', subset: 'all' },
+      { id: 5, titleAr: 'المُسْتَوَى ٥: الأَرْقَامُ وَالأَلْوَان', titleEn: 'Numbers 1–10 & Colors', color: '#10B981', icon: '🎨', gameType: 'numbersColors', subset: 'all' },
+      { id: 6, titleAr: 'المُسْتَوَى ٦: مُحَقِّقُ النِّقَاط', titleEn: 'Letter Detective & Memory', color: '#E11D48', icon: '🕵️', gameType: 'detective', subset: 'all' }
+    ];
+
+    const MINI_GAMES_META = [
+      { id: 'learn', titleAr: 'تَعَلَّمْ الحُرُوفَ', titleEn: 'Learn Letters', emoji: '📖', bg: 'linear-gradient(180deg, #38BDF8 0%, #0284C7 100%)', shadow: '#0369A1' },
+      { id: 'findLetter', titleAr: 'أَيْنَ الحَرْف؟', titleEn: 'Find the Letter', emoji: '👂', bg: 'linear-gradient(180deg, #4ADE80 0%, #16A34A 100%)', shadow: '#15803D' },
+      { id: 'match', titleAr: 'وَصِّلْ الحَرْفَ', titleEn: 'Match Letters', emoji: '🧩', bg: 'linear-gradient(180deg, #C084FC 0%, #7C3AED 100%)', shadow: '#5B21B6' },
+      { id: 'memory', titleAr: 'لُعْبَةُ الذَّاكِرَة', titleEn: 'Memory Cards', emoji: '🃏', bg: 'linear-gradient(180deg, #FBBF24 0%, #D97706 100%)', shadow: '#B45309' },
+      { id: 'guessWord', titleAr: 'خَمِّنْ الكَلِمَة', titleEn: 'Guess the Word', emoji: '🖼️', bg: 'linear-gradient(180deg, #FB7185 0%, #E11D48 100%)', shadow: '#9F1239' },
+      { id: 'numbersColors', titleAr: 'الأَرْقَامُ وَالأَلْوَان', titleEn: 'Numbers & Colors', emoji: '🎨', bg: 'linear-gradient(180deg, #2DD4BF 0%, #0D9488 100%)', shadow: '#115E59' },
+      { id: 'detective', titleAr: 'مُحَقِّقُ النِّقَاط', titleEn: 'Letter Detective', emoji: '🔍', bg: 'linear-gradient(180deg, #818CF8 0%, #4F46E5 100%)', shadow: '#3730A3' }
+    ];
+
+    const BADGES_CONFIG = [
+      { id: 'first_star', titleAr: 'أَوَّلُ نَجْمَة', titleEn: 'First Star', emoji: '⭐', req: (s) => s.stars >= 1 },
+      { id: 'explorer_5', titleAr: 'مُسْتَكْشِفُ الحُرُوف', titleEn: 'Letter Explorer', emoji: '🧭', req: (s) => s.masteredLetters.length >= 5 },
+      { id: 'star_hunter', titleAr: 'صَائِدُ النُّجُوم (١٥)', titleEn: '15 Stars Hunter', emoji: '🌟', req: (s) => s.stars >= 15 },
+      { id: 'detective_pro', titleAr: 'مُحَقِّقٌ ذَكِيّ', titleEn: 'Dot Detective', emoji: '🕵️', req: (s) => s.completedGames.includes('detective') },
+      { id: 'color_master', titleAr: 'فَنَّانُ الأَلْوَان', titleEn: 'Color & Number Pro', emoji: '🎨', req: (s) => s.completedGames.includes('numbersColors') },
+      { id: 'abjad_hero', titleAr: 'بَطَلُ الأَبْجَدِيَّة', titleEn: 'Abjad Champion', emoji: '👑', req: (s) => s.stars >= 30 || s.masteredLetters.length >= 20 }
+    ];
+
+    /**
+     * =========================================================================
+     * VOICE & AUDIO ENGINE (Web Speech API + Web Audio API Sound Effects)
+     * Guarantees non-overlapping Arabic & English TTS + musical feedback
+     * =========================================================================
+     */
+    const VoiceEngine = {
+      muted: false,
+      bilingual: true,
+      arabicVoice: null,
+      englishVoice: null,
+      voicesLoaded: false,
+      warnedNoArabic: false,
+      speechToken: 0,
+      audioCtx: null,
+
+      init() {
+        if ('speechSynthesis' in window) {
+          const loadVoices = () => {
+            const voices = window.speechSynthesis.getVoices();
+            if (!voices || voices.length === 0) return;
+            this.voicesLoaded = true;
+            // Prioritize Saudi/Egyptian/UAE/Modern Standard Arabic voices
+            this.arabicVoice =
+              voices.find(v => v.lang.toLowerCase() === 'ar-sa') ||
+              voices.find(v => v.lang.toLowerCase().startsWith('ar-')) ||
+              voices.find(v => v.lang.toLowerCase().includes('ar')) ||
+              null;
+
+            this.englishVoice =
+              voices.find(v => v.lang.toLowerCase() === 'en-us' && v.name.includes('Google')) ||
+              voices.find(v => v.lang.toLowerCase().startsWith('en-')) ||
+              voices[0] ||
+              null;
+          };
+          loadVoices();
+          window.speechSynthesis.onvoiceschanged = loadVoices;
+        }
+      },
+
+      ensureAudioContext() {
+        if (!this.audioCtx) {
+          const Ctx = window.AudioContext || window.webkitAudioContext;
+          if (Ctx) this.audioCtx = new Ctx();
+        }
+        if (this.audioCtx && this.audioCtx.state === 'suspended') {
+          this.audioCtx.resume().catch(() => {});
+        }
+      },
+
+      playTone(freq, duration = 0.16, type = 'sine', delay = 0, gainVal = 0.16) {
+        if (this.muted) return;
+        try {
+          this.ensureAudioContext();
+          if (!this.audioCtx) return;
+          const now = this.audioCtx.currentTime + delay;
+          const osc = this.audioCtx.createOscillator();
+          const gain = this.audioCtx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, now);
+          gain.gain.setValueAtTime(0.001, now);
+          gain.gain.exponentialRampToValueAtTime(gainVal, now + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+          osc.connect(gain);
+          gain.connect(this.audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + duration + 0.03);
+        } catch (e) {}
+      },
+
+      sfxTap() {
+        this.playTone(523.25, 0.1, 'triangle', 0, 0.14);
+        this.playTone(659.25, 0.12, 'triangle', 0.05, 0.12);
+      },
+
+      sfxCorrect() {
+        this.playTone(523.25, 0.14, 'sine', 0, 0.18);
+        this.playTone(659.25, 0.14, 'sine', 0.1, 0.18);
+        this.playTone(783.99, 0.16, 'sine', 0.2, 0.18);
+        this.playTone(1046.5, 0.28, 'triangle', 0.3, 0.2);
+      },
+
+      sfxWrong() {
+        this.playTone(330, 0.18, 'sine', 0, 0.14);
+        this.playTone(277.18, 0.24, 'sine', 0.14, 0.14);
+      },
+
+      sfxCelebrate() {
+        const notes = [523.25, 659.25, 783.99, 1046.5, 783.99, 1046.5];
+        notes.forEach((n, idx) => {
+          this.playTone(n, 0.18, 'triangle', idx * 0.11, 0.2);
+        });
+      },
+
+      stopAll() {
+        this.speechToken++;
+        if ('speechSynthesis' in window) {
+          try { window.speechSynthesis.cancel(); } catch (e) {}
+        }
+      },
+
+      /**
+       * Speaks an array of segments sequentially without overlapping:
+       * e.g. [{ text: 'أَيْنَ حَرْفُ البَاء؟', lang: 'ar' }, { text: 'Where is the letter Baa?', lang: 'en' }]
+       */
+      speakSequence(segments, onDone) {
+        this.stopAll();
+        const currentToken = this.speechToken;
+
+        if (this.muted || !('speechSynthesis' in window)) {
+          if (onDone) setTimeout(onDone, 250);
+          return;
+        }
+
+        // Filter English segments if child/parent selected Pure Arabic mode
+        const filtered = segments.filter(seg => seg && seg.text && (seg.lang === 'ar' || this.bilingual));
+        if (filtered.length === 0) {
+          if (onDone) onDone();
+          return;
+        }
+
+        // Check once if Arabic voice is missing on this device
+        if (!this.arabicVoice && this.voicesLoaded && !this.warnedNoArabic && filtered.some(s => s.lang === 'ar')) {
+          this.warnedNoArabic = true;
+          App.showToast('ℹ️ صوت العربية غير مثبت على المتصفح، تم تفعيل المساعد الصوتي والمؤثرات!');
+        }
+
+        let idx = 0;
+        const speakNext = () => {
+          if (currentToken !== this.speechToken) return;
+          if (idx >= filtered.length) {
+            if (onDone) onDone();
+            return;
+          }
+          const seg = filtered[idx++];
+          const utter = new SpeechSynthesisUtterance(seg.text);
+          if (seg.lang === 'ar') {
+            utter.lang = this.arabicVoice ? this.arabicVoice.lang : 'ar-SA';
+            if (this.arabicVoice) utter.voice = this.arabicVoice;
+            utter.rate = seg.rate || 0.86; // Clear, child-friendly pace
+            utter.pitch = 1.08;
+          } else {
+            utter.lang = 'en-US';
+            if (this.englishVoice) utter.voice = this.englishVoice;
+            utter.rate = seg.rate || 0.95;
+            utter.pitch = 1.1;
+          }
+
+          utter.onend = () => {
+            if (currentToken === this.speechToken) {
+              setTimeout(speakNext, 110);
+            }
+          };
+          utter.onerror = () => {
+            if (currentToken === this.speechToken) {
+              speakNext();
+            }
+          };
+
+          try {
+            window.speechSynthesis.speak(utter);
+          } catch (e) {
+            speakNext();
+          }
+        };
+
+        speakNext();
+      }
+    };
+
+    /**
+     * =========================================================================
+     * CONFETTI PARTICLE CELEBRATION SYSTEM
+     * =========================================================================
+     */
+    const Confetti = {
+      launch() {
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const colors = ['#FACC15', '#FB7185', '#38BDF8', '#4ADE80', '#C084FC', '#F97316'];
+        const pieces = Array.from({ length: 85 }, () => ({
+          x: Math.random() * canvas.width,
+          y: -20 - Math.random() * canvas.height * 0.4,
+          w: 10 + Math.random() * 10,
+          h: 8 + Math.random() * 12,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          vx: -3 + Math.random() * 6,
+          vy: 3 + Math.random() * 5,
+          rot: Math.random() * 360,
+          vrot: -6 + Math.random() * 12
+        }));
+
+        let frame = 0;
+        const tick = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          pieces.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.rot += p.vrot;
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate((p.rot * Math.PI) / 180);
+            ctx.fillStyle = p.color;
+            ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+            ctx.restore();
+          });
+          frame++;
+          if (frame < 135) {
+            requestAnimationFrame(tick);
+          } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+          }
+        };
+        requestAnimationFrame(tick);
+      }
+    };
+
+    /**
+     * =========================================================================
+     * MAIN GAME CONTROLLER & ALL 7 INTERACTIVE MINI-GAMES
+     * =========================================================================
+     */
+    const App = {
+      state: {
+        stars: 0,
+        unlockedLevel: 1,
+        masteredLetters: [],
+        completedGames: [],
+        bilingual: true
+      },
+
+      currentScreen: 'home',
+      currentPrompt: {
+        arText: 'مَرْحَبًا يَا صَدِيقِي! أَنَا كَرِيم، هَيَّا نَتَعَلَّمْ العَرَبِيَّةَ مَعًا!',
+        enText: "Hello friend! I'm Kareem. Let's learn Arabic together!",
+        speech: [
+          { text: 'مَرْحَبًا يَا صَدِيقِي! أَنَا كَرِيم، هَيَّا نَتَعَلَّمْ العَرَبِيَّةَ مَعًا!', lang: 'ar' },
+          { text: "Hello friend! I'm Kareem. Let's learn Arabic together!", lang: 'en' }
+        ]
+      },
+
+      activeGame: null,
+
+      init() {
+        this.loadState();
+        VoiceEngine.init();
+        VoiceEngine.bilingual = this.state.bilingual;
+        document.body.classList.toggle('pure-arabic', !this.state.bilingual);
+
+        this.bindGlobalEvents();
+        this.updateTopBar();
+        this.renderMap();
+        this.renderTrophies();
+      },
+
+      loadState() {
+        try {
+          const saved = localStorage.getItem('abjad_adventure_save_v1');
+          if (saved) {
+            const parsed = JSON.parse(saved);
+            this.state = { ...this.state, ...parsed };
+          }
+        } catch (e) {}
+      },
+
+      saveState() {
+        try {
+          localStorage.setItem('abjad_adventure_save_v1', JSON.stringify(this.state));
+        } catch (e) {}
+        this.updateTopBar();
+      },
+
+      updateTopBar() {
+        document.getElementById('star-count').textContent = this.state.stars;
+        const biBtn = document.getElementById('btn-bilingual');
+        biBtn.innerHTML = this.state.bilingual ? '<span>عربي / EN</span>' : '<span>عَرَبِي فَقَط</span>';
+        const muteBtn = document.getElementById('btn-mute');
+        muteBtn.textContent = VoiceEngine.muted ? '🔇' : '🔔';
+      },
+
+      showToast(msg) {
+        const el = document.getElementById('voice-toast');
+        el.textContent = msg;
+        el.classList.add('show');
+        clearTimeout(this._toastTimer);
+        this._toastTimer = setTimeout(() => el.classList.remove('show'), 3800);
+      },
+
+      bindGlobalEvents() {
+        document.getElementById('btn-home').addEventListener('click', () => {
+          VoiceEngine.sfxTap();
+          this.showScreen('home');
+        });
+        document.getElementById('btn-map').addEventListener('click', () => {
+          VoiceEngine.sfxTap();
+          this.showScreen('map');
+        });
+        document.getElementById('btn-trophies').addEventListener('click', () => {
+          VoiceEngine.sfxTap();
+          this.showScreen('trophies');
+        });
+        document.getElementById('btn-start-play').addEventListener('click', () => {
+          VoiceEngine.sfxTap();
+          this.showScreen('map');
+        });
+        document.getElementById('btn-replay-voice').addEventListener('click', () => {
+          VoiceEngine.sfxTap();
+          this.replayCurrentPrompt();
+        });
+        document.getElementById('btn-bubble-speak').addEventListener('click', () => {
+          VoiceEngine.sfxTap();
+          this.replayCurrentPrompt();
+        });
+        document.getElementById('mascot-avatar').addEventListener('click', () => {
+          this.bounceMascot();
+          this.replayCurrentPrompt();
+        });
+        document.getElementById('btn-mute').addEventListener('click', () => {
+          VoiceEngine.muted = !VoiceEngine.muted;
+          if (VoiceEngine.muted) VoiceEngine.stopAll();
+          else VoiceEngine.sfxTap();
+          this.updateTopBar();
+        });
+        document.getElementById('btn-bilingual').addEventListener('click', () => {
+          this.state.bilingual = !this.state.bilingual;
+          VoiceEngine.bilingual = this.state.bilingual;
+          document.body.classList.toggle('pure-arabic', !this.state.bilingual);
+          this.saveState();
+          VoiceEngine.sfxTap();
+          this.replayCurrentPrompt();
+        });
+        document.getElementById('btn-unlock-all').addEventListener('click', () => {
+          this.state.unlockedLevel = 6;
+          this.saveState();
+          this.renderMap();
+          VoiceEngine.sfxCorrect();
+          this.setPrompt(
+            'تَمَّ فَتْحُ جَمِيعِ المَرَاحِل! اِخْتَرْ أَيَّ لُعْبَةٍ تُحِبُّهَا!',
+            'All levels unlocked! Choose any adventure you like!'
+          );
+        });
+        document.getElementById('btn-celeb-map').addEventListener('click', () => {
+          document.getElementById('celebrate-modal').classList.remove('open');
+          this.showScreen('map');
+        });
+        document.getElementById('btn-celeb-next').addEventListener('click', () => {
+          document.getElementById('celebrate-modal').classList.remove('open');
+          if (this.activeGame && this.activeGame.nextAction) {
+            this.activeGame.nextAction();
+          } else {
+            this.showScreen('map');
+          }
+        });
+      },
+
+      bounceMascot() {
+        const av = document.getElementById('mascot-avatar');
+        av.classList.remove('bounce');
+        void av.offsetWidth;
+        av.classList.add('bounce');
+      },
+
+      setPrompt(arText, enText, customSpeech = null, autoSpeak = true) {
+        document.getElementById('speech-ar').textContent = arText;
+        document.getElementById('speech-en').textContent = enText || '';
+        this.currentPrompt = {
+          arText,
+          enText,
+          speech: customSpeech || [
+            { text: arText, lang: 'ar' },
+            ...(enText ? [{ text: enText, lang: 'en' }] : [])
+          ]
+        };
+        this.bounceMascot();
+        if (autoSpeak) {
+          VoiceEngine.speakSequence(this.currentPrompt.speech);
+        }
+      },
+
+      replayCurrentPrompt() {
+        this.bounceMascot();
+        if (this.currentPrompt && this.currentPrompt.speech) {
+          VoiceEngine.speakSequence(this.currentPrompt.speech);
+        }
+      },
+
+      showScreen(name) {
+        this.currentScreen = name;
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        const target = document.getElementById(`screen-${name}`);
+        if (target) target.classList.add('active');
+
+        if (name === 'home') {
+          this.setPrompt(
+            'مَرْحَبًا يَا صَدِيقِي! اِضْغَطْ عَلَى اِبْدَأ اللَّعِبَ لِنَبْدَأَ المُغَامَرَة!',
+            'Welcome friend! Tap PLAY to start our Arabic adventure!'
+          );
+        } else if (name === 'map') {
+          this.renderMap();
+          this.setPrompt(
+            'اِخْتَرْ مَرْحَلَةً أَوْ لُعْبَةً مِنَ الأَلْعَابِ المُمْتِعَةِ!',
+            'Choose a level or any fun mini-game to play!'
+          );
+        } else if (name === 'trophies') {
+          this.renderTrophies();
+          this.setPrompt(
+            'هٰذِهِ نُجُومُكَ وَالحُرُوفُ الَّتِي تَعَلَّمْتَهَا! اِضْغَطْ عَلَى أَيِّ حَرْفٍ لِتَسْمَعَهُ.',
+            'Here are your stars and learned letters! Tap any letter to hear it.'
+          );
+        }
+      },
+
+      renderMap() {
+        const levelsGrid = document.getElementById('levels-grid');
+        levelsGrid.innerHTML = '';
+        LEVELS_CONFIG.forEach(lvl => {
+          const isUnlocked = lvl.id <= this.state.unlockedLevel;
+          const isCompleted = lvl.id < this.state.unlockedLevel;
+          const card = document.createElement('div');
+          card.className = `level-card ${isUnlocked ? 'unlocked' : 'locked'} ${isCompleted ? 'completed' : ''}`;
+          card.innerHTML = `
+            <div class="level-badge-num" style="background:${lvl.color};">
+              ${isUnlocked ? lvl.icon : '🔒'}
+            </div>
+            <div class="level-info">
+              <h3>${lvl.titleAr}</h3>
+              <p class="en-text bilingual-sub">${lvl.titleEn}</p>
+              <p style="margin-top:4px; color:${isCompleted ? '#15803D' : '#0284C7'};">
+                ${isCompleted ? '⭐⭐⭐ مُكْتَمِل!' : (isUnlocked ? '▶️ جَاهِزٌ لِلَّعِب!' : '🔒 أَكْمِلْ المَرْحَلَةَ السَّابِقَة')}
+              </p>
+            </div>
+          `;
+          card.onclick = () => {
+            if (!isUnlocked) {
+              VoiceEngine.sfxWrong();
+              this.setPrompt(
+                'أَكْمِلْ المَرْحَلَةَ السَّابِقَةَ أَوَّلًا لِتَفْتَحَ هٰذِهِ المَرْحَلَة!',
+                'Complete the previous level first to unlock this one!'
+              );
+              return;
+            }
+            VoiceEngine.sfxTap();
+            this.startMiniGame(lvl.gameType, lvl.id, lvl.subset);
+          };
+          levelsGrid.appendChild(card);
+        });
+
+        const mgGrid = document.getElementById('minigames-grid');
+        mgGrid.innerHTML = '';
+        MINI_GAMES_META.forEach(mg => {
+          const btn = document.createElement('button');
+          btn.className = 'mg-tile';
+          btn.style.background = mg.bg;
+          btn.style.boxShadow = `0 7px 0 ${mg.shadow}`;
+          btn.innerHTML = `
+            <div class="mg-emoji">${mg.emoji}</div>
+            <div class="mg-title-ar">${mg.titleAr}</div>
+            <div class="mg-title-en bilingual-sub">${mg.titleEn}</div>
+          `;
+          btn.onclick = () => {
+            VoiceEngine.sfxTap();
+            this.startMiniGame(mg.id);
+          };
+          mgGrid.appendChild(btn);
+        });
+      },
+
+      renderTrophies() {
+        const badgesGrid = document.getElementById('badges-grid');
+        badgesGrid.innerHTML = '';
+        BADGES_CONFIG.forEach(b => {
+          const earned = b.req(this.state);
+          const div = document.createElement('div');
+          div.className = `badge-card ${earned ? 'earned' : ''}`;
+          div.innerHTML = `
+            <div style="font-size:2.8rem;">${earned ? b.emoji : '🔒'}</div>
+            <div style="font-weight:900; font-size:1.1rem; margin-top:4px;">${b.titleAr}</div>
+            <div class="en-text bilingual-sub" style="font-size:0.85rem; color:#64748B;">${b.titleEn}</div>
+          `;
+          badgesGrid.appendChild(div);
+        });
+
+        const alphaGrid = document.getElementById('alphabet-mastery-grid');
+        alphaGrid.innerHTML = '';
+        ARABIC_ALPHABET.forEach(item => {
+          const mastered = this.state.masteredLetters.includes(item.id);
+          const cell = document.createElement('div');
+          cell.className = `alpha-cell ${mastered ? 'mastered' : ''}`;
+          cell.innerHTML = `
+            <span>${item.char}</span>
+            <span style="font-size:0.75rem;">${mastered ? '⭐' : ''}</span>
+          `;
+          cell.onclick = () => {
+            VoiceEngine.sfxTap();
+            this.setPrompt(
+              `حَرْفُ ${item.name} .. ${item.sound} .. ${item.word}`,
+              `${item.name} (${item.enWord})`,
+              [
+                { text: item.name, lang: 'ar' },
+                { text: item.sound, lang: 'ar' },
+                { text: item.word, lang: 'ar' }
+              ]
+            );
+          };
+          alphaGrid.appendChild(cell);
+        });
+      },
+
+      markLetterMastered(letterId) {
+        if (!this.state.masteredLetters.includes(letterId)) {
+          this.state.masteredLetters.push(letterId);
+          this.saveState();
+        }
+      },
+
+      awardStars(count) {
+        this.state.stars += count;
+        this.saveState();
+      },
+
+      updateProgress(step, total) {
+        const pct = Math.min(100, Math.round((step / total) * 100));
+        document.getElementById('game-progress-fill').style.width = `${pct}%`;
+        document.getElementById('game-progress-text').textContent = `${step} / ${total}`;
+      },
+
+      speakPraise(extraAr = '', extraEn = '') {
+        const p = PRAISE_PHRASES[Math.floor(Math.random() * PRAISE_PHRASES.length)];
+        const ar = extraAr ? `${p.ar} ${extraAr}` : p.ar;
+        const en = extraEn ? `${p.en} ${extraEn}` : p.en;
+        this.setPrompt(ar, en, [
+          { text: p.ar, lang: 'ar' },
+          ...(extraAr ? [{ text: extraAr, lang: 'ar' }] : []),
+          ...(en ? [{ text: en, lang: 'en' }] : [])
+        ]);
+      },
+
+      completeRound(gameType, levelId = null, earnedStars = 3, nextAction = null) {
+        this.awardStars(earnedStars);
+        if (!this.state.completedGames.includes(gameType)) {
+          this.state.completedGames.push(gameType);
+        }
+        if (levelId && levelId >= this.state.unlockedLevel && this.state.unlockedLevel < 6) {
+          this.state.unlockedLevel = levelId + 1;
+        }
+        this.saveState();
+
+        VoiceEngine.sfxCelebrate();
+        Confetti.launch();
+
+        const p = PRAISE_PHRASES[Math.floor(Math.random() * PRAISE_PHRASES.length)];
+        document.getElementById('celeb-title-ar').textContent = `${p.ar} أَكْمَلْتَ التَّحَدِّي!`;
+        document.getElementById('celeb-title-en').textContent = `${p.en} Challenge Complete!`;
+        document.getElementById('celeb-stars-earned').textContent = `+${earnedStars} نُجُومٍ جَدِيدَة! ⭐⭐⭐`;
+        this.activeGame = { nextAction };
+
+        document.getElementById('celebrate-modal').classList.add('open');
+        VoiceEngine.speakSequence([
+          { text: `${p.ar} لَقَدْ حَصَلْتَ عَلَى ${earnedStars} نُجُوم!`, lang: 'ar' },
+          { text: `${p.en} You earned ${earnedStars} stars!`, lang: 'en' }
+        ]);
+      },
+
+      shuffle(arr) {
+        const copy = [...arr];
+        for (let i = copy.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+        return copy;
+      },
+
+      /**
+       * =====================================================================
+       * ROUTER FOR ALL 7 MINI-GAMES
+       * =====================================================================
+       */
+      startMiniGame(type, levelId = null, subset = 'all') {
+        this.showScreen('game');
+        const pool = subset === 'group1'
+          ? ARABIC_ALPHABET.filter(l => l.group === 1)
+          : ARABIC_ALPHABET;
+
+        switch (type) {
+          case 'learn':
+            this.runGame1LearnLetters(pool, levelId);
+            break;
+          case 'findLetter':
+            this.runGame2FindLetter(pool, levelId);
+            break;
+          case 'match':
+            this.runGame3MatchLetters(pool, levelId);
+            break;
+          case 'memory':
+            this.runGame4MemoryGame(pool, levelId);
+            break;
+          case 'guessWord':
+            this.runGame5GuessWord(levelId);
+            break;
+          case 'numbersColors':
+            this.runGame6NumbersAndColors(levelId);
+            break;
+          case 'detective':
+            this.runGame7LetterDetective(levelId);
+            break;
+        }
+      },
+
+      /**
+       * GAME 1: LEARN THE ARABIC LETTERS (Interactive Discovery Cards)
+       */
+      runGame1LearnLetters(pool, levelId) {
+        let index = 0;
+        const stage = document.getElementById('game-stage-content');
+
+        const renderCard = () => {
+          const item = pool[index];
+          this.updateProgress(index + 1, pool.length);
+          this.markLetterMastered(item.id);
+
+          stage.innerHTML = `
+            <div class="big-letter-stage">
+              <div class="letter-showcase-card">
+                <div class="giant-arabic-char" id="g1-char" title="اضغط لسماع الحرف">${item.char}</div>
+                <div class="example-word-box" id="g1-word">
+                  <div class="example-emoji">${item.emoji}</div>
+                  <div class="example-word-ar">${item.word}</div>
+                  <div class="en-text bilingual-sub" style="font-weight:700; color:#0284C7;">${item.name} • ${item.enWord}</div>
+                </div>
+              </div>
+
+              <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
+                <button class="btn-3d btn-yellow" id="g1-hear-letter">
+                  <span>🔊</span>
+                  <span>اِسْمَعْ الحَرْفَ (${item.name})</span>
+                </button>
+                <button class="btn-3d btn-purple" id="g1-hear-sound">
+                  <span>🎵</span>
+                  <span>صَوْتُ الحَرْفِ (${item.sound})</span>
+                </button>
+                <button class="btn-3d btn-coral" id="g1-hear-word">
+                  <span>🗣️</span>
+                  <span>الكَلِمَة (${item.word})</span>
+                </button>
+              </div>
+
+              <div style="display:flex; gap:16px; margin-top:8px;">
+                <button class="btn-3d btn-white" id="g1-prev" ${index === 0 ? 'disabled style="opacity:0.45;"' : ''}>
+                  ➡️ السَّابِق
+                </button>
+                <button class="btn-3d btn-green" id="g1-next" style="padding:12px 32px; font-size:1.25rem;">
+                  ${index === pool.length - 1 ? '⭐ أَنْهَيْتُ التَّعَلُّم!' : 'الحَرْفُ التَّالِي ⬅️'}
+                </button>
+              </div>
+            </div>
+          `;
+
+          const speakFull = () => {
+            this.setPrompt(
+              `هٰذَا حَرْفُ ${item.name} .. صَوْتُهُ ${item.sound} .. مِثْلَ كَلِمَةِ ${item.word}!`,
+              `This is the letter ${item.name}, as in ${item.enWord}!`,
+              [
+                { text: `حَرْفُ ${item.name}`, lang: 'ar' },
+                { text: item.sound, lang: 'ar' },
+                { text: item.word, lang: 'ar' },
+                { text: `${item.name}, ${item.enWord}`, lang: 'en' }
+              ]
+            );
+          };
+
+          document.getElementById('g1-char').onclick = speakFull;
+          document.getElementById('g1-word').onclick = speakFull;
+          document.getElementById('g1-hear-letter').onclick = () => {
+            VoiceEngine.speakSequence([{ text: `حَرْفُ ${item.name}`, lang: 'ar' }]);
+          };
+          document.getElementById('g1-hear-sound').onclick = () => {
+            VoiceEngine.speakSequence([{ text: `${item.sound} .. ${item.sound}`, lang: 'ar' }]);
+          };
+          document.getElementById('g1-hear-word').onclick = () => {
+            VoiceEngine.speakSequence([{ text: item.word, lang: 'ar' }]);
+          };
+          document.getElementById('g1-prev').onclick = () => {
+            if (index > 0) { index--; VoiceEngine.sfxTap(); renderCard(); }
+          };
+          document.getElementById('g1-next').onclick = () => {
+            VoiceEngine.sfxTap();
+            if (index < pool.length - 1) {
+              index++;
+              renderCard();
+            } else {
+              this.completeRound('learn', levelId || 1, 3, () => this.startMiniGame('findLetter', 2));
+            }
+          };
+
+          speakFull();
+        };
+
+        renderCard();
+      },
+
+      /**
+       * GAME 2: FIND THE CORRECT LETTER ("Where is the letter ب?")
+       */
+      runGame2FindLetter(pool, levelId) {
+        const totalQuestions = 5;
+        const targets = this.shuffle(pool).slice(0, totalQuestions);
+        let qIdx = 0;
+        const stage = document.getElementById('game-stage-content');
+
+        const renderQuestion = () => {
+          const target = targets[qIdx];
+          this.updateProgress(qIdx + 1, totalQuestions);
+          const distractors = this.shuffle(ARABIC_ALPHABET.filter(l => l.id !== target.id)).slice(0, 3);
+          const options = this.shuffle([target, ...distractors]);
+
+          stage.innerHTML = `
+            <div class="big-letter-stage">
+              <button class="btn-3d btn-yellow" id="g2-listen-again" style="font-size:1.3rem; padding:14px 28px;">
+                <span>🔊</span>
+                <span>اِسْتَمِعْ مَرَّةً أُخْرَى</span>
+              </button>
+
+              <div class="options-grid cols-4" id="g2-options">
+                ${options.map(opt => `
+                  <button class="choice-card" data-id="${opt.id}">
+                    <span class="big-char">${opt.char}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+          `;
+
+          const askQuestion = () => {
+            this.setPrompt(
+              `أَيْنَ حَرْفُ ${target.name}؟`,
+              `Where is the letter ${target.name}?`,
+              [
+                { text: `أَيْنَ حَرْفُ ${target.name}؟`, lang: 'ar' },
+                { text: `Where is the letter ${target.name}?`, lang: 'en' }
+              ]
+            );
+          };
+
+          document.getElementById('g2-listen-again').onclick = askQuestion;
+
+          let locked = false;
+          document.querySelectorAll('#g2-options .choice-card').forEach(btn => {
+            btn.onclick = () => {
+              if (locked) return;
+              const chosenId = btn.dataset.id;
+              const chosenObj = options.find(o => o.id === chosenId);
+
+              if (chosenId === target.id) {
+                locked = true;
+                btn.classList.add('correct-state');
+                VoiceEngine.sfxCorrect();
+                this.markLetterMastered(target.id);
+                this.awardStars(1);
+                this.speakPraise(`هٰذَا حَرْفُ ${target.name}!`);
+                setTimeout(() => {
+                  qIdx++;
+                  if (qIdx < totalQuestions) renderQuestion();
+                  else this.completeRound('findLetter', levelId || 2, 3, () => this.startMiniGame('match', 3));
+                }, 1550);
+              } else {
+                btn.classList.add('wrong-state');
+                VoiceEngine.sfxWrong();
+                this.setPrompt(
+                  `هٰذَا حَرْفُ ${chosenObj.name}. جَرِّبْ مَرَّةً أُخْرَى! أَيْنَ حَرْفُ ${target.name}؟`,
+                  `That is ${chosenObj.name}. Try again! Find ${target.name}.`,
+                  [
+                    { text: `هٰذَا حَرْفُ ${chosenObj.name}. نَحْنُ نَبْحَثُ عَنْ حَرْفِ ${target.name}!`, lang: 'ar' },
+                    { text: `Try again! Where is ${target.name}?`, lang: 'en' }
+                  ]
+                );
+              }
+            };
+          });
+
+          askQuestion();
+        };
+
+        renderQuestion();
+      },
+
+      /**
+       * GAME 3: MATCH LETTERS AND PICTURES (Tap-to-Pair with Glowing SVG Lines)
+       */
+      runGame3MatchLetters(pool, levelId) {
+        const totalRounds = 2;
+        let round = 0;
+        const stage = document.getElementById('game-stage-content');
+
+        const renderRound = () => {
+          this.updateProgress(round + 1, totalRounds);
+          const items = this.shuffle(pool).slice(0, 4);
+          const leftCol = this.shuffle(items);
+          const rightCol = this.shuffle(items);
+
+          let selectedLeft = null;
+          let selectedRight = null;
+          const matchedIds = new Set();
+
+          stage.innerHTML = `
+            <div style="text-align:center; margin-bottom:8px; font-weight:800; color:#475569;">
+              اِضْغَطْ عَلَى الحَرْفِ ثُمَّ الصُّورَةِ الَّتِي تَبْدَأُ بِهِ!
+            </div>
+            <div class="match-arena" id="match-arena">
+              <svg class="match-svg-lines" id="match-svg"></svg>
+              <div class="match-col" id="match-left">
+                ${leftCol.map(it => `
+                  <button class="match-node" data-side="left" data-id="${it.id}" style="font-size:2.4rem; color:#E11D48;">
+                    ${it.char}
+                  </button>
+                `).join('')}
+              </div>
+              <div class="match-col" id="match-right">
+                ${rightCol.map(it => `
+                  <button class="match-node" data-side="right" data-id="${it.id}">
+                    <span style="font-size:2.2rem;">${it.emoji}</span>
+                    <span style="font-size:1.35rem;">${it.word}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+          `;
+
+          const drawLines = () => {
+            const svg = document.getElementById('match-svg');
+            const arenaRect = document.getElementById('match-arena').getBoundingClientRect();
+            svg.innerHTML = '';
+            matchedIds.forEach(id => {
+              const lEl = document.querySelector(`.match-node[data-side="left"][data-id="${id}"]`);
+              const rEl = document.querySelector(`.match-node[data-side="right"][data-id="${id}"]`);
+              if (!lEl || !rEl) return;
+              const lR = lEl.getBoundingClientRect();
+              const rR = rEl.getBoundingClientRect();
+              const x1 = lR.left + lR.width / 2 - arenaRect.left;
+              const y1 = lR.top + lR.height / 2 - arenaRect.top;
+              const x2 = rR.left + rR.width / 2 - arenaRect.left;
+              const y2 = rR.top + rR.height / 2 - arenaRect.top;
+              const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+              line.setAttribute('x1', x1);
+              line.setAttribute('y1', y1);
+              line.setAttribute('x2', x2);
+              line.setAttribute('y2', y2);
+              line.setAttribute('stroke', '#22C55E');
+              line.setAttribute('stroke-width', '7');
+              line.setAttribute('stroke-linecap', 'round');
+              svg.appendChild(line);
+            });
+          };
+
+          const checkPair = () => {
+            if (!selectedLeft || !selectedRight) return;
+            const lId = selectedLeft.dataset.id;
+            const rId = selectedRight.dataset.id;
+            const itemObj = items.find(i => i.id === lId);
+
+            if (lId === rId) {
+              matchedIds.add(lId);
+              selectedLeft.classList.remove('selected');
+              selectedRight.classList.remove('selected');
+              selectedLeft.classList.add('matched');
+              selectedRight.classList.add('matched');
+              selectedLeft = null;
+              selectedRight = null;
+              drawLines();
+              VoiceEngine.sfxCorrect();
+              this.markLetterMastered(lId);
+              this.speakPraise(`${itemObj.name} .. ${itemObj.word}!`);
+
+              if (matchedIds.size === items.length) {
+                setTimeout(() => {
+                  round++;
+                  if (round < totalRounds) renderRound();
+                  else this.completeRound('match', levelId || 3, 3, () => this.startMiniGame('guessWord', 4));
+                }, 1300);
+              }
+            } else {
+              VoiceEngine.sfxWrong();
+              const lTemp = selectedLeft;
+              const rTemp = selectedRight;
+              lTemp.classList.add('wrong-state');
+              rTemp.classList.add('wrong-state');
+              this.setPrompt(
+                'لَيْسَ هٰذَا! حَاوِلْ مَرَّةً أُخْرَى يَا بَطَل.',
+                'Not quite! Try matching again!'
+              );
+              setTimeout(() => {
+                lTemp.classList.remove('selected', 'wrong-state');
+                rTemp.classList.remove('selected', 'wrong-state');
+              }, 500);
+              selectedLeft = null;
+              selectedRight = null;
+            }
+          };
+
+          document.querySelectorAll('.match-node').forEach(node => {
+            node.onclick = () => {
+              const side = node.dataset.side;
+              const id = node.dataset.id;
+              const obj = items.find(i => i.id === id);
+              VoiceEngine.sfxTap();
+
+              if (side === 'left') {
+                document.querySelectorAll('.match-node[data-side="left"]').forEach(n => n.classList.remove('selected'));
+                node.classList.add('selected');
+                selectedLeft = node;
+                VoiceEngine.speakSequence([{ text: `حَرْفُ ${obj.name}`, lang: 'ar' }]);
+              } else {
+                document.querySelectorAll('.match-node[data-side="right"]').forEach(n => n.classList.remove('selected'));
+                node.classList.add('selected');
+                selectedRight = node;
+                VoiceEngine.speakSequence([{ text: obj.word, lang: 'ar' }]);
+              }
+              checkPair();
+            };
+          });
+
+          window.addEventListener('resize', drawLines, { once: true });
+
+          this.setPrompt(
+            'وَصِّلْ كُلَّ حَرْفٍ بِالصُّورَةِ الَّتِي تَبْدَأُ بِهِ!',
+            'Match each Arabic letter with its picture!'
+          );
+        };
+
+        renderRound();
+      },
+
+      /**
+       * GAME 4: MEMORY CARD GAME (Match Letter Card with Picture Card)
+       */
+      runGame4MemoryGame(pool, levelId) {
+        const chosen = this.shuffle(pool).slice(0, 4); // 4 pairs = 8 cards (ideal for ages 5-7)
+        const cards = this.shuffle([
+          ...chosen.map(c => ({ pairId: c.id, kind: 'letter', display: c.char, speak: `حَرْفُ ${c.name}`, item: c })),
+          ...chosen.map(c => ({ pairId: c.id, kind: 'pic', display: c.emoji, sub: c.word, speak: c.word, item: c }))
+        ]);
+
+        let flipped = [];
+        let matchedPairs = 0;
+        let busy = false;
+
+        this.updateProgress(0, chosen.length);
+        const stage = document.getElementById('game-stage-content');
+        stage.innerHTML = `
+          <div class="memory-grid" id="mem-grid">
+            ${cards.map((card, i) => `
+              <div class="mem-card" data-idx="${i}">
+                <div class="mem-inner">
+                  <div class="mem-face mem-front">⭐</div>
+                  <div class="mem-face mem-back">
+                    <div style="font-size:${card.kind === 'letter' ? '3.2rem' : '2.7rem'}; line-height:1.1;">${card.display}</div>
+                    ${card.sub ? `<div style="font-size:1.15rem; margin-top:4px;">${card.sub}</div>` : ''}
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+
+        document.querySelectorAll('.mem-card').forEach(el => {
+          el.onclick = () => {
+            if (busy || el.classList.contains('flipped') || el.classList.contains('matched')) return;
+            const idx = Number(el.dataset.idx);
+            const cardData = cards[idx];
+
+            el.classList.add('flipped');
+            VoiceEngine.sfxTap();
+            VoiceEngine.speakSequence([{ text: cardData.speak, lang: 'ar' }]);
+            flipped.push({ el, cardData });
+
+            if (flipped.length === 2) {
+              busy = true;
+              const [a, b] = flipped;
+              if (a.cardData.pairId === b.cardData.pairId) {
+                setTimeout(() => {
+                  a.el.classList.add('matched');
+                  b.el.classList.add('matched');
+                  matchedPairs++;
+                  this.updateProgress(matchedPairs, chosen.length);
+                  this.markLetterMastered(a.cardData.pairId);
+                  VoiceEngine.sfxCorrect();
+                  this.speakPraise(`${a.cardData.item.name} .. ${a.cardData.item.word}!`);
+                  flipped = [];
+                  busy = false;
+                  if (matchedPairs === chosen.length) {
+                    setTimeout(() => {
+                      this.completeRound('memory', levelId || 4, 3, () => this.startMiniGame('guessWord', 4));
+                    }, 1100);
+                  }
+                }, 550);
+              } else {
+                setTimeout(() => {
+                  a.el.classList.remove('flipped');
+                  b.el.classList.remove('flipped');
+                  VoiceEngine.sfxWrong();
+                  flipped = [];
+                  busy = false;
+                }, 1050);
+              }
+            }
+          };
+        });
+
+        this.setPrompt(
+          'اِقْلِبْ البِطَاقَاتِ وَطَابِقْ الحَرْفَ مَعَ صُورَتِهِ!',
+          'Flip the cards and match each letter with its picture!'
+        );
+      },
+
+      /**
+       * GAME 5: GUESS THE WORD (Picture -> Choose Arabic Word)
+       */
+      runGame5GuessWord(levelId) {
+        const totalQuestions = 5;
+        const items = this.shuffle(VOCABULARY_ITEMS).slice(0, totalQuestions);
+        let qIdx = 0;
+        const stage = document.getElementById('game-stage-content');
+
+        const renderQ = () => {
+          const target = items[qIdx];
+          this.updateProgress(qIdx + 1, totalQuestions);
+          const distractors = this.shuffle(VOCABULARY_ITEMS.filter(v => v.plain !== target.plain)).slice(0, 3);
+          const options = this.shuffle([target, ...distractors]);
+
+          stage.innerHTML = `
+            <div class="big-letter-stage">
+              <div class="example-word-box" id="g5-pic" style="padding:18px 36px; border-color:#38BDF8; box-shadow:0 8px 0 #0284C7;">
+                <div style="font-size:5.4rem; line-height:1.1;">${target.emoji}</div>
+                <div class="en-text bilingual-sub" style="font-weight:700; color:#64748B;">${target.en}</div>
+              </div>
+
+              <div class="options-grid" id="g5-options">
+                ${options.map(opt => `
+                  <button class="choice-card" data-word="${opt.plain}">
+                    <span class="word-label">${opt.word}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+          `;
+
+          const ask = () => {
+            this.setPrompt(
+              `مَا هٰذِهِ الصُّورَة؟ اِخْتَرْ الكَلِمَةَ الصَّحِيحَة!`,
+              `What is this picture? Choose the right Arabic word!`,
+              [
+                { text: 'مَا هٰذِهِ الصُّورَة؟ اِخْتَرْ الكَلِمَةَ الصَّحِيحَة!', lang: 'ar' },
+                { text: `Find the word for ${target.en}`, lang: 'en' }
+              ]
+            );
+          };
+
+          document.getElementById('g5-pic').onclick = () => {
+            VoiceEngine.speakSequence([{ text: target.word, lang: 'ar' }]);
+          };
+
+          let locked = false;
+          document.querySelectorAll('#g5-options .choice-card').forEach(btn => {
+            btn.onclick = () => {
+              if (locked) return;
+              const chosenWord = btn.dataset.word;
+              const chosenObj = options.find(o => o.plain === chosenWord);
+
+              if (chosenWord === target.plain) {
+                locked = true;
+                btn.classList.add('correct-state');
+                VoiceEngine.sfxCorrect();
+                this.awardStars(1);
+                this.speakPraise(`نَعَم، هٰذِهِ ${target.word}!`);
+                setTimeout(() => {
+                  qIdx++;
+                  if (qIdx < totalQuestions) renderQ();
+                  else this.completeRound('guessWord', levelId || 4, 3, () => this.startMiniGame('numbersColors', 5));
+                }, 1500);
+              } else {
+                btn.classList.add('wrong-state');
+                VoiceEngine.sfxWrong();
+                this.setPrompt(
+                  `هٰذِهِ كَلِمَةُ ${chosenObj.word}. جَرِّبْ مَرَّةً أُخْرَى!`,
+                  `That says ${chosenObj.en}. Try again!`,
+                  [
+                    { text: `هٰذِهِ كَلِمَةُ ${chosenObj.word}. حَاوِلْ مَرَّةً أُخْرَى!`, lang: 'ar' },
+                    { text: 'Try again!', lang: 'en' }
+                  ]
+                );
+              }
+            };
+          });
+
+          ask();
+        };
+
+        renderQ();
+      },
+
+      /**
+       * GAME 6: ARABIC NUMBERS (1-10) & COLORS
+       */
+      runGame6NumbersAndColors(levelId) {
+        // 3 counting rounds + 3 color splash rounds = 6 engaging rounds
+        const numRounds = this.shuffle(ARABIC_NUMBERS).slice(0, 3).map(n => ({ mode: 'number', data: n }));
+        const colRounds = this.shuffle(ARABIC_COLORS).slice(0, 3).map(c => ({ mode: 'color', data: c }));
+        const rounds = [...numRounds, ...colRounds];
+        let rIdx = 0;
+        const stage = document.getElementById('game-stage-content');
+
+        const renderRound = () => {
+          const current = rounds[rIdx];
+          this.updateProgress(rIdx + 1, rounds.length);
+
+          if (current.mode === 'number') {
+            const target = current.data;
+            const distractors = this.shuffle(ARABIC_NUMBERS.filter(n => n.num !== target.num)).slice(0, 3);
+            const options = this.shuffle([target, ...distractors]);
+            let tappedCount = 0;
+
+            stage.innerHTML = `
+              <div class="big-letter-stage">
+                <div style="font-weight:800; color:#0D9488; font-size:1.1rem;">
+                  اِضْغَطْ عَلَى الأَشْكَالِ لِتَعُدَّهَا، ثُمَّ اِخْتَرْ الرَّقْمَ!
+                </div>
+                <div class="counting-garden" id="counting-garden">
+                  ${Array.from({ length: target.num }, (_, i) => `
+                    <div class="count-item" data-i="${i}">${target.emoji}</div>
+                  `).join('')}
+                </div>
+
+                <div class="options-grid cols-4" id="g6-num-options">
+                  ${options.map(opt => `
+                    <button class="choice-card" data-num="${opt.num}">
+                      <span class="big-char" style="color:#0D9488;">${opt.arNum}</span>
+                      <span style="font-size:1.25rem; font-weight:800;">${opt.word}</span>
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+            `;
+
+            document.querySelectorAll('.count-item').forEach(el => {
+              el.onclick = () => {
+                if (el.classList.contains('counted')) return;
+                el.classList.add('counted');
+                tappedCount++;
+                const numObj = ARABIC_NUMBERS[tappedCount - 1];
+                const badge = document.createElement('span');
+                badge.className = 'count-badge';
+                badge.textContent = numObj ? numObj.arNum : tappedCount;
+                el.appendChild(badge);
+                VoiceEngine.sfxTap();
+                if (numObj) {
+                  VoiceEngine.speakSequence([{ text: numObj.word, lang: 'ar' }]);
+                }
+              };
+            });
+
+            let locked = false;
+            document.querySelectorAll('#g6-num-options .choice-card').forEach(btn => {
+              btn.onclick = () => {
+                if (locked) return;
+                const chosen = Number(btn.dataset.num);
+                const chosenObj = options.find(o => o.num === chosen);
+                if (chosen === target.num) {
+                  locked = true;
+                  btn.classList.add('correct-state');
+                  VoiceEngine.sfxCorrect();
+                  this.awardStars(1);
+                  this.speakPraise(`العَدَدُ ${target.word}!`);
+                  setTimeout(() => {
+                    rIdx++;
+                    if (rIdx < rounds.length) renderRound();
+                    else this.completeRound('numbersColors', levelId || 5, 3, () => this.startMiniGame('detective', 6));
+                  }, 1500);
+                } else {
+                  btn.classList.add('wrong-state');
+                  VoiceEngine.sfxWrong();
+                  this.setPrompt(
+                    `هٰذَا الرَّقْمُ ${chosenObj.word}. عُدَّهَا مَرَّةً أُخْرَى!`,
+                    `That is ${chosenObj.en}. Count them again!`
+                  );
+                }
+              };
+            });
+
+            this.setPrompt(
+              'كَمْ عَدَدُ الأَشْكَالِ فِي الحَدِيقَة؟ اِضْغَطْ لِتَعُدَّهَا!',
+              'How many items are in the garden? Tap to count them!'
+            );
+          } else {
+            // Color Matching Activity
+            const target = current.data;
+            const distractors = this.shuffle(ARABIC_COLORS.filter(c => c.id !== target.id)).slice(0, 3);
+            const options = this.shuffle([target, ...distractors]);
+
+            stage.innerHTML = `
+              <div class="big-letter-stage">
+                <div class="example-word-box" style="padding:16px 34px; border-color:${target.hex};">
+                  <div style="font-size:4.2rem;">🎨 ${target.itemEmoji}</div>
+                  <div style="font-size:1.8rem; font-weight:900; color:${target.hex};">اللَّوْنُ ${target.name}</div>
+                </div>
+
+                <div class="options-grid cols-4" id="g6-col-options">
+                  ${options.map(opt => `
+                    <button class="choice-card" data-cid="${opt.id}">
+                      <div class="color-blob" style="background:${opt.hex};"></div>
+                      <span style="font-size:1.3rem; font-weight:900;">${opt.name}</span>
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+            `;
+
+            let locked = false;
+            document.querySelectorAll('#g6-col-options .choice-card').forEach(btn => {
+              btn.onclick = () => {
+                if (locked) return;
+                const cid = btn.dataset.cid;
+                const cObj = options.find(o => o.id === cid);
+                if (cid === target.id) {
+                  locked = true;
+                  btn.classList.add('correct-state');
+                  VoiceEngine.sfxCorrect();
+                  this.awardStars(1);
+                  this.speakPraise(`اللَّوْنُ ${target.name}!`);
+                  setTimeout(() => {
+                    rIdx++;
+                    if (rIdx < rounds.length) renderRound();
+                    else this.completeRound('numbersColors', levelId || 5, 3, () => this.startMiniGame('detective', 6));
+                  }, 1500);
+                } else {
+                  btn.classList.add('wrong-state');
+                  VoiceEngine.sfxWrong();
+                  this.setPrompt(
+                    `هٰذَا اللَّوْنُ ${cObj.name}. نَحْنُ نَبْحَثُ عَنْ اللَّوْنِ ${target.name}!`,
+                    `That is ${cObj.en}. Find ${target.en}!`
+                  );
+                }
+              };
+            });
+
+            this.setPrompt(
+              `أَيْنَ اللَّوْنُ ${target.name}؟`,
+              `Where is the color ${target.en}?`,
+              [
+                { text: `أَيْنَ اللَّوْنُ ${target.name}؟`, lang: 'ar' },
+                { text: `Choose the color ${target.en}!`, lang: 'en' }
+              ]
+            );
+          }
+        };
+
+        renderRound();
+      },
+
+      /**
+       * GAME 7: LETTER DETECTIVE (Distinguishing look-alike Arabic letters by their dots)
+       */
+      runGame7LetterDetective(levelId) {
+        const families = ['baa-family', 'jeem-family', 'dal-family', 'raa-family', 'seen-family', 'sad-family', 'tah-family', 'ain-family', 'faa-family'];
+        const chosenFamilies = this.shuffle(families).slice(0, 5);
+        let qIdx = 0;
+        const stage = document.getElementById('game-stage-content');
+
+        const renderDetectiveQ = () => {
+          const fam = chosenFamilies[qIdx];
+          const members = ARABIC_ALPHABET.filter(l => l.family === fam);
+          const target = members[Math.floor(Math.random() * members.length)];
+          this.updateProgress(qIdx + 1, chosenFamilies.length);
+
+          stage.innerHTML = `
+            <div class="big-letter-stage">
+              <div class="example-word-box" style="background:linear-gradient(180deg, #EEF2FF 0%, #E0E7FF 100%); border-color:#6366F1; max-width:560px; width:100%;">
+                <div style="font-size:3.2rem;">🕵️‍♂️🔍</div>
+                <div style="font-size:1.5rem; font-weight:900; color:#3730A3;">
+                  أَيُّ حَرْفٍ هُوَ حَرْفُ <span style="color:#E11D48; font-size:1.85rem;">${target.name}</span>؟
+                </div>
+                <div style="font-size:1.2rem; font-weight:800; color:#4F46E5;">
+                  💡 تَلْمِيح: ${target.dots}
+                </div>
+                <div class="en-text bilingual-sub" style="font-size:0.95rem; color:#4338CA;">
+                  Clue: ${target.dotsEn}
+                </div>
+              </div>
+
+              <div class="options-grid" style="grid-template-columns: repeat(${members.length}, 1fr);" id="g7-options">
+                ${members.map(m => `
+                  <button class="choice-card" data-id="${m.id}">
+                    <span class="big-char" style="color:#312E81;">${m.char}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+          `;
+
+          const askClue = () => {
+            this.setPrompt(
+              `أَيُّ حَرْفٍ هُوَ حَرْفُ ${target.name}؟ تَلْمِيح: ${target.dots}.`,
+              `Which letter is ${target.name}? Clue: ${target.dotsEn}.`,
+              [
+                { text: `أَيُّ حَرْفٍ هُوَ حَرْفُ ${target.name}؟ ${target.dots}`, lang: 'ar' },
+                { text: `Which letter is ${target.name}? ${target.dotsEn}`, lang: 'en' }
+              ]
+            );
+          };
+
+          let locked = false;
+          document.querySelectorAll('#g7-options .choice-card').forEach(btn => {
+            btn.onclick = () => {
+              if (locked) return;
+              const id = btn.dataset.id;
+              const chosen = members.find(m => m.id === id);
+              if (id === target.id) {
+                locked = true;
+                btn.classList.add('correct-state');
+                VoiceEngine.sfxCorrect();
+                this.markLetterMastered(target.id);
+                this.awardStars(1);
+                this.speakPraise(`اِكْتِشَافٌ رَائِع! هٰذَا حَرْفُ ${target.name}!`);
+                setTimeout(() => {
+                  qIdx++;
+                  if (qIdx < chosenFamilies.length) renderDetectiveQ();
+                  else this.completeRound('detective', levelId || 6, 4, () => this.showScreen('trophies'));
+                }, 1550);
+              } else {
+                btn.classList.add('wrong-state');
+                VoiceEngine.sfxWrong();
+                this.setPrompt(
+                  `هٰذَا حَرْفُ ${chosen.name} (${chosen.dots}). اُنظُرْ إِلَى النِّقَاطِ وَحَاوِلْ مَرَّةً أُخْرَى!`,
+                  `That is ${chosen.name} (${chosen.dotsEn}). Look closely at the dots and try again!`
+                );
+              }
+            };
+          });
+
+          askClue();
+        };
+
+        renderDetectiveQ();
+      }
+    };
+
+    window.addEventListener('DOMContentLoaded', () => App.init());
+  </script>
+</body>
+</html>
